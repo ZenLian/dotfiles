@@ -1,0 +1,11 @@
+[user]
+	email = zeninglian@gmail.com
+	name = Zenlian
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[color]
+	ui = true
+[push]
+	default = current
