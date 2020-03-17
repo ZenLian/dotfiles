@@ -2,7 +2,7 @@
 	email = zeninglian@gmail.com
 	name = Zenlian
 [core]
-	editor = vim
+	editor = nvim
 [merge]
 	tool = vimdiff
 [color]
