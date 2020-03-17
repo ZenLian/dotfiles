@@ -1,4 +1,11 @@
+# ohmyzsh 用到的插件
+#plugins=(git tmux vi-mode z) # conda-zsh-completion zsh-completions)
 source ~/.config/zsh/env.zsh
 source ~/.config/zsh/aliases.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# 手动指定 nvm 默认环境, 加快 zsh 启动速度
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
+export PATH=$HOME/.nvm/versions/node/v13.11.0/bin/:$PATH
