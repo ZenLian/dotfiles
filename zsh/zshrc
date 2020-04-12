@@ -2,6 +2,7 @@
 #plugins=(git tmux vi-mode z) # conda-zsh-completion zsh-completions)
 source ~/.config/zsh/env.zsh
 source ~/.config/zsh/aliases.zsh
+source ~/.config/zsh/plugins.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
