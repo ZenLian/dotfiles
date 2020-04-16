@@ -5,6 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
 # zinit
 typeset -A ZINIT=(
     BIN_DIR         $ZDOTDIR/zinit/bin
@@ -53,7 +54,6 @@ zinit wait lucid light-mode for \
 zinit ice lucid atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh'
 zinit light Aloxaf/fzf-tab
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # theme
 #zinit ice lucid wait="!0" pick="async.zsh" src="pure.zsh" atload="prompt_pure_precmd"
@@ -65,9 +65,4 @@ zinit light romkatv/powerlevel10k
 # custom
 source $ZDOTDIR/env.zsh
 source $ZDOTDIR/aliases.zsh
-
-# 手动指定 nvm 默认环境, 加快 zsh 启动速度
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
-export PATH=$HOME/.nvm/versions/node/v13.12.0/bin/:$PATH
 
