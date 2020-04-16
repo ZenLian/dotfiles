@@ -1,4 +1,4 @@
-export PATH=~/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 export TERM=xterm-256color
 export TERM_ITALICS=true
 export EDITOR='nvim'
