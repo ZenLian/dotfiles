@@ -3,7 +3,9 @@
 ## install
 
 ``` shell
-git clone --recursive git@gitee.com:zenlian/dotconfig.git ~/.config
+git clone --recursive git@gitee.com:zenlian/dotfiles.git
+cd dotfiles
+./install.sh
 ```
 
 ## required utilities
