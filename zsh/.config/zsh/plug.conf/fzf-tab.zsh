@@ -14,6 +14,8 @@ FZF_TAB_COMMAND=(
     '--query=$query'   # $query will be expanded to query string at runtime.
     '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
 )
+
+zstyle ':fzf-tab:*' single-group ''
 zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
 # disable sort when completing options of any command
 zstyle ':completion:complete:*:options' sort false
@@ -39,3 +41,4 @@ zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps -
 #zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always ${~ctxt[hpre]}$in'
 zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'ls --color=always ${~ctxt[hpre]}$in'
 # }}}
+
