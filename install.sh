@@ -1,6 +1,6 @@
 #!/bin/bash
 
-list=(zsh git tmux nvim)
+list=(zsh git tmux nvim pip)
 
 for i in ${list[*]}; do
     #echo $i

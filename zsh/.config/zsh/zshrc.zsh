@@ -7,6 +7,11 @@ fi
 
 autoload -Uz zcalc zmv
 
+# custom
+for f in $ZDOTDIR/snippets/*.zsh; do
+    source $f
+done
+
 # zinit
 typeset -A ZINIT=(
     BIN_DIR         $ZDOTDIR/zinit/bin
@@ -35,25 +40,25 @@ zinit for \
     OMZ::plugins/systemd/systemd.plugin.zsh \
     OMZ::plugins/sudo/sudo.plugin.zsh
 
+# executable
+zinit wait"2" lucid as"null" from"gh-r" for \
+    mv"exa* -> exa" sbin  ogham/exa \
+    mv"fd* -> fd" sbin"fd/fd"  @sharkdp/fd \
+    sbin junegunn/fzf-bin
+
 # plugins
 zinit light-mode lucid for \
     zdharma/fast-syntax-highlighting \
     atload'source $ZDOTDIR/plug.conf/zsh-autosuggestions.zsh' zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
     skywind3000/z.lua \
-    atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
+    load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
 
 # cheat.sh and its completions
 zinit lucid as"null" for \
     mv":cht.sh -> cht.sh" sbin"cht.sh" https://cht.sh/:cht.sh
 zinit ice mv=":zsh -> _cht" as="completion"
 zinit snippet https://cheat.sh/:zsh
-
-# executable
-zinit wait"2" lucid as"null" from"gh-r" for \
-    mv"exa* -> exa" sbin  ogham/exa \
-    mv"fd* -> fd" sbin"fd/fd"  @sharkdp/fd \
-    sbin junegunn/fzf-bin
 
 # fzf utils
 # FIXME
@@ -69,8 +74,4 @@ zinit as="completion" for \
 # theme
 zinit ice depth=1 atload'!source $ZDOTDIR/plug.conf/p10k.zsh' lucid nocd
 zinit light romkatv/powerlevel10k
-
-# custom
-source $ZDOTDIR/env.zsh
-source $ZDOTDIR/aliases.zsh
 
