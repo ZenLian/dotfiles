@@ -1,4 +1,6 @@
 .zcompdump
-completions/
-snippets/
-plugins/
+.zcalc_history
+zinit/completions/
+zinit/snippets/
+zinit/plugins/
+zinit/polaris
