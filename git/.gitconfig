@@ -4,6 +4,7 @@
 	name = Zenlian
 [core]
 	editor = nvim
+	quotepath = false
 [merge]
 	tool = vimdiff
 [color]
