@@ -39,7 +39,6 @@ zinit for \
     OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
     OMZ::plugins/systemd/systemd.plugin.zsh \
     OMZ::plugins/sudo/sudo.plugin.zsh \
-    OMZ::plugins/tmux/tmux.plugin.zsh
 
 # executable
 zinit wait"2" lucid as"null" from"gh-r" for \

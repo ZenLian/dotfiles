@@ -38,3 +38,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
 export PATH=$HOME/.nvm/versions/node/v13.12.0/bin/:$PATH
 
+# golang
+export GOROOT=$HOME/.local/share/go1.14.3
+export GOPATH=$HOME/.local/share/gopath
+#export GO111MODULE=on
+export GOPROXY=https://mirrors.aliyun.com/goproxy/
+export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
