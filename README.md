@@ -3,7 +3,7 @@
 ## install
 
 ``` shell
-git clone --recursive git@gitee.com:zenlian/dotfiles.git
+git clone --recursive git@github.com:ZenLian/dotfiles.git
 cd dotfiles
 ./install.sh
 ```
