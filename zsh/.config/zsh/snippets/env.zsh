@@ -37,7 +37,7 @@ export PATH=$PYENV_ROOT/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
-export PATH=$HOME/.nvm/versions/node/v13.12.0/bin:$PATH
+export PATH=$HOME/.nvm/versions/node/v12.17.0/bin:$PATH
 
 # golang
 export GOROOT=$HOME/.local/share/go1.14.3

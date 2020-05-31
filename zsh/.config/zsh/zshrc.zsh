@@ -61,12 +61,11 @@ zinit ice mv=":zsh -> _cht" as="completion"
 zinit snippet https://cheat.sh/:zsh
 
 # fzf utils
-# FIXME
+# FIXME: fzf-tmux
 zinit lucid for \
     https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh \
     https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
 
-# FIXME
 zinit as="completion" for \
     https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fd/_fd \
     https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg
