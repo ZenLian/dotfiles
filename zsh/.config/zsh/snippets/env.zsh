@@ -40,11 +40,15 @@ export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 export PATH=$HOME/.nvm/versions/node/v12.17.0/bin:$PATH
 
 # golang
-export GOROOT=$HOME/.local/share/go1.14.3
+#export GOROOT=$HOME/.local/share/go1.14.3
 export GOPATH=$HOME/.local/share/gopath
-#export GO111MODULE=on
+##export GO111MODULE=on
 export GOPROXY=https://mirrors.aliyun.com/goproxy/
-export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+#export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+# use gvm
+export GOROOT="${HOME}/.g/go"
+export PATH="${HOME}/.g/go/bin:$PATH"
+export G_MIRROR=https://golang.google.cn/dl/
 
 # rust
 export PATH=$HOME/.cargo/bin:$PATH

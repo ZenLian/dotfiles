@@ -40,11 +40,14 @@ zinit for \
     OMZ::plugins/systemd/systemd.plugin.zsh \
     OMZ::plugins/sudo/sudo.plugin.zsh \
 
+unalias g
+
 # executable
 zinit wait"2" lucid as"null" from"gh-r" for \
     mv"exa* -> exa" sbin  ogham/exa \
     mv"fd* -> fd" sbin"fd/fd"  @sharkdp/fd \
-    sbin junegunn/fzf-bin
+    sbin junegunn/fzf-bin \
+    sbin voidint/g
 
 # plugins
 zinit light-mode lucid for \
