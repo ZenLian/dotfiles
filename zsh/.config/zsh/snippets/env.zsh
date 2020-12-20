@@ -26,12 +26,28 @@ export FZF_COMPLETION_TRIGGER='\'
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT='80%'
 
-# pyenv
-export PYENV_ROOT=$XDG_DATA_HOME/pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-[ -f $PYENV_ROOT/bin/pyenv ] && \
-    eval "$(pyenv init -)" && \
-    eval "$(pyenv virtualenv-init -)"
+## pyenv OR miniconda
+# pyenv: light, pip
+#export PYENV_ROOT=$XDG_DATA_HOME/pyenv
+#export PATH=$PYENV_ROOT/bin:$PATH
+#[ -f $PYENV_ROOT/bin/pyenv ] && \
+#    eval "$(pyenv init -)" && \
+#    eval "$(pyenv virtualenv-init -)"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/lianzn/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/lianzn/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/lianzn/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/lianzn/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
 # 手动指定 nvm 默认环境, 加快 zsh 启动速度
 export NVM_DIR="$HOME/.nvm"
