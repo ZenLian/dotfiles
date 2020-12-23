@@ -10,3 +10,5 @@ alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
 command -v exa > /dev/null && alias ls='exa'
+
+command -v trash > /dev/null && alias rm='trash'
