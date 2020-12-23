@@ -47,7 +47,8 @@ zinit light-mode lucid for \
     atload'source $ZDOTDIR/plug.conf/zsh-autosuggestions.zsh' zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
     skywind3000/z.lua \
-    load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
+    load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab \
+    esc/conda-zsh-completion
 
 zinit as="completion" for \
     mv"completions.zsh -> _exa" https://gitee.com/mirrors/exa/raw/master/completions/completions.zsh \

@@ -36,17 +36,19 @@ export FZF_TMUX_HEIGHT='80%'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/lianzn/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+CONDA_PATH="$HOME/.miniconda3"
+__conda_setup="$('${CONDA_PATH}/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/lianzn/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/lianzn/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "${CONDA_PATH}/etc/profile.d/conda.sh" ]; then
+        . "${CONDA_PATH}/etc/profile.d/conda.sh"
     else
-        export PATH="/home/lianzn/miniconda3/bin:$PATH"
+        export PATH="${CONDA_PATH}/bin:$PATH"
     fi
 fi
 unset __conda_setup
+unset CONDA_PATH
 # <<< conda initialize <<<
 
 # 手动指定 nvm 默认环境, 加快 zsh 启动速度
