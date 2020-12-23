@@ -28,26 +28,18 @@ zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node
 
 # OMZ
+OMZ="https://gitee.com/mirrors/oh-my-zsh/raw/master"
 zinit for \
-    OMZ::lib/theme-and-appearance.zsh \
-    OMZ::lib/completion.zsh \
-    OMZ::lib/compfix.zsh \
-    OMZ::lib/clipboard.zsh \
-    OMZ::lib/git.zsh \
-    OMZ::lib/directories.zsh \
-    OMZ::plugins/git/git.plugin.zsh \
-    OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
-    OMZ::plugins/systemd/systemd.plugin.zsh \
-    OMZ::plugins/sudo/sudo.plugin.zsh \
-
-unalias g
-
-# executable
-zinit wait"2" lucid as"null" from"gh-r" for \
-    mv"exa* -> exa" sbin  ogham/exa \
-    mv"fd* -> fd" sbin"fd/fd"  @sharkdp/fd \
-    sbin junegunn/fzf-bin \
-    sbin voidint/g
+    ${OMZ}/lib/theme-and-appearance.zsh \
+    ${OMZ}/lib/completion.zsh \
+    ${OMZ}/lib/compfix.zsh \
+    ${OMZ}/lib/clipboard.zsh \
+    ${OMZ}/lib/git.zsh \
+    ${OMZ}/lib/directories.zsh \
+    ${OMZ}/plugins/git/git.plugin.zsh \
+    ${OMZ}/plugins/colored-man-pages/colored-man-pages.plugin.zsh \
+    ${OMZ}/plugins/systemd/systemd.plugin.zsh \
+    ${OMZ}/plugins/sudo/sudo.plugin.zsh \
 
 # plugins
 zinit light-mode lucid for \
@@ -57,21 +49,10 @@ zinit light-mode lucid for \
     skywind3000/z.lua \
     load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
 
-# cheat.sh and its completions
-zinit lucid as"null" for \
-    mv":cht.sh -> cht.sh" sbin"cht.sh" https://cht.sh/:cht.sh
-zinit ice mv=":zsh -> _cht" as="completion"
-zinit snippet https://cheat.sh/:zsh
-
-# fzf utils
-# FIXME: fzf-tmux
-zinit lucid for \
-    https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh \
-    https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
-
 zinit as="completion" for \
-    https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fd/_fd \
-    https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg
+    mv"completions.zsh -> _exa" https://gitee.com/mirrors/exa/raw/master/completions/completions.zsh \
+    https://gitee.com/mirrors/fd/raw/master/contrib/completion/_fd \
+    https://gitee.com/mirrors/ripgrep/raw/master/complete/_rg
 
 # theme
 zinit ice depth=1 atload'!source $ZDOTDIR/plug.conf/p10k.zsh' lucid nocd

@@ -17,7 +17,7 @@ setopt share_history          # share command history data
 
 
 # fzf
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 local fzf_preview_cmd='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -200'
 export FZF_DEFAULT_OPTS="--bind=tab:down,btab:up,change:top,space:toggle --border"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
@@ -53,7 +53,7 @@ unset __conda_setup
 export NVM_DIR="$HOME/.nvm"
 export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
-export PATH=$HOME/.nvm/versions/node/v12.17.0/bin:$PATH
+export PATH=$HOME/.nvm/versions/node/v15.4.0/bin:$PATH
 
 # golang
 #export GOROOT=$HOME/.local/share/go1.14.3
