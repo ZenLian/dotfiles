@@ -23,10 +23,6 @@ source $ZDOTDIR/zinit/bin/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# annex
-zinit light-mode for \
-    zinit-zsh/z-a-bin-gem-node
-
 # OMZ
 OMZ="https://gitee.com/mirrors/oh-my-zsh/raw/master"
 zinit for \
@@ -47,8 +43,8 @@ zinit light-mode lucid for \
     atload'source $ZDOTDIR/plug.conf/zsh-autosuggestions.zsh' zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
     skywind3000/z.lua \
-    load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab \
-    esc/conda-zsh-completion
+    blockf esc/conda-zsh-completion \
+    load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
 
 zinit as="completion" for \
     mv"completions.zsh -> _exa" https://gitee.com/mirrors/exa/raw/master/completions/completions.zsh \
@@ -58,4 +54,6 @@ zinit as="completion" for \
 # theme
 zinit ice depth=1 atload'!source $ZDOTDIR/plug.conf/p10k.zsh' lucid nocd
 zinit light romkatv/powerlevel10k
+
+compinit
 
