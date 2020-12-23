@@ -45,7 +45,11 @@ zinit light-mode lucid for \
 zinit as="completion" for \
     mv"completions.zsh -> _exa" https://gitee.com/mirrors/exa/raw/master/completions/completions.zsh \
     https://gitee.com/mirrors/fd/raw/master/contrib/completion/_fd \
-    https://gitee.com/mirrors/ripgrep/raw/master/complete/_rg
+    https://gitee.com/mirrors/ripgrep/raw/master/complete/_rg \
+    mv"*zsh -> _cht" https://cht.sh/:zsh
+
+zinit ice pick"cht.sh" as"program"
+zinit snippet https://gitee.com/mirrorshub/cht.sh/raw/master/cht.sh
 
 # theme
 zinit ice depth=1 atload'!source $ZDOTDIR/plug.conf/p10k.zsh' lucid nocd
