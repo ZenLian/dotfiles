@@ -7,11 +7,6 @@ fi
 
 autoload -Uz zcalc zmv
 
-# custom
-for f in $ZDOTDIR/snippets/*.zsh; do
-    source $f
-done
-
 # zinit
 typeset -A ZINIT=(
     BIN_DIR         $ZDOTDIR/zinit/bin
@@ -44,8 +39,9 @@ zinit light-mode lucid for \
     blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
     skywind3000/z.lua \
     blockf esc/conda-zsh-completion \
-    load'' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
+    load'!command -v fzf >/dev/null' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
 
+# completions
 zinit as="completion" for \
     mv"completions.zsh -> _exa" https://gitee.com/mirrors/exa/raw/master/completions/completions.zsh \
     https://gitee.com/mirrors/fd/raw/master/contrib/completion/_fd \
@@ -54,6 +50,11 @@ zinit as="completion" for \
 # theme
 zinit ice depth=1 atload'!source $ZDOTDIR/plug.conf/p10k.zsh' lucid nocd
 zinit light romkatv/powerlevel10k
+
+# custom
+for f in $ZDOTDIR/snippets/*.zsh; do
+    source $f
+done
 
 compinit
 
