@@ -15,8 +15,6 @@ typeset -A ZINIT=(
 )
 
 source $ZDOTDIR/zinit/bin/zinit.zsh
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
 
 # OMZ
 OMZ="https://gitee.com/mirrors/oh-my-zsh/raw/master"
@@ -29,15 +27,14 @@ zinit for \
     ${OMZ}/lib/directories.zsh \
     ${OMZ}/plugins/git/git.plugin.zsh \
     ${OMZ}/plugins/colored-man-pages/colored-man-pages.plugin.zsh \
-    ${OMZ}/plugins/systemd/systemd.plugin.zsh \
     ${OMZ}/plugins/sudo/sudo.plugin.zsh \
 
 # plugins
-zinit light-mode lucid for \
+zinit light-mode for \
     zdharma/fast-syntax-highlighting \
     atload'source $ZDOTDIR/plug.conf/zsh-autosuggestions.zsh' zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
-    skywind3000/z.lua \
+    blockf atpull'zinit creinstall -q .' skywind3000/z.lua \
     blockf esc/conda-zsh-completion \
     load'!command -v fzf >/dev/null' atload'!source $ZDOTDIR/plug.conf/fzf-tab.zsh' Aloxaf/fzf-tab
 
