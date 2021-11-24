@@ -85,34 +85,34 @@ export FZF_TMUX_HEIGHT='80%'
 
 ## pyenv OR miniconda
 # pyenv: light, pip
-#export PYENV_ROOT=$XDG_DATA_HOME/pyenv
-#export PATH=$PYENV_ROOT/bin:$PATH
-#[ -f $PYENV_ROOT/bin/pyenv ] && \
-#    eval "$(pyenv init -)" && \
-#    eval "$(pyenv virtualenv-init -)"
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+[ -f $PYENV_ROOT/bin/pyenv ] && \
+    eval "$(pyenv init --path)" && \
+    eval "$(pyenv init -)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-CONDA_PATH="$HOME/.miniconda3"
-__conda_setup="$('${CONDA_PATH}/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "${CONDA_PATH}/etc/profile.d/conda.sh" ]; then
-        . "${CONDA_PATH}/etc/profile.d/conda.sh"
-    else
-        export PATH="${CONDA_PATH}/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-unset CONDA_PATH
+##CONDA_PATH="$HOME/.miniconda3"
+##__conda_setup="$('${CONDA_PATH}/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+##if [ $? -eq 0 ]; then
+##    eval "$__conda_setup"
+##else
+##    if [ -f "${CONDA_PATH}/etc/profile.d/conda.sh" ]; then
+##        . "${CONDA_PATH}/etc/profile.d/conda.sh"
+##    else
+##        export PATH="${CONDA_PATH}/bin:$PATH"
+##    fi
+##fi
+##unset __conda_setup
+##unset CONDA_PATH
 # <<< conda initialize <<<
 
 # 手动指定 nvm 默认环境, 加快 zsh 启动速度
 export NVM_DIR="$HOME/.nvm"
 export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
-export PATH=$HOME/.nvm/versions/node/v15.4.0/bin:$PATH
+export PATH=$HOME/.nvm/versions/node/v16.5.0/bin:$PATH
 
 ## golang
 export GOPATH=$HOME/.local/share/gopath

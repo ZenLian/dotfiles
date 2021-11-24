@@ -1,8 +1,4 @@
 [submodule "nvim"]
 	path = nvim/.config/nvim
-	url = git@gitee.com:ZenLian/nvim.git
-	branch = master
-[submodule "zinit"]
-	path = zsh/.config/zsh/zinit/bin
-	url = https://github.com/zdharma/zinit.git
-	branch = master
+	url = https://github.com/ZenLian/nvim.git
+	branch = lua
