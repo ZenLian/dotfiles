@@ -15,9 +15,25 @@ custom = '[[ ! -f $ZDOTDIR/plugins/{{ name }}.zsh ]] || source $ZDOTDIR/plugins/
 
 [plugins]
 
+[plugins.local]
+local = "~/.config/zsh/snippets"
+
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
 apply = ["source", "custom"]
+
+[plugins.oh-my-zsh]
+github = "ohmyzsh/ohmyzsh"
+use = [
+    "lib/completion.zsh",
+    "lib/commpfix.zsh",
+    "lib/clipboard.zsh",
+    "lib/git.zsh",
+    "lib/directories.zsh",
+    "plugins/git/git.plugin.zsh",
+    "plugins/colored-man-pages/colored-man-pages.plugin.zsh",
+    "plugins/sudo/sudo.plugin.zsh",
+    ]
 
 [plugins.fzf]
 github = "junegunn/fzf"
@@ -34,6 +50,9 @@ apply = ["custom", "source"]
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
 
 [plugins."z.lua"]
 github = "skywind3000/z.lua"

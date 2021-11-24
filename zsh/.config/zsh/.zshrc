@@ -31,4 +31,7 @@ export SHELDON_CONFIG_DIR=$XDG_CONFIG_HOME/sheldon
 export SHELDON_DATA_DIR=$XDG_DATA_HOME/sheldon
 export SHELDON_CLONE_DIR=$SHELDON_DATA_DIR/repos
 export SHELDON_DOWNLOAD_DIR=$SHELDON_DATA_DIR/downloads
+command -v sheldon &> /dev/null || \
+    (curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin)
 eval "$(sheldon source)"
