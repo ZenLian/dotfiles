@@ -15,8 +15,8 @@ custom = '[[ ! -f $ZDOTDIR/plugins/{{ name }}.zsh ]] || source $ZDOTDIR/plugins/
 
 [plugins]
 
-[plugins.local]
-local = "~/.config/zsh/snippets"
+[plugins.preinit]
+local = "~/.config/zsh/preinit"
 
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
@@ -25,6 +25,7 @@ apply = ["source", "custom"]
 [plugins.oh-my-zsh]
 github = "ohmyzsh/ohmyzsh"
 use = [
+    "lib/theme-and-appearance.zsh",
     "lib/completion.zsh",
     "lib/commpfix.zsh",
     "lib/clipboard.zsh",
@@ -56,3 +57,7 @@ github = "zsh-users/zsh-completions"
 
 [plugins."z.lua"]
 github = "skywind3000/z.lua"
+apply = ["custom", "source"]
+
+[plugins.postinit]
+local = "~/.config/zsh/postinit"
