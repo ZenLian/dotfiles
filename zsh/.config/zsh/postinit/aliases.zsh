@@ -22,5 +22,5 @@ command -v trash > /dev/null && alias rm='trash'
 
 command -v cht.sh > /dev/null && alias cht='cht.sh'
 
-command -v lazygit &> /dev/null && alias lg='lazygit'
+alias lg='lazygit'
 
