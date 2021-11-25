@@ -1,6 +1,6 @@
 #!/bin/bash
 
-list=(zsh git tmux nvim ranger npm conda)
+list=(zsh git tmux nvim ranger npm conda lazygit)
 
 for i in ${list[*]}; do
     #echo $i

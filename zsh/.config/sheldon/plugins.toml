@@ -52,6 +52,9 @@ apply = ["custom", "source"]
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
 
+#[plugins.fast-syntax-highlighting]
+#github = "zdharma/fast-syntax-highlighting"
+
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 
@@ -61,3 +64,4 @@ apply = ["custom", "source"]
 
 [plugins.postinit]
 local = "~/.config/zsh/postinit"
+

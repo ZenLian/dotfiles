@@ -17,7 +17,7 @@ zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=do
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
 # show file contents
-local fzf_preview_cmd='[[ -d ${(Q)realpath} ]] && ls -l --color=always ${(Q)realpath} ||
+local fzf_preview_cmd='[[ -d ${(Q)realpath} ]] && (exa -hl --git --color=always ${(Q)realpath} || ls -l --color=always ${(Q)realpath})||
     ( [[ $(file --mime ${(Q)realpath}) =~ binary ]] && echo ${(Q)realpath} is a binary file ||
       (bat ${(Q)realpath} || ccat --color=always ${(Q)realpath} || highlight -O ansi -l ${(Q)realpath} || cat ${(Q)realpath}) 2> /dev/null
     )'
