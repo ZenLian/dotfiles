@@ -1,4 +1,4 @@
 [submodule "nvim"]
 	path = nvim/.config/nvim
-	url = https://github.com/ZenLian/nvim.git
+	url = git@github.com:ZenLian/nvim.git
 	branch = lua
