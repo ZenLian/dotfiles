@@ -25,8 +25,6 @@ setopt share_history          # share command history data
 
 bindkey -e
 
-autoload -U compinit
-
 export SHELDON_CONFIG_DIR=$XDG_CONFIG_HOME/sheldon
 export SHELDON_DATA_DIR=$XDG_DATA_HOME/sheldon
 export SHELDON_CLONE_DIR=$SHELDON_DATA_DIR/repos
@@ -35,3 +33,21 @@ command -v sheldon &> /dev/null || \
     (curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin)
 eval "$(sheldon source)"
+
+autoload -U compinit
+compinit
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/zenil/.miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/zenil/.miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/zenil/.miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/zenil/.miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<

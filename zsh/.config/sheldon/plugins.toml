@@ -12,6 +12,7 @@
 
 [templates]
 custom = '[[ ! -f $ZDOTDIR/plugins/{{ name }}.zsh ]] || source $ZDOTDIR/plugins/{{ name }}.zsh'
+rename = '[[ -f {{ dir }}/{{ name }}.zsh ]] && cp {{ dir }}/{{ name }}.zsh {{ dir }}/_{{ name }}'
 
 [plugins]
 
@@ -61,6 +62,20 @@ github = "zsh-users/zsh-completions"
 [plugins."z.lua"]
 github = "skywind3000/z.lua"
 apply = ["custom", "source"]
+
+## extra completions
+[plugins.sheldon]
+remote = "https://github.com/rossmacarthur/sheldon/raw/trunk/completions/sheldon.zsh"
+apply = ["fpath", "rename"]
+
+[plugins.exa]
+remote = "https://github.com/ogham/exa/raw/master/completions/zsh/_exa"
+apply = ["fpath"]
+
+[plugins.fd]
+remote = "https://github.com/sharkdp/fd/raw/master/contrib/completion/_fd"
+apply = ["fpath"]
+##
 
 [plugins.postinit]
 local = "~/.config/zsh/postinit"
