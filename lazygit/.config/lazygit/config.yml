@@ -10,12 +10,8 @@ gui:
     optionsTextColor:
       - blue
     selectedLineBgColor:
-      - '#202122'
+      - default
       - bold
     selectedRangeBgColor:
       - blue
-  # theme:
-  #   selectedLineBgColor:
-  #     - default
-  #     - bold
 
