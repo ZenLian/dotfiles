@@ -10,7 +10,7 @@ gui:
     optionsTextColor:
       - blue
     selectedLineBgColor:
-      - default
+      - '#2b2d37'
       - bold
     selectedRangeBgColor:
       - blue
