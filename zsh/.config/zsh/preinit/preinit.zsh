@@ -23,7 +23,19 @@ export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 path=($HOME/.nvm/versions/node/v17.2.0/bin $path)
 
 ####################
+# rust
+####################
+path=($HOME/.cargo/bin $path)
+
+####################
+# luarocks
+####################
+path=($HOME/.luarocks/bin $path)
+
+####################
 # mongodb
 ####################
 export MONGODB_ROOT=$HOME/.local/mongodb-5.0.5
 path=($MONGODB_ROOT/bin $path)
+
+
