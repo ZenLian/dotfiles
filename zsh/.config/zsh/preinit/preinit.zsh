@@ -5,12 +5,12 @@ typeset -U path
 export LANG=en_US.UTF-8
 
 ####################
-# go 
+# go/gvm
 ####################
-export GOPATH=$XDG_DATA_HOME/gopath
-export GOBIN=$GOPATH/bin
-
-path=($GOBIN $path)
+# export GOPATH=$XDG_DATA_HOME/gopath
+# export GOBIN=$GOPATH/bin
+# path=($GOBIN $path)
+eval "$(gvm 1.17.8)"
 
 
 ####################
