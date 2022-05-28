@@ -34,8 +34,12 @@ use = [
     "lib/directories.zsh",
     "plugins/git/git.plugin.zsh",
     "plugins/colored-man-pages/colored-man-pages.plugin.zsh",
-    "plugins/sudo/sudo.plugin.zsh",
+    # "plugins/sudo/sudo.plugin.zsh",
     ]
+
+[plugins.zsh-vi-mode]
+github = "jeffreytse/zsh-vi-mode"
+apply = ["custom", "source"]
 
 [plugins.fzf]
 github = "junegunn/fzf"
@@ -49,9 +53,6 @@ apply = ["source", "custom"]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
 apply = ["custom", "source"]
-
-# [plugins.zsh-syntax-highlighting]
-# github = "zsh-users/zsh-syntax-highlighting"
 
 [plugins.fast-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"

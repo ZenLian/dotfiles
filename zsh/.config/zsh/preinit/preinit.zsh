@@ -38,4 +38,8 @@ path=($HOME/.luarocks/bin $path)
 export MONGODB_ROOT=$HOME/.local/mongodb-5.0.5
 path=($MONGODB_ROOT/bin $path)
 
+####################
+# thefuck
+####################
+command -v thefuck &> /dev/null && eval $(thefuck --alias)
 
