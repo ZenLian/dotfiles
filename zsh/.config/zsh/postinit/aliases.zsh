@@ -18,6 +18,8 @@ command -v exa > /dev/null &&\
     alias lta='exa -Ta' &&\
     alias llta='exa -lTa'
 
+command -v batcat &> /dev/null && alias bat='batcat'
+
 command -v trash > /dev/null && alias rm='trash'
 
 command -v cht.sh > /dev/null && alias cht='cht.sh'
