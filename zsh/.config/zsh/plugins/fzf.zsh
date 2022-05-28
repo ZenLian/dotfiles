@@ -2,7 +2,7 @@
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 local fzf_preview_cmd='[[ -d {} ]] && ls -l --color=always {} ||
     ( [[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||
-      (bat {} || ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null
+      ( batcat --color=always --style=numbers --line-range=:500 {} || ccat --color=always {} || highlight -O ansi -l {} || cat {} ) 2> /dev/null
     )'
 export FZF_DEFAULT_OPTS="--bind=tab:down,btab:up,change:top,space:toggle"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
