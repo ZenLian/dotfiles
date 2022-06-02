@@ -45,9 +45,9 @@ apply = ["custom", "source"]
 github = "junegunn/fzf"
 apply = ["custom"]
 
-[plugins.fzf-tab]
-github = "Aloxaf/fzf-tab"
-apply = ["source", "custom"]
+# [plugins.fzf-tab]
+# github = "Aloxaf/fzf-tab"
+# apply = ["source", "custom"]
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
@@ -65,17 +65,17 @@ github = "skywind3000/z.lua"
 apply = ["custom", "source"]
 
 ## extra completions
-[plugins.sheldon]
-remote = "https://github.com/rossmacarthur/sheldon/raw/trunk/completions/sheldon.zsh"
-apply = ["fpath", "rename"]
-
-[plugins.exa]
-remote = "https://github.com/ogham/exa/raw/master/completions/zsh/_exa"
-apply = ["fpath"]
-
-[plugins.fd]
-remote = "https://github.com/sharkdp/fd/raw/master/contrib/completion/_fd"
-apply = ["fpath"]
+#[plugins.sheldon]
+#remote = "https://github.com/rossmacarthur/sheldon/raw/trunk/completions/sheldon.zsh"
+#apply = ["fpath", "rename"]
+#
+#[plugins.exa]
+#remote = "https://github.com/ogham/exa/raw/master/completions/zsh/_exa"
+#apply = ["fpath"]
+#
+#[plugins.fd]
+#remote = "https://github.com/sharkdp/fd/raw/master/contrib/completion/_fd"
+#apply = ["fpath"]
 ##
 
 [plugins.postinit]

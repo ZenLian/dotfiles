@@ -10,8 +10,7 @@ export LANG=en_US.UTF-8
 # export GOPATH=$XDG_DATA_HOME/gopath
 # export GOBIN=$GOPATH/bin
 # path=($GOBIN $path)
-eval "$(gvm 1.17.8)"
-
+command -v gvm &> /dev/null && eval "$(gvm 1.17.8)"
 
 ####################
 # nodejs
