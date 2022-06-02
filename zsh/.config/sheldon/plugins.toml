@@ -42,12 +42,14 @@ github = "jeffreytse/zsh-vi-mode"
 apply = ["custom", "source"]
 
 [plugins.fzf]
-github = "junegunn/fzf"
-apply = ["custom"]
+# github = "junegunn/fzf"
+# apply = ["custom"]
+local = "/usr/share/fzf"
+apply = ["custom", "source"]
 
-# [plugins.fzf-tab]
-# github = "Aloxaf/fzf-tab"
-# apply = ["source", "custom"]
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+apply = ["source", "custom"]
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
