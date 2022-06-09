@@ -21,10 +21,12 @@ local = "~/.config/zsh/preinit"
 
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
+# proto = "ssh"
 apply = ["source", "custom"]
 
 [plugins.oh-my-zsh]
 github = "ohmyzsh/ohmyzsh"
+# proto = "ssh"
 use = [
     "lib/theme-and-appearance.zsh",
     "lib/completion.zsh",
@@ -39,31 +41,39 @@ use = [
 
 [plugins.zsh-vi-mode]
 github = "jeffreytse/zsh-vi-mode"
+# proto = "ssh"
 apply = ["custom", "source"]
 
 [plugins.fzf]
 # github = "junegunn/fzf"
+# proto = "ssh"
 # apply = ["custom"]
 local = "/usr/share/fzf"
+use = ["*.zsh"]
 apply = ["custom", "source"]
 
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
+# proto = "ssh"
 apply = ["source", "custom"]
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
+# proto = "ssh"
 use = ["{{ name }}.zsh"]
 apply = ["custom", "source"]
 
 [plugins.fast-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"
+# proto = "ssh"
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
+# proto = "ssh"
 
 [plugins."z.lua"]
 github = "skywind3000/z.lua"
+# proto = "ssh"
 apply = ["custom", "source"]
 
 ## extra completions
@@ -82,4 +92,5 @@ apply = ["custom", "source"]
 
 [plugins.postinit]
 local = "~/.config/zsh/postinit"
+use = ["*.zsh"]
 

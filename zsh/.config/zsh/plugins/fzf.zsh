@@ -1,6 +1,6 @@
-local fzf_preview_cmd='[[ -d {} ]] && ls -l --color=always {} ||
+local fzf_preview_cmd='[[ -d {} ]] && (exa -hl --git --color=always {} || ls -l --color=always {}) ||
     ( [[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||
-      ( batcat --color=always --style=numbers --line-range=:500 {} || ccat --color=always {} || highlight -O ansi -l {} || cat {} ) 2> /dev/null
+      ( bat --color=always --style=numbers --line-range=:500 {} || ccat --color=always {} || highlight -O ansi -l {} || cat {} ) 2> /dev/null
     )'
 export FZF_DEFAULT_OPTS="--bind=tab:down,btab:up,change:top,space:toggle"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'

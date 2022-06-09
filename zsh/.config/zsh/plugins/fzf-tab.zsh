@@ -19,7 +19,7 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl
 # show file contents
 local fzf_preview_cmd='[[ -d ${(Q)realpath} ]] && (exa -hl --git --color=always ${(Q)realpath} || ls -l --color=always ${(Q)realpath}) 2> /dev/null ||
     ( [[ $(file --mime ${(Q)realpath}) =~ binary ]] && echo ${(Q)realpath} is a binary file ||
-      (batcat --color=always --style=numbers --line-range=:500 ${(Q)realpath} || ccat --color=always ${(Q)realpath} || highlight -O ansi -l ${(Q)realpath} || cat ${(Q)realpath}) 2> /dev/null
+      (bat --color=always --style=numbers --line-range=:500 ${(Q)realpath} || ccat --color=always ${(Q)realpath} || highlight -O ansi -l ${(Q)realpath} || cat ${(Q)realpath}) 2> /dev/null
     )'
 zstyle ':fzf-tab:complete:*:*' fzf-preview $fzf_preview_cmd
 # export LESSOPEN='|'$ZDOTDIR'/plugins/.lessfilter %s'
