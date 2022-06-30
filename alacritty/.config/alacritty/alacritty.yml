@@ -120,7 +120,7 @@ font:
     family: CaskaydiaCove Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
+    style: Book
 
   # Bold font face
   #bold:
@@ -445,7 +445,8 @@ color_schemes:
 
     # Default colors
     primary:
-      background: '#1E1E2E' # base
+      #background: '#1E1E2E' # base
+      background: '#11111b' # crust
       foreground: '#CDD6F4' # text
       # Bright and dim foreground colors
       dim_foreground: '#CDD6F4' # text
