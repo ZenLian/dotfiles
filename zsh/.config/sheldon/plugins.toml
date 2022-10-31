@@ -71,15 +71,6 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 github = "zsh-users/zsh-completions"
 # proto = "ssh"
 
-[plugins."z.lua"]
-github = "skywind3000/z.lua"
-# proto = "ssh"
-apply = ["custom", "source"]
-
-## extra completions
-#[plugins.sheldon]
-#remote = "https://github.com/rossmacarthur/sheldon/raw/trunk/completions/sheldon.zsh"
-#apply = ["fpath", "rename"]
 #
 #[plugins.exa]
 #remote = "https://github.com/ogham/exa/raw/master/completions/zsh/_exa"
