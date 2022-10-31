@@ -11,6 +11,8 @@ do_alias ()
 do_alias cat bat batcat
 do_alias rm trash
 do_alias vim nvim
+do_alias vi nvim vim
+do_alias ra ranger lf
 
 if command -v exa &> /dev/null; then
     alias ls='exa'
@@ -22,8 +24,6 @@ if command -v exa &> /dev/null; then
     alias lta='exa -Ta'
     alias llta='exa -lTa'
 fi
-
-alias ra='ranger'
 
 alias ta='tmux attach -t'
 alias tad='tmux attach -d -t'
