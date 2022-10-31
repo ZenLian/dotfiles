@@ -50,7 +50,6 @@ cmd open ${{
     esac
 }}
 
-
 # define a custom 'rename' command without prompt for overwrite
 # cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
 # map r push :rename<space>
@@ -61,7 +60,7 @@ cmd open ${{
 # move current file or selected files to trash folder
 # (also see 'man mv' for backup/overwrite options)
 # cmd trash %set -f; mv $fx ~/.trash
-cmd trash %set -f; trash $fx
+cmd trash %trash-put $fx
 
 # define a custom 'delete' command
 # cmd delete ${{
