@@ -21,12 +21,10 @@ local = "~/.config/zsh/preinit"
 
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
-# proto = "ssh"
 apply = ["source", "custom"]
 
 [plugins.oh-my-zsh]
 github = "ohmyzsh/ohmyzsh"
-# proto = "ssh"
 use = [
     "lib/theme-and-appearance.zsh",
     "lib/completion.zsh",
@@ -41,12 +39,10 @@ use = [
 
 [plugins.zsh-vi-mode]
 github = "jeffreytse/zsh-vi-mode"
-# proto = "ssh"
 apply = ["custom", "source"]
 
 [plugins.fzf]
 # github = "junegunn/fzf"
-# proto = "ssh"
 # apply = ["custom"]
 local = "/usr/share/fzf"
 use = ["*.zsh"]
@@ -54,18 +50,15 @@ apply = ["custom", "source"]
 
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
-# proto = "ssh"
 apply = ["source", "custom"]
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
-# proto = "ssh"
 use = ["{{ name }}.zsh"]
 apply = ["custom", "source"]
 
 [plugins.fast-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"
-# proto = "ssh"
 
 [plugins.zsh-history-substring-search]
 github = "zsh-users/zsh-history-substring-search"
@@ -73,17 +66,6 @@ apply = ["source", "custom"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
-# proto = "ssh"
-
-#
-#[plugins.exa]
-#remote = "https://github.com/ogham/exa/raw/master/completions/zsh/_exa"
-#apply = ["fpath"]
-#
-#[plugins.fd]
-#remote = "https://github.com/sharkdp/fd/raw/master/contrib/completion/_fd"
-#apply = ["fpath"]
-##
 
 [plugins.postinit]
 local = "~/.config/zsh/postinit"
