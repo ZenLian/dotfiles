@@ -12,6 +12,7 @@ do_alias cat bat batcat
 do_alias rm trash
 do_alias vim nvim
 do_alias vi nvim vim
+do_alias v nvim vim
 do_alias ra ranger lf
 
 if command -v exa &> /dev/null; then

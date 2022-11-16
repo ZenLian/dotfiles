@@ -5,7 +5,7 @@ if [[ -n "$1" ]]; then
 else
     # list=(zsh git tmux nvim ranger npm conda lazygit luarocks asdf pip)
     # all=${list[*]}
-    all="zsh git tmux nvim lf npm conda lazygit luarocks asdf pip alacritty awesome rofi"
+    all="zsh alacritty tmux nvim git bat lf npm conda lazygit luarocks asdf pip awesome rofi"
 fi
 
 for i in $all; do
