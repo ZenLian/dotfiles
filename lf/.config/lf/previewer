@@ -1,12 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-case "$1" in
+file=$1
+w=$(($2 - 1))
+h=$(($3 - 1))
+x=$4
+y=$(($5 + 1))
+
+case "$file" in
     # *.tar*) tar tf "$1";;
     # *.zip) unzip -l "$1";;
     # *.rar) unrar l "$1";;
     # *.7z) 7z l "$1";;
-    *.tar*|*.tgz|*.zip|*.rar|*.7z) lsar "$1";;
+    *.tar*|*.tgz|*.zip|*.rar|*.7z) lsar "$file";;
+    *.[1-8]) man "$file" | col -b ;;
+    *.o) nm "$file" | less ;;
+    *.md) glow -s dark "$file" ;;
     # *.pdf) pdftotext "$1" -;;
-    *) bat --line-range=:500 "$1" || true;;
+    *.bmp|*.jpg|*.jpeg|*.png|*.xpm) viu -s -h $h -w $w $file ;;
+    *) bat --color=always --style=numbers,changes --line-range=:$h $file ;;
 esac
 

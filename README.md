@@ -2,26 +2,39 @@
 
 ## Prerequisites
 
+Distribution: Arch Linux
+
 - zsh
-- [sheldon](https://github.com/rossmacarthur/sheldon)
-- tmux
-- neovim(v0.8+)
-- alacrity
-- ripgrep
-- [fzf](https://github.com/junegunn/fzf)
+- [sheldon](https://github.com/rossmacarthur/sheldon): zsh plugin manager
+- alacrity: terminal
+- tmux: terminal multiplexer
+- [neovim](https://github.com/neovim/neovim): editor
+- [fzf](https://github.com/junegunn/fzf): fuzzy finder
 
 ```bash
-pacman -S zsh sheldon tmux neovim alacritty ripgrep fzf
+pacman -S zsh sheldon tmux neovim alacritty fzf
 ```
 
 Optional tools:
 
-- lf(~~ranger~~)
+- ripgrep: grep alternative
+- lf: terminal file manager
+- bat: cat alternative
+- fd: find alternative
 - [lazygit](https://github.com/jesseduffield/lazygit)
-- asdf
 
 ```bash
-pacman -S lf lazygit asdf
+pacman -S ripgrep lf bat fd lazygit
+```
+
+Other utilities:
+
+- asdf: unified version manager
+- viu: terminal image viewer
+- glow: terminal markdown viewer
+
+```shell
+yay -S asdf-vm
 ```
 
 ## Installation

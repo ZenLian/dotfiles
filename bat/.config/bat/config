@@ -10,7 +10,7 @@
 # terminal emulators (like tmux, by default):
 --italic-text=always
 --color=always
---style=default
+#--style=default
 
 # Uncomment the following line to disable automatic paging:
 #--paging=never
