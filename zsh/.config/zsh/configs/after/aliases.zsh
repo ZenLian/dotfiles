@@ -103,7 +103,8 @@ alias gdw='git diff --word-diff'
 
 # alias glg=
 alias glp='git log --stat'
-alias glg="git log --color --graph --pretty='%Cred%h%Creset%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glg="git log --color --graph --pretty='%C(auto)%h%d%Creset %s %Cgreen(%cr)'"
+alias gll="git log --color --graph --pretty='%C(auto)%h%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset'"
 alias gl1='git log --oneline --decorate --graph'
 
 alias gm='git merge'
