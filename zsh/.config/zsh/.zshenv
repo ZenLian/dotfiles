@@ -1,3 +1,9 @@
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -7,7 +13,7 @@ export EDITOR='nvim'
 export LANG=en_US.UTF-8
 
 # typeset -U path
-path=($HOME/.local/bin $path)
+path+=($HOME/.local/bin)
 
 ####################
 # go/gvm
@@ -15,7 +21,7 @@ path=($HOME/.local/bin $path)
 export GOPATH=$XDG_DATA_HOME/gopath
 export GOBIN=$GOPATH/bin
 export GOPROXY=https://goproxy.cn
-path=($GOBIN $path)
+path+=($GOBIN)
 # command -v gvm &> /dev/null && eval "$(gvm 1.17.8)"
 
 ####################
@@ -30,12 +36,12 @@ export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 ####################
 # rust
 ####################
-path=($HOME/.cargo/bin $path)
+path+=($HOME/.cargo/bin)
 
 ####################
 # luarocks
 ####################
-path=($HOME/.luarocks/bin $path)
+path+=($HOME/.luarocks/bin)
 
 ####################
 # mongodb

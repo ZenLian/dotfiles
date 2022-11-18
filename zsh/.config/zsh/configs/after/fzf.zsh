@@ -8,4 +8,7 @@ export FZF_CTRL_T_OPTS='--preview="'$fzf_preview_cmd'"'
 export FZF_COMPLETION_TRIGGER='\'
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT='80%'
+
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
