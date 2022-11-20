@@ -14,9 +14,9 @@ zsh-defer plug "zdharma-continuum/fast-syntax-highlighting"
 zsh-defer plug "zsh-users/zsh-history-substring-search"
 zsh-defer plug "zsh-users/zsh-completions"
 
-source_after() {
+source-after() {
     for cfg in $ZDOTDIR/configs/after/*.zsh; do
         source $cfg
     done
 }
-zsh-defer source_after
+zsh-defer -c 'source-after && unset -f source-after'
