@@ -5,16 +5,18 @@ for cfg in $ZDOTDIR/configs/before/*.zsh; do
     source $cfg
 done
 
-# TODO: plug "zsh-defer" or "zsh-async"
+plug "romkatv/zsh-defer"
 plug "romkatv/powerlevel10k"
 plug "jeffreytse/zsh-vi-mode"
-plug "Aloxaf/fzf-tab"
-plug "zsh-users/zsh-autosuggestions"
-plug "zdharma-continuum/fast-syntax-highlighting"
-plug "zsh-users/zsh-history-substring-search"
-plug "zsh-users/zsh-completions"
+zsh-defer plug "Aloxaf/fzf-tab"
+zsh-defer plug "zsh-users/zsh-autosuggestions"
+zsh-defer plug "zdharma-continuum/fast-syntax-highlighting"
+zsh-defer plug "zsh-users/zsh-history-substring-search"
+zsh-defer plug "zsh-users/zsh-completions"
 
-for cfg in $ZDOTDIR/configs/after/*.zsh; do
-    source $cfg
-done
-
+source_after() {
+    for cfg in $ZDOTDIR/configs/after/*.zsh; do
+        source $cfg
+    done
+}
+zsh-defer source_after
