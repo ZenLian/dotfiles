@@ -8,12 +8,13 @@ export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # export TERM=xterm-256color
-export TERM_ITALICS=true
-export EDITOR='nvim'
-export LANG=en_US.UTF-8
+# export COLORTERM='truecolor'
+# export TERM_ITALICS=true
 
-# typeset -U path
-path+=($HOME/.local/bin)
+export EDITOR='nvim'
+export OPENER='xdg-open'
+
+path+=($HOME/.local/bin $ZDOTDIR/bin)
 
 ####################
 # go/gvm

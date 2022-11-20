@@ -1,9 +1,21 @@
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
+
 # conda_zsh_completion
 # zstyle ':completion::complete:*' use-cache 1
 # zstyle ":conda_zsh_completion:*" use-groups true
 
 # use input as query string when completing zlua
 zstyle ':fzf-tab:complete:_zlua:*' query-string input
+# zstyle ':fzf-tab:complete:_zoxide:*' query-string input
 
 # ref: https://github.com/Aloxaf/fzf-tab/wiki/Preview
 
@@ -17,10 +29,11 @@ zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=do
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
 # show file contents
-local fzf_preview_cmd='[[ -d ${(Q)realpath} ]] && (exa -hl --git --color=always ${(Q)realpath} || ls -l --color=always ${(Q)realpath}) 2> /dev/null ||
-    ( [[ $(file --mime ${(Q)realpath}) =~ binary ]] && echo ${(Q)realpath} is a binary file ||
-      (bat --color=always --style=numbers --line-range=:500 ${(Q)realpath} || ccat --color=always ${(Q)realpath} || highlight -O ansi -l ${(Q)realpath} || cat ${(Q)realpath}) 2> /dev/null
-    )'
+# local fzf_preview_cmd='[[ -d ${(Q)realpath} ]] && (exa -hl --git --color=always ${(Q)realpath} || ls -l --color=always ${(Q)realpath}) 2> /dev/null ||
+#     ( [[ $(file --mime ${(Q)realpath}) =~ binary ]] && echo ${(Q)realpath} is a binary file ||
+#       (bat --color=always --style=numbers --line-range=:500 ${(Q)realpath} || ccat --color=always ${(Q)realpath} || highlight -O ansi -l ${(Q)realpath} || cat ${(Q)realpath}) 2> /dev/null
+#     )'
+local fzf_preview_cmd='preview ${(Q)realpath}'
 zstyle ':fzf-tab:complete:*:*' fzf-preview $fzf_preview_cmd
 # export LESSOPEN='|'$ZDOTDIR'/plugins/.lessfilter %s'
 

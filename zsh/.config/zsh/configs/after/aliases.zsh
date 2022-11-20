@@ -5,8 +5,8 @@ alias _='sudo'
 alias diff='diff --color'
 
 # ls/exa
-# if exists exa; then
-if command -v exa &> /dev/null; then
+if exists exa; then
+# if command -v exa &> /dev/null; then
     alias ls='exa'
     alias la='exa -a'
     alias l='exa -al'
