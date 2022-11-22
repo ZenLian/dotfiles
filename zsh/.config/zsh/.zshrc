@@ -1,4 +1,4 @@
-fpath=($ZDOTDIR/functions $fpath)
+fpath=($ZDOTDIR/functions $ZDOTDIR/completions $fpath)
 autoload -U $ZDOTDIR/functions/*(:t)
 
 for cfg in $ZDOTDIR/configs/before/*.zsh; do
