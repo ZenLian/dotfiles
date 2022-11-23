@@ -23,9 +23,12 @@ change:top,\
 space:toggle,\
 ?:toggle-preview,\
 ctrl-y:'execute-silent(printf {} | clipcopy)',\
+alt-k:preview-page-up,\
+alt-j:preview-page-down,\
 ctrl-a:select-all,\
 ctrl-s:toggle-sort,\
-ctrl-/:toggle-all"
+ctrl-/:toggle-all,\
+ctrl-z:ignore" # don't hung up
 # ctrl-x:toggle-sort"
 # ctrl-s:jump
 # ctrl-qsrty
@@ -58,7 +61,7 @@ export FZF_CTRL_T_OPTS="\
   --select-1 --exit-0\
   --bind='ctrl-o:execute-silent($OPENER {1})'"
 export FZF_COMPLETION_TRIGGER='\'
-export FZF_CTRL_R_OPTS="--preview='echo {}' --preview-window=down,3,wrap"
+export FZF_CTRL_R_OPTS="--preview='echo {2..-1}' --preview-window=down,hidden,3,wrap"
 export FZF_ALT_C_OPTS="--preview='$FZF_PREVIEW_DIR_CMD'"
 export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git/"
 export FZF_TMUX=1
@@ -72,12 +75,11 @@ export FZF_TMUX_HEIGHT='80%'
 # `A-c`: cd directory
 # ------------------------------------------
 # #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# source /usr/share/fzf/key-bindings.zsh
-# source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/completion.zsh
 
 # NOTE:
-# Stole from key-bindings.zsh, for writing my own scripts instead of using
-# builtin's
+# steal from key-bindings.zsh, for writing custom scripts
+# source /usr/share/fzf/key-bindings.zsh
 fzfcmd() {
     [ -n "${TMUX_PANE-}" ] && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "${FZF_TMUX_OPTS-}" ]; } &&
     echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
@@ -177,9 +179,9 @@ export FZF_FILE_OPTS=" \
     --height=${FZF_TMUX_HEIGHT:-40%} \
     --select-1 --exit-0"
 
-# CTRL-T - Paste the selected file path(s) into the command line
+# helper function to select files
 __fsel() {
-    local cmd="fd --type f --strip-cwd-prefix --hidden --exclude=.git/"
+    local cmd="fd --type f --hidden --exclude=.git/"
     local item
     eval "$cmd" | FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS-} ${FZF_FILE_OPTS-}" $(fzfcmd) -m "$@" \
         | while read item; do
@@ -190,6 +192,7 @@ __fsel() {
     return $ret
 }
 
+# CTRL-T - Paste the selected file path(s) into the command line
 fzf-file-widget() {
     LBUFFER="${LBUFFER}$(__fsel)"
     local ret=$?
@@ -208,48 +211,107 @@ fv() {
     files="$(__fsel \
         -q "$*" \
         --bind='ctrl-o:abort+execute-silent(for f in {+}; do $OPENER $f; done)')"
-    [[ -n "$files" ]] && eval "$EDITOR $files"
+    [[ -n "$files" ]] && "$EDITOR" ${=files} # `=` force word splitting
 }
 
 # ff [directory] - interactive searching file contents
 # -> https://github.com/junegunn/fzf/wiki/Examples#searching-file-contents
 ff() {
     [[ -n $1 ]] && cd $1 # go to provided folder
-    local RG_DEFAULT_COMMAND="rg -i -l --hidden --glob='!.git/*' " # --no-ignore-vcs"
-    local RG_MATCH_CMD="rg -i --context=0 --line-number -- {q} {}"
+    local RG_DEFAULT_COMMAND="rg -l --hidden --glob='!.git/*' " # --no-ignore-vcs"
+    local RG_MATCH_CMD="rg --context=0 --line-number -- {q} {}"
     # https://github.com/eth-p/bat-extras#batgrep
-    local batgrep='{
-        LR=(); LH=(); FOUND=0;
-        for text (${(f)"$(eval '"${RG_MATCH_CMD}"')"}) {
-            ((FOUND++))
-            line=${text%%:*};
-            line_start=$((line - 2));
-            line_end=$((line + 2));
-            (( line_start <= 0 )) && line_start=;
-            LR+=("--line-range=${line_start}:${line_end}")
-            LH+=("--highlight-line=${line}")
-        }
-        ((FOUND > 0)) && bat --color=always "${LR[@]}" "${LH[@]}" --paging=never {};
-    }'
+    local batgrep='{ \
+            LR=(); LH=(); FOUND=0; \
+            for text (${(f)"$(eval '"${RG_MATCH_CMD}"')"}) { \
+                (( FOUND++ )); \
+                line=${text%%:*}; \
+                line_start=$((line - 2)); \
+                line_end=$((line + 2)); \
+                (( line_start <= 0 )) && line_start=; \
+                LR+=("--line-range=${line_start}:${line_end}"); \
+                LH+=("--highlight-line=${line}"); \
+            }; \
+            ((FOUND > 0)) && bat --color=always "${LR[@]}" "${LH[@]}" --paging=never {}; \
+        }'
 
     local selected=$(
         FZF_DEFAULT_COMMAND="rg --files --hidden -i" \
             FZF_DEFAULT_OPTS=" \
-            -m \
-            -e \
-            --ansi \
-            --disabled \
             --reverse \
             ${FZF_DEFAULT_OPTS-}" \
             $(fzfcmd) \
-            --bind "change:+reload($RG_DEFAULT_COMMAND {q} || true)" \
-            --bind "change:+change-preview:(${batgrep})" \
+            -m \
+            --exact \
+            --ansi \
+            --disabled \
+            --bind "change:+reload($RG_DEFAULT_COMMAND {q} || true)+change-preview:($batgrep)" \
+            --preview 'bat --color=always --style=numbers --line-range=:$FZF_PREVIEW_LINES {}' \
         )
-    #
-    # | cut -d":" -f1,2
-    # --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2
 
-    [[ -n $selected ]] && $EDITOR $selected # open multiple files in editor
+    [[ -n $selected ]] && $EDITOR ${=selected}
+}
+
+# ------------------------------------------
+# History
+# CTRL-R - Paste the selected command from history into the command line
+# ------------------------------------------
+fzf-history-widget() {
+    local selected num key
+    setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
+    # awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' |
+    selected=($( \
+                fc -rl 1 | \
+                FZF_DEFAULT_OPTS=" \
+                --height ${FZF_TMUX_HEIGHT:-40%} \
+                ${FZF_DEFAULT_OPTS-} \
+                -n2..,.. \
+                --scheme=history \
+                --expect=ctrl-o \
+                --reverse \
+                ${FZF_CTRL_R_OPTS-} \
+                --query=${(qqq)LBUFFER} \
+                +m" \
+                $(fzfcmd)
+    ))
+    ret=$?
+    key=$selected[1]
+    num=$selected[2]
+    # <ENTER>
+    if [[ "$key" != ctrl-o ]]; then
+        num="$key"
+    fi
+    if [[ -n "$num" ]]; then
+        zle vi-fetch-history -n $num
+        if [[ "$key" == ctrl-o ]]; then
+            zle accept-line
+        fi
+    fi
+
+    zle reset-prompt
+    return $ret
+}
+zle     -N            fzf-history-widget
+bindkey -M emacs '^R' fzf-history-widget
+bindkey -M vicmd '^R' fzf-history-widget
+bindkey -M viins '^R' fzf-history-widget
+
+# ------------------------------------------
+# Process
+# ------------------------------------------
+# fkill - kill processes, list only the ones you can kill.
+fkill() {
+    local pid
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi
+
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi
 }
 
 # ------------------------------------------
@@ -261,26 +323,137 @@ ff() {
 #   * `A-c`: cht.sh
 #   * `A-m`: manpage
 #   * `A-t`: tldr
+# FIXME: press <Enter> always show manpages
 # ------------------------------------------
 fzf-man-widget() {
-    batman="man {1} | col -bx | bat --language=man --plain --color always --theme=\"Monokai Extended\""
+    batman='SEC={2} && man ${SEC[-2,2]} {1} | col -bx | bat --language=man --plain --color=always --theme="Monokai Extended"'
     man -k . | sort \
-        | awk -v cyan=$(tput setaf 6) -v blue=$(tput setaf 4) -v res=$(tput sgr0) -v bld=$(tput bold) '{ $1=cyan bld $1; $2=res blue;} 1' \
+        | awk \
+        -v cyan=$(tput setaf 6) \
+        -v yellow=$(tput setaf 4) \
+        -v blue=$(tput setaf 7) \
+        -v res=$(tput sgr0) \
+        -v bld=$(tput bold) \
+        '{ $1=cyan bld $1; $2=yellow $2; $3=res blue $3;} 1' \
         | fzf  \
-        -q "$1" \
+        -q "$BUFFER" \
         --ansi \
         --tiebreak=begin \
         --prompt=' Man > '  \
         --preview-window '50%,rounded,<50(up,85%,border-bottom)' \
         --preview "${batman}" \
-        --bind "enter:execute(man {1})" \
-        --bind "alt-c:+change-preview(cht.sh {1})+change-prompt(ﯽ Cheat > )" \
+        --bind "enter:execute(${batman})" \
+        --bind "alt-c:reload(cht.sh :list)+change-preview(cht.sh {1})+change-prompt(ﯽ Cheat > )" \
         --bind "alt-m:+change-preview(${batman})+change-prompt( Man > )" \
         --bind "alt-t:+change-preview(tldr --color=always {1})+change-prompt(ﳁ TLDR > )"
     zle reset-prompt
 }
-bindkey '^h' fzf-man-widget
+bindkey '^[h' fzf-man-widget
 zle -N fzf-man-widget
+
+# ------------------------------------------
+# pacman widget
+# https://github.com/junegunn/fzf/wiki/Examples#pacman
+# - fpi: install
+# - fpu: remove
+# ------------------------------------------
+# Install packages using yay (change to pacman/AUR helper of your choice)
+fpi() {
+    yay -Slq | fzf -q "$1" -m --preview 'yay -Si {1}'| xargs -ro yay -S
+}
+# Remove installed packages (change to pacman/AUR helper of your choice)
+fpu() {
+    yay -Qq | fzf -q "$1" -m --preview 'yay -Qi {1}' | xargs -ro yay -Rns
+}
+# Helper function to integrate yay and fzf
+yzf() {
+    pos=$1
+    shift
+    sed "s/ /\t/g" |
+    fzf --nth=$pos --multi --history="${FZF_HISTDIR:-$XDG_CACHE_HOME/fzf}/history-yzf$pos" \
+        --preview-window=60%,border-left \
+        --ansi \
+        --bind="double-click:execute(xdg-open 'https://archlinux.org/packages/{$pos}'),alt-enter:execute(xdg-open 'https://aur.archlinux.org/packages?K={$pos}&SB=p&SO=d&PP=100')" \
+        "$@" | cut -f$pos | xargs
+}
+
+# Dev note: print -s adds a shell history entry
+
+# List installable packages into fzf and install selection
+yas() {
+    cache_dir="/tmp/yas-$USER"
+    test "$1" = "-y" && rm -rf "$cache_dir" && shift
+    mkdir -p "$cache_dir"
+    preview_cache="$cache_dir/preview_{2}"
+    list_cache="$cache_dir/list"
+    { test "$(cat "$list_cache$@" | wc -l)" -lt 50000 && rm "$list_cache$@"; } 2>/dev/null
+    pkg=$( (cat "$list_cache$@" 2>/dev/null || { pacman --color=always -Sl "$@"; yay --color=always -Sl aur "$@" } | sed 's/ [^ ]*unknown-version[^ ]*//' | tee "$list_cache$@") |
+    yzf 2 --tiebreak=index --preview="cat $preview_cache 2>/dev/null | grep -v 'Querying' | grep . || yay --color always -Si {2} | tee $preview_cache")
+    if test -n "$pkg"
+    then echo "Installing $pkg..."
+        cmd="yay -S $pkg"
+        print -s "$cmd"
+        eval "$cmd"
+        rehash
+    fi
+}
+# List installed packages into fzf and remove selection
+# Tip: use -e to list only explicitly installed packages
+yar() {
+    pkg=$(yay --color=always -Q "$@" | yzf 1 --tiebreak=length --preview="yay --color always -Qli {1}")
+    if test -n "$pkg"; then
+        echo "Removing $pkg..."
+        cmd="yay -R --cascade --recursive $pkg"
+        print -s "$cmd"
+        eval "$cmd"
+        rehash
+    fi
+}
+
+
+# ------------------------------------------
+# asdf
+# https://github.com/junegunn/fzf/wiki/Examples#asdf
+# ------------------------------------------
+# Install one or more versions of specified language
+# e.g. `fai rust` # => fzf multimode, tab to mark, enter to install
+# if no plugin is supplied (e.g. `fai<CR>`), fzf will list them for you
+# Mnemonic [V]ersion [M]anager [I]nstall
+fai() {
+    local lang=${1}
+
+    if [[ ! $lang ]]; then
+        lang=$(asdf plugin-list | fzf)
+    fi
+
+    if [[ $lang ]]; then
+        local versions=$(asdf list-all $lang | fzf --tac --no-sort --multi)
+        if [[ $versions ]]; then
+            for version in $(echo $versions);
+            do; asdf install $lang $version; done;
+        fi
+    fi
+}
+
+# Remove one or more versions of specified language
+# e.g. `fau rust` # => fzf multimode, tab to mark, enter to remove
+# if no plugin is supplied (e.g. `fau<CR>`), fzf will list them for you
+# Mnemonic [V]ersion [M]anager [C]lean
+fau() {
+    local lang=${1}
+
+    if [[ ! $lang ]]; then
+        lang=$(asdf plugin-list | fzf)
+    fi
+
+    if [[ $lang ]]; then
+        local versions=$(asdf list $lang | fzf -m)
+        if [[ $versions ]]; then
+            for version in $(echo $versions);
+            do; asdf uninstall $lang $version; done;
+        fi
+    fi
+}
 
 # ------------------------------------------
 # flatpak widget
@@ -354,62 +527,3 @@ fzf-flatpak-uninstall-widget() {
 }
 bindkey '^[f^[u' fzf-flatpak-uninstall-widget #alt-f + alt-u
 zle -N fzf-flatpak-uninstall-widget
-
-# ------------------------------------------
-# pacman widget
-# https://github.com/junegunn/fzf/wiki/Examples#pacman
-# - yi: install
-# - yr: remove
-# ------------------------------------------
-# Install packages using yay (change to pacman/AUR helper of your choice)
-yi() {
-    yay -Slq | fzf -q "$1" -m --preview 'yay -Si {1}'| xargs -ro yay -S
-}
-# Remove installed packages (change to pacman/AUR helper of your choice)
-yr() {
-    yay -Qq | fzf -q "$1" -m --preview 'yay -Qi {1}' | xargs -ro yay -Rns
-}
-# Helper function to integrate yay and fzf
-yzf() {
-    pos=$1
-    shift
-    sed "s/ /\t/g" |
-    fzf --nth=$pos --multi --history="${FZF_HISTDIR:-$XDG_CACHE_HOME/fzf}/history-yzf$pos" \
-        --preview-window=60%,border-left \
-        --bind="double-click:execute(xdg-open 'https://archlinux.org/packages/{$pos}'),alt-enter:execute(xdg-open 'https://aur.archlinux.org/packages?K={$pos}&SB=p&SO=d&PP=100')" \
-        "$@" | cut -f$pos | xargs
-}
-
-# Dev note: print -s adds a shell history entry
-
-# List installable packages into fzf and install selection
-yas() {
-    cache_dir="/tmp/yas-$USER"
-    test "$1" = "-y" && rm -rf "$cache_dir" && shift
-    mkdir -p "$cache_dir"
-    preview_cache="$cache_dir/preview_{2}"
-    list_cache="$cache_dir/list"
-    { test "$(cat "$list_cache$@" | wc -l)" -lt 50000 && rm "$list_cache$@"; } 2>/dev/null
-    pkg=$( (cat "$list_cache$@" 2>/dev/null || { pacman --color=always -Sl "$@"; yay --color=always -Sl aur "$@" } | sed 's/ [^ ]*unknown-version[^ ]*//' | tee "$list_cache$@") |
-    yzf 2 --tiebreak=index --preview="cat $preview_cache 2>/dev/null | grep -v 'Querying' | grep . || yay --color always -Si {2} | tee $preview_cache")
-    if test -n "$pkg"
-    then echo "Installing $pkg..."
-        cmd="yay -S $pkg"
-        print -s "$cmd"
-        eval "$cmd"
-        rehash
-    fi
-}
-# List installed packages into fzf and remove selection
-# Tip: use -e to list only explicitly installed packages
-yar() {
-    pkg=$(yay --color=always -Q "$@" | yzf 1 --tiebreak=length --preview="yay --color always -Qli {1}")
-    if test -n "$pkg"
-    then echo "Removing $pkg..."
-        cmd="yay -R --cascade --recursive $pkg"
-        print -s "$cmd"
-        eval "$cmd"
-    local key="$(head -1 <<< "${out[@]})"
-local files="$(head -1 <<< "${out[@]})"
-
-}

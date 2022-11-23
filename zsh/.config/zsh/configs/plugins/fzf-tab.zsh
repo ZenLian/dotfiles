@@ -1,42 +1,90 @@
+# References:
+# * https://github.com/Aloxaf/fzf-tab/wiki/Preview
+# * https://github.com/Freed-Wu/fzf-tab-source
+#
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# preview directory's content with exa when completing cd
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# set descriptions format to enable group support
+# zstyle ':completion:*:descriptions' format '[%d]'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:*' show-group brief
 
-# conda_zsh_completion
-# zstyle ':completion::complete:*' use-cache 1
-# zstyle ":conda_zsh_completion:*" use-groups true
+# ------------------------------------------
+# common preview
+# ------------------------------------------
+# https://github.com/Freed-Wu/fzf-tab-source/blob/main/sources/_complete.zsh
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'preview ${realpath#--*=}'
 
+# options
+zstyle ':fzf-tab:complete:*:options' fzf-preview 'echo $desc'
+zstyle ':fzf-tab:complete:*:options' fzf-flags --preview-window=down:3:hidden:wrap
+
+# environment variable
+zstyle ':fzf-tab:complete:((-parameter-|unset):|(export|typeset|declare|local):argument-rest)' \
+    fzf-preview 'echo ${(P)word}'
+zstyle ':fzf-tab:complete:((-parameter-|unset):|(export|typeset|declare|local):argument-rest)' \
+    fzf-flags --preview-window=wrap
+
+# =<TAB>
+zstyle ':fzf-tab:complete:(-equal-:|(\\|*/|)(sudo|proxychains):argument-1)' \
+    fzf-preview '[[ $group == "[external command]" ]] && preview =$word'
+
+# users
+# ~<TAB>
+zstyle ':fzf-tab:complete:-tilde-:' \
+    fzf-preview 'groups $word && id $word && w $word'
+
+# bindkey -M <TAB>
+zstyle ':fzf-tab:complete:(\\|)bindkey:option-M-1' fzf-preview \
+    '[[ $group == "keymap" ]] && {bindkey -M$word | bat --color=always -p -ltsv}'
+
+# ------------------------------------------
+# kill/ps
+# ------------------------------------------
+# give a preview of commandline arguments when completing `kill`
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
+    '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+
+# ------------------------------------------
+# systemctl
+# ------------------------------------------
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+
+# ------------------------------------------
+# git
+# TODO: custom git preview
+# ------------------------------------------
+zstyle ':fzf-tab:complete:git-*:*' fzf-preview
+# zstyle ':fzf-tab:complete:git*:*' fzf-flags --preview-window=hidden
+zstyle ':fzf-tab:complete:git:argument-1' fzf-preview 'echo $desc'
+
+# ------------------------------------------
+# zlua/zoxide
+# ------------------------------------------
 # use input as query string when completing zlua
 zstyle ':fzf-tab:complete:_zlua:*' query-string input
 # zstyle ':fzf-tab:complete:_zoxide:*' query-string input
 
-# ref: https://github.com/Aloxaf/fzf-tab/wiki/Preview
+# ------------------------------------------
+# flatpak
+# ------------------------------------------
+zstyle ':fzf-tab:complete:(\\|*/|)flatpak:' fzf-preview \
+    '[[ $group == "argument" ]] && flatpak $word --help'
+# 'flatpak $word --help | bat --color=always -plhelp'
 
-# give a preview of commandline arguments when completing `kill`
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
-zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
-  '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+# ------------------------------------------
+# docker
+# ------------------------------------------
+zstyle ':fzf-tab:complete:((\\|*/|)docker|docker-help):argument-1' fzf-preview \
+    'docker help $word | bat --color=always -plhelp'
 
-# systemctl
-zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
-
-# show file contents
-# local fzf_preview_cmd='[[ -d ${(Q)realpath} ]] && (exa -hl --git --color=always ${(Q)realpath} || ls -l --color=always ${(Q)realpath}) 2> /dev/null ||
-#     ( [[ $(file --mime ${(Q)realpath}) =~ binary ]] && echo ${(Q)realpath} is a binary file ||
-#       (bat --color=always --style=numbers --line-range=:500 ${(Q)realpath} || ccat --color=always ${(Q)realpath} || highlight -O ansi -l ${(Q)realpath} || cat ${(Q)realpath}) 2> /dev/null
-#     )'
-local fzf_preview_cmd='preview ${(Q)realpath}'
-zstyle ':fzf-tab:complete:*:*' fzf-preview $fzf_preview_cmd
-# export LESSOPEN='|'$ZDOTDIR'/plugins/.lessfilter %s'
-
-# environment variable
-zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
-	fzf-preview 'echo ${(P)word}'
+# ------------------------------------------
+# gcc
+# ------------------------------------------
+zstyle ':fzf-tab:complete:(\\|*/|):gcc:argument-rest' fzf-preview \
+    'gcc -o- -S $realpath | bat --color=always -plasm'
