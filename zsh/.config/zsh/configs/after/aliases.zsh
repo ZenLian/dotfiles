@@ -6,7 +6,7 @@ alias diff='diff --color'
 
 # ls/exa
 if exists exa; then
-# if command -v exa &> /dev/null; then
+    # if command -v exa &> /dev/null; then
     alias ls='exa'
     alias la='exa -a'
     alias l='exa -al'
@@ -69,8 +69,14 @@ alias rd=rmdir
 ##########################################
 # git
 ##########################################
-# alias g='git'
-alias g='cd "$(git rev-parse --show-toplevel || echo .)"'
+g() {
+    if [[ $# -eq 0 ]]; then
+        cd "$(git rev-parse --show-toplevel || echo .)"
+        return 0
+    fi
+    git "$@"
+    return $?
+}
 
 alias ga='git add'
 alias gaa='git add --all'
@@ -168,4 +174,3 @@ alias ts='tmux new-session -s'
 alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
-

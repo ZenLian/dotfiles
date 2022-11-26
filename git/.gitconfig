@@ -29,10 +29,11 @@
 	followTags = true
 [init]
 	defaultBranch = main
-[format]
-	pretty = format:%C(yellow)%h %Cblue%ai %Cgreen%<(10)%aN%Cred%d %Creset%s
+; [format]
+; 	pretty = format:%C(yellow)%h %Cblue%ai %Cgreen%<(10)%aN%Cred%d %Creset%s
 [alias]
-	lg = log --color --graph
+	lg = log --color --graph --format='%C(yellow)%h %Cblue%ai %Cgreen%<(10)%aN%Cred%d %Creset%s'
+	st = status -su
 	fuck = reset --hard HEAD
 	uncommit = reset --soft HEAD^
 ; [url "https://hub.fastgit.xyz/"]

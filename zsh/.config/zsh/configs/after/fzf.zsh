@@ -1,28 +1,33 @@
 # ------------------------------------------
+# custom environment variables
+# ------------------------------------------
+export FZF_DEFAULT_HEIGHT='40%'
+
+export FZF_COPY_CMD='clipcopy'
+export FZF_PREVIEW_CMD='preview {} $FZF_PREVIEW_LINES $FZF_PREVIEW_COLUMNS'
+export FZF_PREVIEW_DIR_CMD='exa -aT -L2 --icons {} | head -n $FZF_PREVIEW_LINES'
+
 # Default colors
 # https://github.com/catppuccin/fzf
-# ------------------------------------------
 # macchiato
-local fzf_default_colors="\
+export FZF_DEFAULT_COLOR="\
 bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796,\
 fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6,\
 marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
 # mocha
-# local fzf_default_colors="\
+# local FZF_DEFAULT_COLOR="\
     # bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,\
     # fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,\
     # marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
-# ------------------------------------------
 # Default key-bindings
-# ------------------------------------------
-local fzf_default_keybinds="\
+export FZF_DEFAULT_KEYBINDINGS="\
 tab:down,\
 btab:up,\
 change:top,\
 space:toggle,\
 ?:toggle-preview,\
-ctrl-y:'execute-silent(printf {} | clipcopy)',\
+ctrl-y:'execute-silent(echo -n {} | $FZF_COPY_CMD)',\
 alt-k:preview-page-up,\
 alt-j:preview-page-down,\
 ctrl-a:select-all,\
@@ -33,40 +38,31 @@ ctrl-z:ignore" # don't hung up
 # ctrl-s:jump
 # ctrl-qsrty
 
-# ------------------------------------------
-# Default commands
-# ------------------------------------------
+
 # list directories
 local fzf_dir_cmd="fd --type d --hidden --exclude .git/"
 # list files
 local fzf_file_cmd="fd --type f --strip-cwd-prefix --hidden --exclude=.git/"
-export FZF_PREVIEW_CMD='preview {} $FZF_PREVIEW_LINES $FZF_PREVIEW_COLUMNS'
-export FZF_PREVIEW_DIR_CMD='exa -aT -L2 --icons {} | head -n $FZF_PREVIEW_LINES'
 
 # ------------------------------------------
 # FZF_* environment variables
 # ------------------------------------------
 export FZF_DEFAULT_OPTS="\
-  --bind=${fzf_default_keybinds}\
+  --bind=${FZF_DEFAULT_KEYBINDINGS:-\'\'}\
   --preview-window=sharp\
   --prompt=' '\
   --pointer=\
   --marker=+\
-  --color=${fzf_default_colors}"
+  --color=${FZF_DEFAULT_COLOR}\
+  --height=${FZF_DEFAULT_HEIGHT:-40%}"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-export FZF_CTRL_T_COMMAND="fd --type f --strip-cwd-prefix --hidden --exclude=.git/"
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="\
-  --preview='$FZF_PREVIEW_CMD'\
-  --select-1 --exit-0\
-  --bind='ctrl-o:execute-silent($OPENER {1})'"
 export FZF_COMPLETION_TRIGGER='\'
-export FZF_CTRL_R_OPTS="--preview='echo {2..-1}' --preview-window=down,hidden,3,wrap"
 export FZF_ALT_C_OPTS="--preview='$FZF_PREVIEW_DIR_CMD'"
 export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git/"
-export FZF_TMUX=1
+export FZF_TMUX=0
 # export FZF_TMUX_OPTS='-p' # float window
-export FZF_TMUX_HEIGHT='80%'
+#export FZF_TMUX_HEIGHT='80%'
+
 
 # ------------------------------------------
 # builtin widgets
@@ -232,7 +228,7 @@ ff() {
                 LR+=("--line-range=${line_start}:${line_end}"); \
                 LH+=("--highlight-line=${line}"); \
             }; \
-            ((FOUND > 0)) && bat --color=always "${LR[@]}" "${LH[@]}" --paging=never {}; \
+            ((FOUND > 0)) && bat --color=always --style=numbers "${LR[@]}" "${LH[@]}" --paging=never {}; \
         }'
 
     local selected=$(
@@ -263,13 +259,12 @@ fzf-history-widget() {
     selected=($( \
                 fc -rl 1 | \
                 FZF_DEFAULT_OPTS=" \
-                --height ${FZF_TMUX_HEIGHT:-40%} \
                 ${FZF_DEFAULT_OPTS-} \
                 -n2..,.. \
                 --scheme=history \
                 --expect=ctrl-o \
-                --reverse \
-                ${FZF_CTRL_R_OPTS-} \
+                --preview='echo {2..-1}' \
+                --preview-window=down,hidden,3,wrap \
                 --query=${(qqq)LBUFFER} \
                 +m" \
                 $(fzfcmd)
@@ -313,6 +308,12 @@ fkill() {
         echo $pid | xargs kill -${1:-9}
     fi
 }
+
+# ------------------------------------------
+# Git
+# ------------------------------------------
+
+
 
 # ------------------------------------------
 # Man widget
