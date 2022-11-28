@@ -1,15 +1,25 @@
 #!/usr/bin/env bash
 
+usage() {
+    printf "\
+usage:
+  $0 [name]
+  $0 all
+"
+}
+
 if [[ -n "$1" ]]; then
-    all=$*
+    if [[ "$1" == "all" ]]; then
+        all="zsh alacritty tmux nvim git bat lf npm conda lazygit luarocks asdf pip awesome rofi"
+    else
+        all=$*
+    fi	
 else
-    # list=(zsh git tmux nvim ranger npm conda lazygit luarocks asdf pip)
-    # all=${list[*]}
-    all="zsh alacritty tmux nvim git bat lf npm conda lazygit luarocks asdf pip awesome rofi"
+    usage
+    exit 1
 fi
 
 for i in $all; do
-    # echo $i
     echo "installing: $i"
     stow -t $HOME $i || exit -1
 done

@@ -6,8 +6,8 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
+"Plug 'ludovicchabant/vim-gutentags'
+"Plug 'skywind3000/gutentags_plus'
 Plug 'tomasiser/vim-code-dark'
 call plug#end()
 

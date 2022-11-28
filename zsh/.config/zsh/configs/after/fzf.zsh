@@ -48,13 +48,16 @@ local fzf_file_cmd="fd --type f --strip-cwd-prefix --hidden --exclude=.git/"
 # FZF_* environment variables
 # ------------------------------------------
 export FZF_DEFAULT_OPTS="\
-  --bind=${FZF_DEFAULT_KEYBINDINGS:-\'\'}\
-  --preview-window=sharp\
-  --prompt=' '\
-  --pointer=\
-  --marker=+\
-  --color=${FZF_DEFAULT_COLOR}\
-  --height=${FZF_DEFAULT_HEIGHT:-40%}"
+  --bind=${FZF_DEFAULT_KEYBINDINGS}\
+  --preview-window=sharp \
+  --color=${FZF_DEFAULT_COLOR} \
+  --height=${FZF_DEFAULT_HEIGHT:-40%} \
+  --marker='+' \
+  --prompt='⌕ ' \
+  --pointer='>' "
+# --marker=+" \
+# --prompt=' ' \
+# --pointer= "
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_COMPLETION_TRIGGER='\'
 export FZF_ALT_C_OPTS="--preview='$FZF_PREVIEW_DIR_CMD'"
@@ -282,7 +285,7 @@ frm() {
     )
     [[ -n $selected ]] && trash ${=selected}
 }
-compdef rm=trash
+#compdef rm=trash
 
 # ------------------------------------------
 # History
@@ -291,16 +294,16 @@ compdef rm=trash
 fzf-history-widget() {
     local selected num key
     setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
-    # awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' |
+    # --scheme=history # not supported v0.30
     selected=($( \
                 fc -rl 1 | \
             FZF_DEFAULT_OPTS=" \
             ${FZF_DEFAULT_OPTS-} \
             -n2..,.. \
-            --scheme=history \
+            --tiebreak=index \
             --expect=ctrl-o \
             --preview='echo {2..-1}' \
-            --preview-window=down,hidden,3,wrap \
+            --preview-window='down,hidden,3,wrap' \
             --query=${(qqq)LBUFFER} \
             +m" \
             $(fzfcmd)
