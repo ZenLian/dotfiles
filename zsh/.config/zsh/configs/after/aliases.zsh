@@ -30,7 +30,7 @@ if exists nvim; then
 fi
 
 exists "bat" && alias cat=bat
-exists "trash" && alias rm=trash
+#exists "trash" && alias rm=trash
 alias ra=ranger
 alias cht='cht.sh'
 alias lg='lazygit'
@@ -77,6 +77,7 @@ g() {
     git "$@"
     return $?
 }
+compdef g=git
 
 alias ga='git add'
 alias gaa='git add --all'
@@ -149,7 +150,7 @@ alias grst='git restore --staged'
 
 alias gst='git status'
 alias gsb='git status -b'
-alias gss='git status -s'
+alias gss='git status -su'
 
 alias gsta='git stash push'
 alias gstA='git stash apply'
