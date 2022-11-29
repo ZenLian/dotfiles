@@ -51,13 +51,10 @@ export FZF_DEFAULT_OPTS="\
   --bind=${FZF_DEFAULT_KEYBINDINGS}\
   --preview-window=sharp \
   --color=${FZF_DEFAULT_COLOR} \
-  --height=${FZF_DEFAULT_HEIGHT:-40%} \
+  --height=${FZF_DEFAULT_HEIGHT:-80%} \
   --marker='+' \
   --prompt='⌕ ' \
   --pointer='>' "
-# --marker=+" \
-# --prompt=' ' \
-# --pointer= "
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_COMPLETION_TRIGGER='\'
 export FZF_ALT_C_OPTS="--preview='$FZF_PREVIEW_DIR_CMD'"

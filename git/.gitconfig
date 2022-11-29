@@ -15,7 +15,7 @@
 	navigate = true
 [delta]
 	features = line-numbers decorations
-	; side-by-side = true
+	side-by-side = true
 	syntax-theme = Visual Studio Dark+
 [delta "decorations"]
   commit-decoration-style = bold yellow box ul
