@@ -1,11 +1,24 @@
-# cd movement
-setopt auto_cd auto_pushd pushd_minus pushd_ignore_dups pushdsilent #cdable_vars
+# dirs
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_minus
+setopt pushd_ignore_dups
+setopt pushd_silent
+#setopt cdable_vars
 # DIRSTACKSIZE=10
 
-setopt interactivecomments # recognize comments
-setopt long_list_jobs
-
-# alias sudo='nocorrect sudo'
+## auto correction
 setopt correct
 # setopt correct_all
-setopt globdots # tab complete hidden files
+alias sudo='nocorrect sudo'
+alias man='nocorrect man'
+alias mkdir='nocorrect mkdir'
+
+# recognize comments
+setopt interactivecomments
+setopt long_list_jobs
+
+# tab complete hidden files
+setopt globdots
+
+setopt print_exit_value

@@ -23,16 +23,14 @@ else
     alias la='ls -lAh --color=auto'
 fi
 
-#if exists nvim; then
-#    alias vim=nvim
-#    alias vi=nvim
-#    alias v=nvim
-#else
-#    alias vi=vim
-#    alias v=vim
-#fi
-alias vi=vim
-alias v=vim
+if exists nvim; then
+    alias vim=nvim
+    alias vi=nvim
+    alias v=nvim
+else
+    alias vi=vim
+    alias v=vim
+fi
 
 exists "bat" && alias cat=bat
 #exists "trash" && alias rm=trash

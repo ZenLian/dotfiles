@@ -1,4 +1,4 @@
-HISTFILE=$ZSH_CACHE_DIR/history
+HISTFILE=${ZSH_CACHE_DIR-:$HOME/.cache/zsh}/history
 HISTSIZE=100000
 SAVEHIST=20000
 setopt extended_history       # record timestamp of command in HISTFILE

@@ -248,7 +248,7 @@ ff() {
 # rm: interactive delete files when used without argument
 rm() {
     if [[ $# -ne 0 ]]; then
-        trash "$*"
+        trash "$@"
         return
     fi
     local selected=$(
