@@ -5,3 +5,7 @@ zvm_config() {
     ZVM_VI_HIGHLIGHT_BACKGROUND=blue
     # ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLOCK
 }
+
+zvm_after_lazy_keybindings() {
+    bindkey -M viins '^F' forward-word
+}
