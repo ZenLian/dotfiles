@@ -1,5 +1,10 @@
+
+#
 # prepare
 [[ -d $ZSH_CACHE_DIR ]] || mkdir -p $ZSH_CACHE_DIR
+
+path+=($HOME/.local/bin $ZDOTDIR/bin)
+
 
 fpath=($ZDOTDIR/functions $ZDOTDIR/completions $fpath)
 autoload -U $ZDOTDIR/functions/*(:t)

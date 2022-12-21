@@ -23,7 +23,7 @@ shopt -s checkwinsize
 bind Space:magic-space
 
 # Turn on recursive globbing (enables ** to recurse all directories)
-shopt -s globstar 2> /dev/null                                                                                   
+shopt -s globstar 2> /dev/null
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
@@ -141,11 +141,11 @@ reset="\[\e[0m\]"
 # Others: ❯
 # TODO: git prompt
 bashrc::exit_color() {
-  if [[ $? == 0 ]]; then
-    printf '\e[32m'
-  else
-    printf '\e[31m'
-  fi
+    if [[ $? == 0 ]]; then
+        printf '\e[32m'
+    else
+        printf '\e[31m'
+    fi
 }
 hint='\[$(([[ $? == 0 ]] && printf "\e[32m") || printf "\e[31m")\]'
 # before command
@@ -164,24 +164,24 @@ mk () { mkdir -p -- "$*" ; cd -- "$*" || exit ; }
 
 # Extract most know archives with one command
 extract () {
-  if [ -f "$1" ] ; then
-    case "$1" in
-      *.tar.bz2)   tar xjf "$1"     ;;
-      *.tar.gz)    tar xzf "$1"     ;;
-      *.bz2)       bunzip2 "$1"     ;;
-      *.rar)       unrar e "$1"     ;;
-      *.gz)        gunzip "$1"      ;;
-      *.tar)       tar xf "$1"      ;;
-      *.tbz2)      tar xjf "$1"     ;;
-      *.tgz)       tar xzf "$1"     ;;
-      *.zip)       unzip "$1"       ;;
-      *.Z)         uncompress "$1"  ;;
-      *.7z)        7z x "$1"        ;;
-      *)     echo "'$1' cannot be extracted via extract()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
+    if [ -f "$1" ] ; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"     ;;
+            *.tar.gz)    tar xzf "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       unrar e "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xf "$1"      ;;
+            *.tbz2)      tar xjf "$1"     ;;
+            *.tgz)       tar xzf "$1"     ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *)     echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
 
 # }}}

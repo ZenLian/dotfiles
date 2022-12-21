@@ -209,6 +209,7 @@ fv() {
 
 # ff [directory] - interactive searching file contents
 # -> https://github.com/junegunn/fzf/wiki/Examples#searching-file-contents
+# TODO: open editor at first matched line
 ff() {
     [[ -n $1 ]] && cd $1 # go to provided folder
     local RG_DEFAULT_COMMAND="rg -l --hidden --glob='!.git/*' " # --no-ignore-vcs"
