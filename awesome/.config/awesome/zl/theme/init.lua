@@ -5,6 +5,7 @@ local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local gears = require("gears")
+local utils = require("zl.utils")
 local sys_themes_path = require("gears.filesystem").get_themes_dir()
 local theme_path = os.getenv("HOME") .. "/.config/awesome/zl/theme"
 
@@ -18,7 +19,7 @@ M.options = {
   taglist = {
     square = false,
   },
-  border_width = 5,
+  border_width = 4,
   border_radius = 10,
   gap = 5,
 }
@@ -37,7 +38,7 @@ function M.setup(opt)
   theme.icon_theme = "/usr/share/icons/breeze"
 
   -- base colors
-  theme.bg_normal = C.mantle
+  theme.bg_normal = C.crust
   theme.bg_focus = C.surface0
   theme.bg_urgent = C.base
   theme.bg_minimize = C.mantle
@@ -51,9 +52,10 @@ function M.setup(opt)
   -- {{{ gap/border/rounded
   theme.useless_gap = dpi(O.gap)
   theme.border_width = dpi(O.border_width)
-  theme.border_normal = theme.bg_normal
-  theme.border_focus = C.blue
-  theme.border_marked = C.mauve
+  theme.border_width_maximized = 0
+  theme.border_color_normal = C.base
+  theme.border_color_active = C.teal
+  theme.border_color_marked = C.mauve
   theme.border_radius = dpi(O.border_radius) -- not builtin
   -- }}}
 
@@ -196,13 +198,14 @@ function M.setup(opt)
   -- hotkyes popup {{{1
   ---------------------
   -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
-  -- theme.hotkeys_shape = helpers.rrect(theme.rounded)
+  theme.hotkeys_shape = utils.shape.rrect(theme.border_radius)
   theme.hotkeys_border_width = 0
+  -- theme.hotkeys_border_color = C.blue
   theme.hotkeys_font = O.font.family .. " 11"
   theme.hotkeys_group_margin = 30
   theme.hotkeys_label_bg = C.rosewater
   theme.hotkeys_label_fg = C.base
-  theme.hotkeys_description_font = O.font.family .. " 8"
+  theme.hotkeys_description_font = O.font.family .. " 11"
   theme.hotkeys_modifiers_fg = theme.fg_normal .. "33"
   theme.hotkeys_bg = C.base
 

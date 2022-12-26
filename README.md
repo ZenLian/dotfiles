@@ -4,15 +4,16 @@
 
 Distribution: Arch Linux
 
+- awesome-git
+- picom
 - zsh
-- [sheldon](https://github.com/rossmacarthur/sheldon): zsh plugin manager
 - alacrity: terminal
 - tmux: terminal multiplexer
 - [neovim](https://github.com/neovim/neovim): editor
 - [fzf](https://github.com/junegunn/fzf): fuzzy finder
 
 ```bash
-pacman -S zsh sheldon tmux neovim alacritty fzf
+pacman -S awesome-git picom-git zsh tmux neovim alacritty fzf
 ```
 
 Optional tools:
@@ -43,4 +44,10 @@ yay -S asdf-vm
 git clone --recursive git@github.com:ZenLian/dotfiles.git
 cd dotfiles
 ./install.sh
+```
+
+## Setup awesome
+
+```sh
+pacman -S awesome-git
 ```

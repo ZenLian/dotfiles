@@ -1,10 +1,11 @@
 local M = {}
 
 local gears = require("gears")
+local beautiful = require("beautiful")
 
 M.rrect = function(radius)
   return function(cr, width, height)
-    gears.shape.rounded_rect(cr, width, height, radius)
+    gears.shape.rounded_rect(cr, width, height, radius or beautiful.border_radius)
   end
 end
 

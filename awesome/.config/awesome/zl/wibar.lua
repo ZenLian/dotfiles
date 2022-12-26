@@ -3,6 +3,8 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 local modkey = require("zl").options.keys.modkey
 local utils = require("zl.utils")
+local lain = require("lain")
+local markup = lain.util.markup
 
 -- {{{ Wibar
 local spacer = wibox.widget.textbox(" ")
@@ -12,6 +14,26 @@ local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
 local mytextclock = wibox.widget.textclock()
+
+-- local cpu = lain.widget.cpu() --{
+-- timeout = 1,
+-- settings = function()
+--   widget:set_markup(markup.fontfg(beautiful.font, beautiful.yellow, " " .. cpu_now.usage .. "%"))
+-- end,
+-- }
+local cpu = lain.widget.cpu {
+  settings = function()
+    widget:set_markup(" " .. cpu_now.usage .. "%")
+  end,
+}
+
+local mem = lain.widget.mem {
+  timeout = 1,
+  settings = function()
+    -- widget:set_markup(markup.fontfg(beautiful.font, beautiful.blue, " " .. mem_now.perc .. "%"))
+    widget:set_markup(" " .. mem_now.perc .. "%")
+  end,
+}
 
 local taglist_buttons = {
   awful.button({}, 1, function(t)
@@ -60,68 +82,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
-  -- Create a taglist widget
-  -- s.mytaglist = awful.widget.taglist({
-  -- 	screen = s,
-  -- 	filter = awful.widget.taglist.filter.all,
-  -- 	buttons = {
-  -- 		awful.button({}, 1, function(t)
-  -- 			t:view_only()
-  -- 		end),
-  -- 		awful.button({ modkey }, 1, function(t)
-  -- 			if client.focus then
-  -- 				client.focus:move_to_tag(t)
-  -- 			end
-  -- 		end),
-  -- 		awful.button({}, 3, awful.tag.viewtoggle),
-  -- 		awful.button({ modkey }, 3, function(t)
-  -- 			if client.focus then
-  -- 				client.focus:toggle_tag(t)
-  -- 			end
-  -- 		end),
-  -- 		awful.button({}, 4, function(t)
-  -- 			awful.tag.viewprev(t.screen)
-  -- 		end),
-  -- 		awful.button({}, 5, function(t)
-  -- 			awful.tag.viewnext(t.screen)
-  -- 		end),
-  -- 	},
-  -- })
   s.mytaglist = awful.widget.taglist {
     screen = s,
     filter = awful.widget.taglist.filter.all,
-    -- style = {
-    -- 	shape = gears.shape.powerline,
-    -- },
-    -- layout = {
-    -- 	spacing = -12,
-    -- 	spacing_widget = {
-    -- 		-- color = "#dddddd",
-    -- 		shape = gears.shape.powerline,
-    -- 		widget = wibox.widget.separator,
-    -- 	},
-    -- 	layout = wibox.layout.fixed.horizontal,
-    -- },
-    -- layout = {
-    -- 	spacing = 8,
-    -- 	layout = wibox.layout.fixed.horizontal,
-    -- },
     widget_template = {
       {
         {
-          -- {
-          -- 	{
-          -- 		{
-          -- 			id = "index_role",
-          -- 			widget = wibox.widget.textbox,
-          -- 		},
-          -- 		-- margins = 4,
-          -- 		widget = wibox.container.margin,
-          -- 	},
-          -- 	-- bg = "#dddddd",
-          -- 	-- shape = gears.shape.circle,
-          -- 	widget = wibox.container.background,
-          -- },
           {
             {
               id = "icon_role",
@@ -211,38 +177,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
     {
       layout = wibox.layout.fixed.horizontal,
       spacer,
-      mykeyboardlayout,
+      cpu,
+      spacer,
+      mem,
       wibox.widget.systray(),
+      mykeyboardlayout,
       mytextclock,
       s.mylayoutbox,
     },
   }
-
-  -- s.mywibox = awful.wibar({
-  -- 	screen = s,
-  -- 	position = "top",
-  -- 	widget = {
-  -- 		layout = wibox.layout.align.horizontal,
-  -- 		-- Left widgets
-  -- 		{
-  -- 			layout = wibox.layout.fixed.horizontal,
-  -- 			s.mytaglist,
-  -- 			s.mypromptbox,
-  -- 			spacer,
-  -- 		},
-  -- 		-- Middle widget
-  -- 		s.mytasklist,
-  -- 		-- Right widgets
-  -- 		{
-  -- 			layout = wibox.layout.fixed.horizontal,
-  -- 			spacer,
-  -- 			mykeyboardlayout,
-  -- 			wibox.widget.systray(),
-  -- 			mytextclock,
-  -- 			s.mylayoutbox,
-  -- 		},
-  -- 	},
-  -- })
 end)
 
 -- }}}

@@ -2,18 +2,18 @@
 
 usage() {
     printf "\
-usage:
-  $0 [name]
-  $0 all
-"
+        usage:
+    $0 [name]
+    $0 all
+    "
 }
 
 if [[ -n "$1" ]]; then
     if [[ "$1" == "all" ]]; then
-        all="zsh alacritty tmux nvim git bat lf npm conda lazygit luarocks asdf pip awesome rofi"
+        all="awesome zsh alacritty tmux nvim git bat lf npm conda lazygit luarocks asdf pip"
     else
         all=$*
-    fi	
+    fi
 else
     usage
     exit 1
@@ -25,4 +25,3 @@ for i in $all; do
 done
 
 echo "Installation success!"
-

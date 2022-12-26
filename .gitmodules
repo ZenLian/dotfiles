@@ -27,3 +27,6 @@
 [submodule "zsh/.config/zsh/plugins/zsh-defer"]
 	path = zsh/.config/zsh/plugins/zsh-defer
 	url = https://github.com/romkatv/zsh-defer.git
+[submodule "awesome/.config/awesome/lain"]
+	path = awesome/.config/awesome/lain
+	url = https://github.com/lcpz/lain.git

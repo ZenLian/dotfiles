@@ -1,6 +1,8 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local ruled = require("ruled")
+local gears = require("gears")
+local utils = require("zl.utils")
 
 ruled.client.connect_signal("request::rules", function()
   -- Global
@@ -12,8 +14,9 @@ ruled.client.connect_signal("request::rules", function()
       raise = true,
       size_hints_honor = false,
       screen = awful.screen.preferred,
-      titlebars_enabled = true,
+      -- titlebars_enabled = true,
       placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
+      -- shape = utils.shape.rrect(),
     },
   }
 
