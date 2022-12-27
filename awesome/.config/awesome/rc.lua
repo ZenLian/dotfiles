@@ -1,14 +1,5 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
-
--- Standard awesome library
-local awful = require("awful")
-local beautiful = require("beautiful")
--- Notification library
 local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to

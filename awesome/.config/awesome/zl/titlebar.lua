@@ -2,7 +2,6 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local dpi = require("beautiful.xresources").apply_dpi
 
 local function create_button(args) --{color, action, c}
   -- the widget
@@ -75,6 +74,10 @@ client.connect_signal("request::titlebars", function(c)
 
   titlebar:setup {
     layout = wibox.layout.align.horizontal,
+    -- {
+    --   markup = string.format("%s | %s | %s", c.class, c.role, c.instance),
+    --   widget = wibox.widget.textbox,
+    -- },
     nil,
     {
       wibox.widget.textbox,

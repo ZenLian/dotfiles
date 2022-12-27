@@ -1,6 +1,6 @@
-configuration {
+/* configuration { */
 /*	modi: "window,run,ssh";*/
-  font: "mono 12";
+/*	font: "mono 12"; */
 /*	location: 0;*/
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
@@ -37,7 +37,7 @@ configuration {
 /*	tokenize: true;*/
 /*	m: "-5";*/
 /*	filter: ;*/
-  dpi: 192;
+/*	dpi: 192; */
 /*	threads: 0;*/
 /*	scroll-method: 0;*/
 /*	window-format: "{w}    {c}   {t}";*/
@@ -136,13 +136,34 @@ configuration {
 /*	me-select-entry: "MousePrimary";*/
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
-  timeout {
-      action: "kb-cancel";
-      delay:  0;
-  }
-  filebrowser {
-      directories-first: true;
-      sorting-method:    "name";
-  }
+/*   timeout { */
+/*       action: "kb-cancel"; */
+/*       delay:  0; */
+/*   } */
+/*   filebrowser { */
+/*       directories-first: true; */
+/*       sorting-method:    "name"; */
+/*   } */
+/* } */
+
+configuration {
+    modi: "run,drun,window";
+    /* icon-theme: "Oranchelo"; */
+    show-icons: true;
+    terminal: "alacritty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: "   Window";
+    sidebar-mode: true;
+    dpi: 192;
+    /* font: "mono 12"; */
+    /* font: "JetBrainsMono Nerd Font 14"; */
+    font: "CaskaydiaCove Nerd Font Mono 14";
 }
+
 @theme "themes/catppuccin-mocha.rasi"
+/* @theme "themes/neon-dream.rasi" */
+

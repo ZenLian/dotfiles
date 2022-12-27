@@ -19,7 +19,7 @@ M.options = {
   taglist = {
     square = false,
   },
-  border_width = 4,
+  border_width = 1,
   border_radius = 10,
   gap = 5,
 }
@@ -30,6 +30,8 @@ function M.setup(opt)
   local C = require("zl.theme.palettes").get(O.flavour)
 
   local theme = {}
+
+  theme.palette = C
 
   -- {{{ Theme variables
   -- https://awesomewm.org/apidoc/theme_related_libraries/beautiful.html#Theme_variables
@@ -53,8 +55,9 @@ function M.setup(opt)
   theme.useless_gap = dpi(O.gap)
   theme.border_width = dpi(O.border_width)
   theme.border_width_maximized = 0
-  theme.border_color_normal = C.base
-  theme.border_color_active = C.teal
+  theme.border_color_maximized = C.base
+  theme.border_color_normal = C.text
+  theme.border_color_active = C.blue
   theme.border_color_marked = C.mauve
   theme.border_radius = dpi(O.border_radius) -- not builtin
   -- }}}

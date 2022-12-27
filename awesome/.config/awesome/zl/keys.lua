@@ -5,20 +5,13 @@ local O = require("zl").options
 local modkey = "Mod4"
 local ctrl = "Control"
 local shift = "Shift"
-local alt = "Mod1"
+-- local alt = "Mod1"
 
 -- {{{ awesome awesomes!
 awful.keyboard.append_global_keybindings {
   awful.key({ modkey }, "F1", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
   awful.key({ modkey, ctrl }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
   awful.key({ modkey, ctrl }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
-  -- awful.key({ modkey, ctrl }, "m", function()
-  -- 	mymainmenu:show()
-  -- end, { description = "show main menu", group = "awesome" })
-  -- awful.key({ modkey }, "v", function()
-  -- 	require("mods.exit-screen")
-  -- 	awesome.emit_signal("module::exit_screen:show")
-  -- end, { description = "show exit screen", group = "modules" })
 }
 -- }}}
 
@@ -38,8 +31,11 @@ awful.keyboard.append_global_keybindings {
 
   -- TODO: configurable
   awful.key({ modkey }, "p", function()
+    awful.spawn(O.apps.launcher)
+  end, { description = "rofi drun", group = "launcher" }),
+  awful.key({ modkey }, "r", function()
     awful.spawn("rofi -show run")
-  end, { description = "rofi run", group = "launcher" }),
+  end, { description = "rofi window", group = "launcher" }),
   awful.key({ modkey }, "w", function()
     awful.spawn("rofi -show window")
   end, { description = "rofi window", group = "launcher" }),
@@ -63,15 +59,25 @@ awful.keyboard.append_global_keybindings {
   -- end, { description = "screenshot", group = "control" }),
 
   awful.key({}, "XF86AudioRaiseVolume", function()
-    awful.spawn("amixer -D pulse set Master 5%+", false)
+    -- awful.spawn("amixer -D pulse set Master 5%+", false)
+    -- awesome.emit_signal("system::volume")
+    awful.spawn.easy_async("amixer -D pulse set Master 5%+", function()
+      awesome.emit_signal("system::volume")
+    end)
   end, { description = "increase volume", group = "control" }),
 
   awful.key({}, "XF86AudioLowerVolume", function()
-    awful.spawn("amixer -D pulse set Master 5%-", false)
+    -- awful.spawn("amixer -D pulse set Master 5%-", false)
+    -- awesome.emit_signal("system::volume")
+    awful.spawn.easy_async("amixer -D pulse set Master 5%-", function()
+      awesome.emit_signal("system::volume")
+    end)
   end, { description = "decrease volume", group = "control" }),
 
   awful.key({}, "XF86AudioMute", function()
-    awful.spawn("amixer -D pulse set Master 1+ toggle", false)
+    awful.spawn.easy_async("amixer -D pulse set Master 1+ toggle", function()
+      awesome.emit_signal("system::volume")
+    end)
   end, { description = "mute volume", group = "control" }),
 
   -- awful.key({ modkey }, "F2", function()

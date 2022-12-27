@@ -14,7 +14,7 @@ ruled.client.connect_signal("request::rules", function()
       raise = true,
       size_hints_honor = false,
       screen = awful.screen.preferred,
-      -- titlebars_enabled = true,
+      titlebars_enabled = true,
       placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
       -- shape = utils.shape.rrect(),
     },
@@ -32,32 +32,7 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule {
     id = "floating",
     rule_any = {
-      -- instance = {
-      -- 	"DTA", -- Firefox addon DownThemAll.
-      -- 	"copyq", -- Includes session name in class.
-      -- 	"pinentry",
-      -- },
-      -- class = {
-      -- 	"Arandr",
-      -- 	"Blueman-manager",
-      -- 	"Gpick",
-      -- 	"Kruler",
-      -- 	"MessageWin", -- kalarm.
-      -- 	"Sxiv",
-      -- 	"Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-      -- 	"Wpa_gui",
-      -- 	"veromix",
-      -- 	"xtightvncviewer",
-      -- },
-      -- name = {
-      -- 	"Event Tester", -- xev.
-      -- },
-      -- role = {
-      -- 	"AlarmWindow", -- Thunderbird's calendar.
-      -- 	"ConfigManager", -- Thunderbird's about:config.
-      -- 	"pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
-      -- },
-      class = { "Sxiv", "Zathura", "Galculator", "Xarchiver" },
+      class = { "Sxiv", "Zathura", "Galculator", "Xarchiver", "Lxappearance" },
       role = { "pop-up" },
       instance = { "spad", "discord", "music" },
     },
@@ -92,20 +67,20 @@ ruled.client.connect_signal("request::rules", function()
   }
 
   -- Titlebar rules
-  ruled.client.append_rule {
-    id = "titlebars",
-    rule_any = {
-      type = {
-        "dialog",
-        "splash",
-      },
-      name = {
-        "^discord.com is sharing your screen.$",
-        "file_progress",
-      },
-    },
-    properties = { titlebars_enabled = false },
-  }
+  -- ruled.client.append_rule {
+  --   id = "titlebars",
+  --   rule_any = {
+  --     type = {
+  --       "dialog",
+  --       "splash",
+  --     },
+  --     name = {
+  --       "^discord.com is sharing your screen.$",
+  --       "file_progress",
+  --     },
+  --   },
+  --   properties = { titlebars_enabled = false },
+  -- }
 end)
 
 -- Music client
