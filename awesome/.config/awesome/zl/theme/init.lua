@@ -38,17 +38,16 @@ function M.setup(opt)
     palette = C,
   }
 
-  -- {{{ fonts
+  -- {{{ fonts/icons and wallpapers
   theme.font = O.font.family .. " " .. O.font.size
+  -- customized
   theme.icon_font = O.icon_font.family .. " " .. O.icon_font.size
+  -- theme.wallpaper = theme_path .. "/wallpapers/LockScreen/arch-rainbow-1920x1080.png"
+  theme.wallpaper = theme_path .. "/wallpapers/LockScreen/arch-rainbow-1920x1080.png"
+  theme.icon_theme = "/usr/share/icons/breeze"
   -- }}}
 
-  -- {{{ Theme variables
-  -- https://awesomewm.org/apidoc/theme_related_libraries/beautiful.html#Theme_variables
-  theme.wallpaper = theme_path .. "/wallpapers/unicat.png"
-  theme.icon_theme = "/usr/share/icons/breeze"
-
-  -- base colors
+  -- {{{ base colors
   theme.bg_normal = C.mantle
   theme.bg_focus = C.surface0
   theme.bg_urgent = C.base
