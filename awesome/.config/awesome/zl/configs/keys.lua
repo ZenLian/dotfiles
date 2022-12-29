@@ -1,5 +1,9 @@
 local awful = require("awful")
+local wibox = require("wibox")
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 local hotkeys_popup = require("awful.hotkeys_popup")
+local utils = require("zl.utils")
 local O = require("zl.configs").options
 
 local modkey = "Mod4"
@@ -242,8 +246,46 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, ctrl }, "l", function()
     awful.tag.incncol(-1, nil, true)
   end, { description = "decrease the number of columns", group = "layout" }),
+}
 
-  -- select layouts
+-- {{{ select layouts
+awful.keygrabber {
+  start_callback = function()
+    awesome.emit_signal("zl::layout_visible", true)
+    -- layout_popup.visible = true
+  end,
+  stop_callback = function()
+    awesome.emit_signal("zl::layout_visible", false)
+    -- layout_popup.visible = false
+  end,
+  export_keybindings = true,
+  stop_event = "release",
+  stop_key = modkey, --{ "Escape", "Super_L", "Super_R", modkey },
+  keybindings = {
+    awful.key {
+      modifiers = { modkey, shift },
+      key = "space",
+      on_press = function()
+        -- awful.layout.inc(-1)
+        -- awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, -1), nil)
+      end,
+      description = "select previous layout",
+      group = "layout",
+    },
+    awful.key {
+      modifiers = { modkey },
+      key = "space",
+      on_press = function()
+        -- awful.layout.inc(1)
+        -- awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, 1), nil)
+      end,
+      description = "select next layout",
+      group = "layout",
+    },
+  },
+}
+
+awful.keyboard.append_global_keybindings {
   awful.key({ modkey }, "space", function()
     awful.layout.inc(1)
   end, { description = "select next", group = "layout" }),
@@ -251,6 +293,7 @@ awful.keyboard.append_global_keybindings {
     awful.layout.inc(-1)
   end, { description = "select previous", group = "layout" }),
 }
+-- }}}
 -- }}}
 
 awful.mouse.append_global_mousebindings {
