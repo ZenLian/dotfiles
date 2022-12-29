@@ -1,6 +1,6 @@
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
-local O = require("zl").options
+local O = require("zl.configs").options
 
 local modkey = "Mod4"
 local ctrl = "Control"
@@ -35,12 +35,20 @@ awful.keyboard.append_global_keybindings {
   end, { description = "rofi drun", group = "launcher" }),
   awful.key({ modkey }, "r", function()
     awful.spawn("rofi -show run")
-  end, { description = "rofi window", group = "launcher" }),
+  end, { description = "rofi run", group = "launcher" }),
   awful.key({ modkey }, "w", function()
     awful.spawn("rofi -show window")
   end, { description = "rofi window", group = "launcher" }),
 
   -- TODO: lauch colorpicker, screenshoter
+}
+-- }}}
+
+-- {{{ wibar
+awful.keyboard.append_client_keybindings {
+  awful.key({ modkey }, "\\", function()
+    awesome.emit_signal("zl::cal_show", { timeout = 5 })
+  end),
 }
 -- }}}
 
@@ -245,25 +253,6 @@ awful.keyboard.append_global_keybindings {
 }
 -- }}}
 
--- Prompt
--- awful.key({ modkey }, "r", function()
--- 	awful.screen.focused().mypromptbox:run()
--- end, { description = "run prompt", group = "launcher" }),
-
--- awful.key({ modkey }, "x", function()
--- 	awful.prompt.run({
--- 		prompt = "Run Lua code: ",
--- 		textbox = awful.screen.focused().mypromptbox.widget,
--- 		exe_callback = awful.util.eval,
--- 		history_path = awful.util.get_cache_dir() .. "/history_eval",
--- 	})
--- end, { description = "lua execute prompt", group = "awesome" }),
--- Menubar
--- 	awful.key({ modkey }, "p", function()
--- 		menubar.show()
--- 	end, { description = "show the menubar", group = "launcher" })
--- )
-
 awful.mouse.append_global_mousebindings {
   -- awful.button({}, 3, function()
   -- 	mymainmenu:toggle()
@@ -318,17 +307,6 @@ local clientkeys = {
 }
 
 local clientbuttons = {
-  -- awful.button({}, 1, function(c)
-  -- 	c:emit_signal("request::activate", "mouse_click", { raise = true })
-  -- end),
-  -- awful.button({ modkey }, 1, function(c)
-  -- 	c:emit_signal("request::activate", "mouse_click", { raise = true })
-  -- 	awful.mouse.client.move(c)
-  -- end),
-  -- awful.button({ modkey }, 3, function(c)
-  -- 	c:emit_signal("request::activate", "mouse_click", { raise = true })
-  -- 	awful.mouse.client.resize(c)
-  -- end),
   awful.button({}, 1, function(c)
     c:activate { context = "mouse_click" }
   end),
@@ -341,23 +319,6 @@ local clientbuttons = {
     c:activate { context = "mouse_click", action = "mouse_resize" }
   end),
 }
-
--- awful.rules.rules = {
--- 	-- All clients will match this rule.
--- 	{
--- 		rule = {},
--- 		properties = {
--- 			border_width = beautiful.border_width,
--- 			border_color = beautiful.border_normal,
--- 			focus = awful.client.focus.filter,
--- 			raise = true,
--- 			keys = clientkeys,
--- 			buttons = clientbuttons,
--- 			screen = awful.screen.preferred,
--- 			placement = awful.placement.no_overlap + awful.placement.no_offscreen,
--- 		},
--- 	},
--- }
 
 client.connect_signal("request::default_keybindings", function()
   awful.keyboard.append_client_keybindings(clientkeys)

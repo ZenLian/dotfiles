@@ -32,9 +32,4 @@ do
 end
 -- }}}
 
-require("zl").setup()
-
--- {{{ autostart
-local utils = require("zl.utils")
-utils.run_once("picom --config $HOME/.config/picom/picom.conf")
--- }}}
+require("zl.configs").setup()

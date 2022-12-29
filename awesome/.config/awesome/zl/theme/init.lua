@@ -16,6 +16,10 @@ M.options = {
     family = "Caskaydia Cove Nerd Font",
     size = 12,
   },
+  icon_font = {
+    family = "Material Design Icons",
+    size = 12,
+  },
   taglist = {
     square = false,
   },
@@ -29,22 +33,26 @@ function M.setup(opt)
   local O = gears.table.merge(M.options, opt or {})
   local C = require("zl.theme.palettes").get(O.flavour)
 
-  local theme = {}
+  local theme = {
+    options = O,
+    palette = C,
+  }
 
-  theme.palette = C
+  -- {{{ fonts
+  theme.font = O.font.family .. " " .. O.font.size
+  theme.icon_font = O.icon_font.family .. " " .. O.icon_font.size
+  -- }}}
 
   -- {{{ Theme variables
   -- https://awesomewm.org/apidoc/theme_related_libraries/beautiful.html#Theme_variables
-  theme.font = O.font.family .. " " .. O.font.size
   theme.wallpaper = theme_path .. "/wallpapers/unicat.png"
   theme.icon_theme = "/usr/share/icons/breeze"
 
   -- base colors
-  theme.bg_normal = C.crust
+  theme.bg_normal = C.mantle
   theme.bg_focus = C.surface0
   theme.bg_urgent = C.base
   theme.bg_minimize = C.mantle
-  theme.bg_systray = C.mantle
   theme.fg_normal = C.text
   theme.fg_focus = C.blue
   theme.fg_urgent = C.red
@@ -156,6 +164,13 @@ function M.setup(opt)
   theme.tasklist_font = O.font.family .. " 11"
   theme.tasklist_plain_task_name = true
   -- }}}
+  --
+
+  -- {{{ systray
+  theme.bg_systray = C.mantle
+  theme.systray_max_rows = 1
+  theme.systray_icon_spacing = dpi(2)
+  -- }}}
 
   -- {{{ layout icons
   ---------------------
@@ -189,11 +204,14 @@ function M.setup(opt)
   -- drop-down menu {{{
   -- menu_[bg|fg]_[normal|focus]
   -- menu_[border_color|border_width]
+  theme.menu_bg = C.surface0
+  theme.menu_fg = theme.fg_normal
   theme.menu_font = O.font.family .. " 10"
   theme.menu_submenu_icon = sys_themes_path .. "default/submenu.png"
   theme.menu_height = dpi(25)
   theme.menu_width = dpi(150)
-  theme.menu_border_radius = 200
+  -- theme.menu_border_radius = 200
+  theme.menu_border_width = 0
   theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_normal, theme.fg_focus)
   -- }}}
 
@@ -215,9 +233,9 @@ function M.setup(opt)
   ----------------
   -- Tooltips {{{1
   ----------------
-  -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
-  -- theme.tooltip_bg = theme.bg_normal
-  -- theme.tooltip_fg = theme.fg_normal
+  theme.tooltip_bg = C.surface0
+  theme.tooltip_fg = theme.fg_normal
+  theme.tooltip_opacity = 0.95
   theme.tooltip_border_width = 0
   theme.tooltip_align = "top"
   theme.tooltip_margin = "top"

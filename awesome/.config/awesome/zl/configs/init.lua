@@ -7,6 +7,7 @@ M.options = {
     editor = "alacritty -e nvim",
     browser = "microsoft-edge-stable",
     explorer = "dolphin", -- "thunar"
+    screenshoter = "",
   },
   keys = {
     modkey = "Mod4",
@@ -32,11 +33,12 @@ end
 function M.setup()
   require("zl.theme").setup()
   misc()
-  require("zl.keys")
-  require("zl.rules")
-  require("zl.screen")
-  require("zl.wibar")
-  require("zl.titlebar")
+  require("zl.configs.keys")
+  require("zl.configs.rules")
+  require("zl.configs.screen")
+  require("zl.configs.wibar")
+  require("zl.configs.titlebar")
+  require("zl.configs.autostart")
 end
 
 return M

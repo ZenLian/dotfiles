@@ -2,53 +2,48 @@ local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-
-local modkey = require("zl").options.keys.modkey
+local zwidgets = require("zl.widgets")
+local modkey = require("zl.configs").options.keys.modkey
 local lain = require("lain")
 local markup = lain.util.markup
 
--- {{{ Wibar
 local spacer = wibox.widget.textbox(" ")
 
-local mykeyboardlayout = awful.widget.keyboardlayout()
+local kbd = zwidgets.keyboard()
 
-local mytextclock = wibox.widget.textclock()
+local clk = zwidgets.clock()
 
--- local vol = lain.widget.alsa {
---   settings = function()
---     widget:set_markup(markup.fg(beautiful.mauve, "🔉 " .. volume_now.level))
---   end,
--- }
-
--- {{{ volume
-local vol = lain.widget.alsa {
-  cmd = "amixer -D pulse",
-  settings = function()
-    local icon = volume_now.status == "on" and "墳" or "婢"
-    local text = string.format("%s %s%%", icon, volume_now.level)
-    widget:set_markup(markup.fg(beautiful.palette.pink, text))
-  end,
+local vol = zwidgets.volume {
+  fg = beautiful.palette.green,
 }
 
--- TODO: put alsa into one module
--- for keys
-awesome.connect_signal("system::volume", function()
-  vol.update()
-end)
+local net = zwidgets.network {
+  fg = beautiful.palette.blue,
+}
 
--- }}}
+local bat = zwidgets.battery {
+  fg = beautiful.palette.teal,
+}
 
 local cpu = lain.widget.cpu {
+  timeout = 5,
   settings = function()
-    widget:set_markup(markup.fg(beautiful.palette.green, " " .. cpu_now.usage .. "%"))
+    widget:set_markup(markup.fg(beautiful.palette.lavender, " " .. cpu_now.usage .. "%"))
   end,
 }
 
 local mem = lain.widget.mem {
-  timeout = 1,
+  timeout = 5,
   settings = function()
     -- widget:set_markup(markup.fontfg(beautiful.font, beautiful.blue, " " .. mem_now.perc .. "%"))
     widget:set_markup(markup.fg(beautiful.palette.yellow, " " .. mem_now.perc .. "%"))
+  end,
+}
+
+local temp = lain.widget.temp {
+  timeout = 5,
+  settings = function()
+    widget:set_markup(markup.fg(beautiful.palette.pink, "﨏 " .. coretemp_now .. "°C"))
   end,
 }
 
@@ -174,7 +169,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   }
 
   -- Create the wibox
-  s.mywibox = awful.wibar {
+  s.mywibar = awful.wibar {
     screen = s,
     visible = true,
     ontop = false,
@@ -182,11 +177,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
     -- width = s.geometry.width - beautiful.useless_gap * 5,
     height = dpi(32),
     -- shape = utils.shape.rrect(beautiful.border_radius / 2),
-    -- bg = beautiful.bg_color,
+    -- bg = beautiful.palette.mantle,
     -- margins = { left = dpi(10), right = dpi(10), top = dpi(10), bottom = dpi(14) },
   }
 
-  s.mywibox:setup {
+  s.mywibar:setup {
     {
       layout = wibox.layout.fixed.horizontal,
       s.mytaglist,
@@ -196,18 +191,43 @@ screen.connect_signal("request::desktop_decoration", function(s)
     s.mytasklist,
     {
       layout = wibox.layout.fixed.horizontal,
+      {
+        {
+          layout = wibox.layout.fixed.horizontal,
+          cpu,
+          spacer,
+          mem,
+          spacer,
+          temp,
+        },
+        widget = wibox.container.margin,
+        left = dpi(16),
+        right = dpi(16),
+      },
       vol,
       spacer,
-      cpu,
+      net,
       spacer,
-      mem,
-      wibox.widget.systray(),
-      mykeyboardlayout,
-      mytextclock,
+      bat,
+      spacer,
+      {
+        {
+          widget = wibox.widget.systray {
+            reverse = true,
+          },
+        },
+        widget = wibox.container.margin,
+        margins = dpi(4),
+        -- left = dpi(4),
+        -- right = dpi(4),
+        -- top = dpi(2),
+        -- bottom = dpi(4),
+      },
+      kbd,
+      clk,
+      spacer,
     },
     layout = wibox.layout.align.horizontal,
     expand = "none",
   }
 end)
-
--- }}}
