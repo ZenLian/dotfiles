@@ -44,7 +44,7 @@ function M.setup(opt)
   theme.icon_font = O.icon_font.family .. " " .. O.icon_font.size
   -- theme.wallpaper = theme_path .. "/wallpapers/LockScreen/arch-rainbow-1920x1080.png"
   theme.wallpaper = theme_path .. "/wallpapers/LockScreen/arch-rainbow-1920x1080.png"
-  theme.icon_theme = "/usr/share/icons/breeze"
+  -- theme.icon_theme = "/usr/share/icons/breeze"
   -- }}}
 
   -- {{{ base colors
@@ -70,6 +70,14 @@ function M.setup(opt)
   -- }}}
 
   --------------------
+  -- {{{ wibar
+  -- NOTE: not builtin
+  --------------------
+  theme.wibar_height = dpi(32)
+  theme.wibar_bg = theme.bg_normal
+  -- }}}
+
+  --------------------
   -- {{{ notifications
   --------------------
   -- Variables set for theming notifications:
@@ -78,11 +86,19 @@ function M.setup(opt)
   -- notification_[width|height|margin]
   -- notification_[border_color|border_width|shape|opacity]
   theme.notification_font = O.font.family .. " 12"
-  theme.notification_margin = dpi(10) -- TODO: options
-  theme.notification_border_color = C.green
-  theme.notification_border_width = dpi(O.border_width)
-  theme.notification_border_radius = dpi(O.border_radius)
-  theme.notification_icon_size = dpi(60) -- TODO: what is this?
+  theme.notification_fg = C.text
+  theme.notification_bg = C.mantle
+  theme.notification_border_width = 0
+  -- theme.notification_border_color = C.mantle
+  theme.notification_shape = gears.shape.rounded_rect
+  theme.notification_opacity = 0.9
+  theme.notification_margin = dpi(10)
+  theme.notification_width = dpi(420)
+  -- theme.notification_height = dpi(200)
+  theme.notification_spacing = dpi(10)
+  -- customized
+  theme.notification_bg_critical = C.red
+  theme.notification_fg_critical = C.mantle
   -- }}}
 
   ---------------
@@ -230,7 +246,7 @@ function M.setup(opt)
   theme.hotkeys_bg = C.base
 
   ----------------
-  -- Tooltips {{{1
+  -- Tooltips {{{
   ----------------
   theme.tooltip_bg = C.surface0
   theme.tooltip_fg = theme.fg_normal
@@ -238,6 +254,7 @@ function M.setup(opt)
   theme.tooltip_border_width = 0
   theme.tooltip_align = "top"
   theme.tooltip_margin = "top"
+  -- }}}
 
   -- There are other variable sets
   -- overriding the default one when
@@ -245,9 +262,15 @@ function M.setup(opt)
   -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
   -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 
-  -- You can add as many variables as
-  -- you wish and access them by using
-  -- beautiful.variable in your rc.lua
+  ------------------------------
+  -- {{{ Control Center(custom)
+  ------------------------------
+  theme.cc_bg = C.mantle
+  theme.cc_widget_bg = C.base
+  theme.cc_width = dpi(400)
+  theme.cc_height = dpi(500)
+  theme.cc_spacing = dpi(20)
+  -- }}}
 
   -- init theme, or fallback to default
   if not beautiful.init(theme) then

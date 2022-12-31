@@ -16,7 +16,7 @@ ruled.client.connect_signal("request::rules", function()
       screen = awful.screen.preferred,
       titlebars_enabled = true,
       placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
-      -- shape = utils.shape.rrect(),
+      -- shape = utils.shape.rrect(8),
     },
   }
 

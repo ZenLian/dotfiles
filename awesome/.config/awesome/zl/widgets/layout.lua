@@ -1,13 +1,15 @@
+------------------------
+-- Layout popup widget
+------------------------
+
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
 
--- layout popup
-
 local factory = function()
-  local ll = awful.widget.layoutlist {
+  local layoutlist = awful.widget.layoutlist {
     source = awful.widget.layoutlist.source.default_layouts,
     spacing = dpi(24),
     base_layout = wibox.widget {
@@ -36,13 +38,13 @@ local factory = function()
 
   local layout_popup = awful.popup {
     widget = wibox.widget {
-      {
-        ll,
-        margins = dpi(24),
-        widget = wibox.container.margin,
-      },
-      bg = beautiful.bg_color,
-      widget = wibox.container.background,
+      -- {
+      layoutlist,
+      margins = dpi(24),
+      widget = wibox.container.margin,
+      -- },
+      -- bg = beautiful.bg_normal .. "88",
+      -- widget = wibox.container.background,
     },
     placement = awful.placement.centered,
     ontop = true,

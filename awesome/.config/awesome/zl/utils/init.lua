@@ -1,6 +1,8 @@
 local M = {
   shape = require("zl.utils.shape"),
   table = require("zl.utils.table"),
+  markup = require("zl.utils.markup"),
+  icons = require("zl.utils.icons"),
 }
 
 local awful = require("awful")

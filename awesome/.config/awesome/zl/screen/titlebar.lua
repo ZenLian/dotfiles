@@ -42,9 +42,9 @@ local function create_button(args) --{color, action, c}
   end
 
   -- apply dynamic color
-  args.c:connect_signal("focus", on_focus_changed)
+  args.client:connect_signal("focus", on_focus_changed)
 
-  args.c:connect_signal("unfocus", on_focus_changed)
+  args.client:connect_signal("unfocus", on_focus_changed)
 
   -- button action
   w:buttons(gears.table.join(awful.button({}, 1, args.action)))
@@ -91,7 +91,7 @@ client.connect_signal("request::titlebars", function(c)
           action = function()
             awful.client.floating.toggle(c)
           end,
-          c = c,
+          client = c,
         },
         create_button {
           color = beautiful.titlebar_maximize_button_bg,
@@ -99,14 +99,14 @@ client.connect_signal("request::titlebars", function(c)
             c.maximized = not c.maximized
             c:raise()
           end,
-          c = c,
+          client = c,
         },
         create_button {
           color = beautiful.titlebar_close_button_bg,
           action = function()
             c:kill()
           end,
-          c = c,
+          client = c,
         },
         layout = wibox.layout.flex.horizontal,
         spacing = beautiful.titlebar_button_margin,

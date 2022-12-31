@@ -1,6 +1,9 @@
+local awful = require("awful")
+local wibox = require("wibox")
 local beautiful = require("beautiful")
-local lain = require("lain")
 local utils = require("zl.utils")
+local service = require("zl.service")
+local O = require("zl.configs").options
 
 local defaults = {
   fg = beautiful.fg_normal,
@@ -9,22 +12,40 @@ local defaults = {
 local factory = function(args)
   args = utils.table.deep_extend(defaults, args or {})
 
-  local vol = lain.widget.alsa {
-    cmd = "amixer -D pulse",
-    settings = function()
-      local icon = volume_now.status == "on" and "墳" or "婢"
-      local text = string.format("%s %s%%", icon, volume_now.level)
-      widget:set_markup(lain.util.markup.fg(args.fg, text))
-    end,
-  }
+  local vol = wibox.widget.textbox("vol")
 
-  -- TODO: put alsa into one module
-  -- for keys
-  awesome.connect_signal("system::volume", function()
-    vol.update()
+  awesome.connect_signal("service::volume", function(result)
+    local icon = utils.icons.volume(result.muted)
+    local text = string.format("%s %s%%", icon, result.volume)
+    local markup = utils.markup.fg(text, args.fg)
+    vol.markup = markup
+    -- local naughty = require("naughty")
+    -- naughty.notify {
+    --   title = "service::volume",
+    --   text = markup,
+    -- }
   end)
 
-  return vol.widget
+  vol:buttons(awful.util.table.join(
+    awful.button({}, 1, function() -- left click
+      service.volume.set("toggle")
+    end),
+    awful.button({}, 2, function() -- middle click
+      service.volume.set(100)
+    end),
+    awful.button({}, 3, function() -- right click
+      -- TODO:
+      awful.spawn(O.apps.terminal .. " -e alsamixer")
+    end),
+    awful.button({}, 4, function() -- scroll up
+      service.volume.set("1%+")
+    end),
+    awful.button({}, 5, function() -- scroll down
+      service.volume.set("1%-")
+    end)
+  ))
+
+  return vol
 end
 
 return factory

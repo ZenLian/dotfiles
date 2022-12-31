@@ -16,22 +16,10 @@ local factory = function(args)
     n_perc = { 10, 20 },
     full_notify = "off",
     settings = function()
-      local icons
-      if bat_now.status == "Discharging" then
-        -- stylua: ignore
-        icons = { "", "", "", "", "", "", "", "", "", "", "" }
-      else
-        -- stylua: ignore
-        icons = { "", "", "", "", "", "", "", "", "", "", "" }
-      end
-
-      local icon
-      if bat_now.perc == "N/A" then
-        icon = ""
-      else
-        icon = icons[bat_now.perc // 10 + 1]
-      end
-      local text = icon .. " " .. bat_now.perc .. "%"
+      local charging = bat_now.status == "Charging" or bat_now.status == "Full"
+      local perc = bat_now.perc == "N/A" and 100 or bat_now.perc
+      local icon = utils.icons.battery(perc, charging)
+      local text = icon .. " "
       widget:set_markup(lain.util.markup.fg(args.fg, text))
     end,
   }

@@ -175,9 +175,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
     ontop = false,
     type = "dock",
     -- width = s.geometry.width - beautiful.useless_gap * 5,
-    height = dpi(32),
+    height = beautiful.wibar_height,
     -- shape = utils.shape.rrect(beautiful.border_radius / 2),
-    -- bg = beautiful.palette.mantle,
+    bg = beautiful.wibar_bg,
     -- margins = { left = dpi(10), right = dpi(10), top = dpi(10), bottom = dpi(14) },
   }
 

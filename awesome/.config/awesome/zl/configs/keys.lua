@@ -4,18 +4,23 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local hotkeys_popup = require("awful.hotkeys_popup")
 local utils = require("zl.utils")
+local service = require("zl.service")
 local O = require("zl.configs").options
 
 local modkey = "Mod4"
 local ctrl = "Control"
 local shift = "Shift"
--- local alt = "Mod1"
+local alt = "Mod1"
 
 -- {{{ awesome awesomes!
 awful.keyboard.append_global_keybindings {
   awful.key({ modkey }, "F1", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
   awful.key({ modkey, ctrl }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
   awful.key({ modkey, ctrl }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+  awful.key({ modkey }, "a", function()
+    local screen = awful.screen.focused()
+    require("zl.screen.controlCenter").toggle(screen)
+  end, { description = "quit awesome", group = "awesome" }),
 }
 -- }}}
 
@@ -59,11 +64,11 @@ awful.keyboard.append_client_keybindings {
 -- media control(fn)
 awful.keyboard.append_global_keybindings {
   awful.key({}, "XF86MonBrightnessUp", function()
-    awful.spawn("brightnessctl set 5%+ -q", false)
+    service.brightness.set("15%+")
   end, { description = "increase brightness", group = "control" }),
 
   awful.key({}, "XF86MonBrightnessDown", function()
-    awful.spawn("brightnessctl set 5%- -q", false)
+    service.brightness.set("15%-")
   end, { description = "decrease brightness", group = "control" }),
 
   -- awful.key({}, "Print", function()
@@ -71,25 +76,15 @@ awful.keyboard.append_global_keybindings {
   -- end, { description = "screenshot", group = "control" }),
 
   awful.key({}, "XF86AudioRaiseVolume", function()
-    -- awful.spawn("amixer -D pulse set Master 5%+", false)
-    -- awesome.emit_signal("system::volume")
-    awful.spawn.easy_async("amixer -D pulse set Master 5%+", function()
-      awesome.emit_signal("system::volume")
-    end)
+    service.volume.set("5%+")
   end, { description = "increase volume", group = "control" }),
 
   awful.key({}, "XF86AudioLowerVolume", function()
-    -- awful.spawn("amixer -D pulse set Master 5%-", false)
-    -- awesome.emit_signal("system::volume")
-    awful.spawn.easy_async("amixer -D pulse set Master 5%-", function()
-      awesome.emit_signal("system::volume")
-    end)
+    service.volume.set("5%-")
   end, { description = "decrease volume", group = "control" }),
 
   awful.key({}, "XF86AudioMute", function()
-    awful.spawn.easy_async("amixer -D pulse set Master 1+ toggle", function()
-      awesome.emit_signal("system::volume")
-    end)
+    service.volume.set("toggle")
   end, { description = "mute volume", group = "control" }),
 
   -- awful.key({ modkey }, "F2", function()
@@ -145,6 +140,7 @@ awful.keyboard.append_global_keybindings {
         local tag = client.focus.screen.tags[index]
         if tag then
           client.focus:move_to_tag(tag)
+          tag:view_only()
         end
       end
     end,

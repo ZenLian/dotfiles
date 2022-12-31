@@ -4,9 +4,6 @@ export XDG_DATA_HOME=$HOME/.local/share
 
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-
 # export TERM=xterm-256color
 # export COLORTERM='truecolor'
 # export TERM_ITALICS=true
