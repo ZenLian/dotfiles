@@ -5,10 +5,7 @@ local awful = require("awful")
 local gtimer = require("gears.timer")
 local service = require("zl.service.core")
 
-local M = {
-  status = service.status.STOPPED,
-  timeout = 5,
-}
+local M = {}
 
 local vol_cmd = "amixer -D pulse get Master"
 
@@ -21,35 +18,14 @@ local parse = function(stdout)
   }
 end
 
-local emit_signal = function(src)
-  awful.spawn.easy_async_with_shell(vol_cmd, function(stdout)
-    local result = parse(stdout)
-    awesome.emit_signal("service::volume", result, src)
-    -- require("naughty").notify {
-    --   text = string.format("%s %s", result.volume, result.muted),
-    -- }
-  end)
-end
+-- M.async = function(callback)
+--   awful.spawn.easy_async_with_shell(vol_cmd, function(stdout)
+--     local result = parse(stdout)
+--     callback(result)
+--   end)
+-- end
 
-M.run = function()
-  if M.status ~= service.status.STOPPED then
-    return
-  end
-  M.status = service.status.STARTING
-
-  gtimer {
-    timeout = M.timeout,
-    autostart = true,
-    call_now = true,
-    callback = function()
-      emit_signal("timeout")
-    end,
-  }
-
-  M.status = service.status.RUNNING
-end
-
-M.get = function(callback)
+M.get_async = function(callback)
   awful.spawn.easy_async(vol_cmd, function(stdout)
     callback(parse(stdout))
   end)
@@ -58,13 +34,13 @@ end
 M.set = function(val, src)
   if type(val) == "number" then
     awful.spawn.easy_async("amixer -D pulse set Master " .. val .. "%", function()
-      emit_signal(src)
+      M.update(src)
     end)
   else
     awful.spawn.easy_async("amixer -D pulse set Master " .. val, function()
-      emit_signal(src)
+      M.update(src)
     end)
   end
 end
 
-return M
+return service.register(M, "volume", 7)

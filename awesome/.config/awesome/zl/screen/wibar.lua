@@ -25,11 +25,8 @@ local bat = zwidgets.battery {
   fg = beautiful.palette.teal,
 }
 
-local cpu = lain.widget.cpu {
-  timeout = 5,
-  settings = function()
-    widget:set_markup(markup.fg(beautiful.palette.lavender, " " .. cpu_now.usage .. "%"))
-  end,
+local cpu = zwidgets.cpu {
+  fg = beautiful.palette.lavender,
 }
 
 local mem = lain.widget.mem {

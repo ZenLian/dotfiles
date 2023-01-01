@@ -10,7 +10,7 @@ local volume = slider {
   min = 0,
   max = 100,
   init = function(self)
-    service.volume.get(function(result)
+    service.volume.get_async(function(result)
       local icon = utils.icons.volume(result.muted)
       self.icon = icon
       self.value = result.volume
@@ -37,8 +37,8 @@ local brightness = slider {
   min = 0,
   max = 100,
   init = function(self)
-    self.icon = ""
-    service.brightness.get(function(result)
+    self.icon = utils.icons.brightness
+    service.brightness.get_async(function(result)
       self.value = result.percentage
     end)
   end,

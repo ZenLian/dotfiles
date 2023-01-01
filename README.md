@@ -2,52 +2,55 @@
 
 ## Prerequisites
 
-Distribution: Arch Linux
+- Window Server: x-org
+- Window Manager: awesome-git
+- Window Compositor: picom-git
+- Launcher: rofi
+- Terminal: alacrity
+- Terminal Multiplexer: tmux
+- Shell: zsh
+- Editor: neovim
+- Browser: microsoft-edge-stable
+- File Explorer
+  - lf(terminal)
+  - thunar(gui) ~~dolphin~~
+- Screenshot: flameshot
+- Video:
+  - xf86-video-[admgpu/intel/nouveau]
+  - brightnessctl
+- Audio:
+  - alsa-utils
+- Network:
+  - Networking Manager
 
-- awesome-git
-- picom
-- zsh
-- alacrity: terminal
-- tmux: terminal multiplexer
-- [neovim](https://github.com/neovim/neovim): editor
-- [fzf](https://github.com/junegunn/fzf): fuzzy finder
+Optional:
+
+- Fuzzy Finder: fzf
+- Grep Alternative: ripgrep
+- File Manager: lf
+- Cat Alternative: bat
+- find alternative: fd
 
 ```bash
-pacman -S awesome-git picom-git zsh tmux neovim alacritty fzf
+pacman -S awesome-git picom-git rofi alacritty
+pacman -S zsh tmux neovim fzf ripgrep lf bat fd
 ```
 
 Optional tools:
 
-- ripgrep: grep alternative
-- lf: terminal file manager
-- bat: cat alternative
-- fd: find alternative
 - [lazygit](https://github.com/jesseduffield/lazygit)
-
-```bash
-pacman -S ripgrep lf bat fd lazygit
-```
-
-Other utilities:
-
 - asdf: unified version manager
 - viu: terminal image viewer
 - glow: terminal markdown viewer
 
-```shell
+```bash
 yay -S asdf-vm
 ```
 
 ## Installation
 
-```shell
+```bash
 git clone --recursive git@github.com:ZenLian/dotfiles.git
 cd dotfiles
 ./install.sh
-```
-
-## Setup awesome
-
-```sh
-pacman -S awesome-git
 ```

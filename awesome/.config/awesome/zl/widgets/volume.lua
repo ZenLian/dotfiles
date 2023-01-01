@@ -12,7 +12,7 @@ local defaults = {
 local factory = function(args)
   args = utils.table.deep_extend(defaults, args or {})
 
-  local vol = wibox.widget.textbox("vol")
+  local vol = wibox.widget.textbox()
 
   awesome.connect_signal("service::volume", function(result)
     local icon = utils.icons.volume(result.muted)

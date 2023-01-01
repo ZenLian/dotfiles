@@ -1,4 +1,9 @@
-local M = {}
+local M = {
+  cpu = "",
+  memory = "",
+  temperature = "﨏", -- "",
+  brightness = "",
+}
 
 M.volume = function(muted)
   return muted and "婢" or "墳"

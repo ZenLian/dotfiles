@@ -67,23 +67,26 @@ local factory = function(args)
   end
 
   function slider_text:set_value(value)
+    value = math.max(math.min(value, args.max), args.min)
     self.markup = string.format("%4s%%", value)
   end
 
-  function widget:set_value(value)
+  function widget:set_value(value, no_block_signal)
     -- slider_text.markup = string.format("%4s%%", value)
     slider_text.value = value
-    self.block_signal = true
+    self.block_signal = not no_block_signal
     slider.value = value
     self.block_signal = false
   end
 
   widget:buttons {
     awful.button({}, 4, function() -- scroll up
-      widget.value = slider.value + 1
+      widget:set_value(slider.value + 1, true)
+      -- widget.value = slider.value + 1
     end),
     awful.button({}, 5, function() -- scroll down
-      widget.value = slider.value - 1
+      widget:set_value(slider.value - 1, true)
+      -- widget.value = slider.value - 1
     end),
   }
 
@@ -116,4 +119,9 @@ local factory = function(args)
   return widget
 end
 
-return factory
+-- return factory
+return setmetatable({}, {
+  __call = function(_, ...)
+    return factory(...)
+  end,
+})
