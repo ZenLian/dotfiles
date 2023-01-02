@@ -1,9 +1,7 @@
--- brightness signal
--- "service::brightness"
--- percentage, src(string)
-local awful = require("awful")
-local gtimer = require("gears.timer")
+-- "service::cpu"
+-- { usage = int}, src(string)
 local service = require("zl.service.core")
+local utils = require("zl.utils")
 
 local M = {}
 
@@ -45,11 +43,8 @@ local parse_cpu_line = function(line)
 end
 
 M.get = function()
-  for line in io.lines("/proc/stat") do
-    -- we only read first line for total cpu usage
-    local result = parse_cpu_line(line)
-    return result
-  end
+  local line = utils.io.first_line("/proc/stat")
+  return parse_cpu_line(line)
 end
 
 return service.register(M, "cpu", 6)

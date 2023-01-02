@@ -4,44 +4,61 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local zwidgets = require("zl.widgets")
 local modkey = require("zl.configs").options.keys.modkey
-local lain = require("lain")
-local markup = lain.util.markup
-
-local spacer = wibox.widget.textbox(" ")
+local utils = require("zl.utils")
 
 local kbd = zwidgets.keyboard()
 
-local clk = zwidgets.clock()
+local clk = wibox.widget.textclock("%H:%M")
 
 local vol = zwidgets.volume {
   fg = beautiful.palette.green,
 }
 
-local net = zwidgets.network {
-  fg = beautiful.palette.blue,
-}
-
-local bat = zwidgets.battery {
+local bat = require("zl.screen.wibar.battery") {
   fg = beautiful.palette.teal,
 }
 
-local cpu = zwidgets.cpu {
-  fg = beautiful.palette.lavender,
+-- local net = zwidgets.network {
+--   fg = beautiful.palette.blue,
+-- }
+
+-- local bat = zwidgets.battery {
+--   fg = beautiful.palette.teal,
+-- }
+
+local cpu = wibox.widget.textbox()
+awesome.connect_signal("service::cpu", function(result)
+  local text = string.format("%s %s%%", utils.icons.cpu, result.usage)
+  cpu.markup = utils.markup.fg(text, beautiful.palette.lavender)
+end)
+
+local mem = wibox.widget.textbox()
+awesome.connect_signal("service::memory", function(result)
+  local text = string.format("%s %s%%", utils.icons.memory, result.perc)
+  mem.markup = utils.markup.fg(text, beautiful.palette.yellow)
+end)
+
+local thermal = wibox.widget.textbox()
+awesome.connect_signal("service::thermal", function(result)
+  local text = string.format("%s %s°C", utils.icons.thermal, result.thermal)
+  thermal.markup = utils.markup.fg(text, beautiful.palette.pink)
+end)
+
+local wi_systat = wibox.widget {
+  cpu,
+  mem,
+  thermal,
+  layout = wibox.layout.fixed.horizontal,
+  spacing = dpi(10),
 }
 
-local mem = lain.widget.mem {
-  timeout = 5,
-  settings = function()
-    -- widget:set_markup(markup.fontfg(beautiful.font, beautiful.blue, " " .. mem_now.perc .. "%"))
-    widget:set_markup(markup.fg(beautiful.palette.yellow, " " .. mem_now.perc .. "%"))
-  end,
-}
-
-local temp = lain.widget.temp {
-  timeout = 5,
-  settings = function()
-    widget:set_markup(markup.fg(beautiful.palette.pink, "﨏 " .. coretemp_now .. "°C"))
-  end,
+local wi_control = wibox.widget {
+  vol,
+  -- net,
+  bat,
+  -- kbd,
+  layout = wibox.layout.fixed.horizontal,
+  spacing = dpi(10),
 }
 
 local taglist_buttons = {
@@ -68,9 +85,6 @@ local taglist_buttons = {
 }
 
 screen.connect_signal("request::desktop_decoration", function(s)
-  -- Create a promptbox for each screen
-  s.mypromptbox = awful.widget.prompt()
-
   -- Create an imagebox widget which will contain an icon indicating which layout we're using.
   -- We need one layoutbox per screen.
   s.mylayoutbox = awful.widget.layoutbox {
@@ -180,33 +194,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   s.mywibar:setup {
     {
-      layout = wibox.layout.fixed.horizontal,
       s.mytaglist,
-      s.mypromptbox,
-      spacer,
+      layout = wibox.layout.fixed.horizontal,
     },
     s.mytasklist,
     {
-      layout = wibox.layout.fixed.horizontal,
-      {
-        {
-          layout = wibox.layout.fixed.horizontal,
-          cpu,
-          spacer,
-          mem,
-          spacer,
-          temp,
-        },
-        widget = wibox.container.margin,
-        left = dpi(16),
-        right = dpi(16),
-      },
-      vol,
-      spacer,
-      net,
-      spacer,
-      bat,
-      spacer,
       {
         {
           widget = wibox.widget.systray {
@@ -215,14 +207,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
         },
         widget = wibox.container.margin,
         margins = dpi(4),
-        -- left = dpi(4),
-        -- right = dpi(4),
-        -- top = dpi(2),
-        -- bottom = dpi(4),
       },
-      kbd,
+      wi_systat,
+      wi_control,
       clk,
-      spacer,
+      layout = wibox.layout.fixed.horizontal,
+      spacing = dpi(10),
     },
     layout = wibox.layout.align.horizontal,
     expand = "none",

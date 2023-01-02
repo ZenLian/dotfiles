@@ -1,11 +1,6 @@
-local M = {
-  shape = require("zl.utils.shape"),
-  table = require("zl.utils.table"),
-  markup = require("zl.utils.markup"),
-  icons = require("zl.utils.icons"),
-}
-
 local awful = require("awful")
+
+local M = {}
 
 -- run a command once, do nothing if another instance is running
 M.run_once = function(command)
@@ -23,4 +18,12 @@ M.mdi = function(name)
   return os.getenv("HOME") .. "/.config/awesome/mods/mdi/svg/" .. name .. ".svg"
 end
 
-return M
+local PREFIX = ... .. "."
+
+return setmetatable(M, {
+  __index = function(self, key)
+    local module = require(PREFIX .. key)
+    rawset(self, key, module)
+    return module
+  end,
+})

@@ -21,11 +21,12 @@ function M.setup()
       height = beautiful.cc_height,
       bg = beautiful.cc_bg,
       -- margins = dpi(20),
-      x = s.geometry.x + beautiful.useless_gap,
-      y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap,
       ontop = true,
       visible = false,
     }
+
+    s.x = s.geometry.x + s.geometry.width - s.mycc.width - beautiful.useless_gap * 2
+    s.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap * 2
 
     -- widgets
     local sliders = require("zl.screen.controlCenter.sliders")
@@ -58,15 +59,14 @@ M.toggle = function(s)
   -- cc.y = s.geometry.y + s.geometry.height - (cc.height + beautiful.useless_gap * 2)
   cc.visible = not cc.visible
 
-  local notify = {
-    title = "cc",
-    -- stylua: ignore
-    text = string.format("visible: %s\n", cc.visible)
-        .. string.format("pos: (%s, %s)\n", cc.x, cc.y)
-        .. string.format("width: %s, height: %s", cc.width, cc.height)
-,
-  }
-  -- require("naughty").notify(notify)
+  --   require("naughty").notify {
+  --     title = "cc",
+  --     -- stylua: ignore
+  --     text = string.format("visible: %s\n", cc.visible)
+  --         .. string.format("pos: (%s, %s)\n", cc.x, cc.y)
+  --         .. string.format("width: %s, height: %s", cc.width, cc.height)
+  -- ,
+  --   }
 end
 
 return M

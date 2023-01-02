@@ -10,60 +10,67 @@ local M = {
 }
 
 M.run = function()
-  require("zl.service.volume").run()
-  require("zl.service.brightness").run()
-  require("zl.service.cpu").run()
+  local services = { "volume", "brightness", "cpu", "memory", "thermal", "battery" }
+  for _, name in ipairs(services) do
+    require("zl.service." .. name).run()
+  end
 end
 
-local run = function(serv)
-  if serv.status ~= M.status.STOPPED then
+local service_run = function(s)
+  if s.status ~= M.status.STOPPED then
     return
   end
-  serv.status = M.status.STARTING
+  s.status = M.status.STARTING
 
-  if serv.timeout > 0 then
+  if s.init then
+    s.init()
+  end
+
+  if s.timeout > 0 then
     gears.timer {
-      timeout = serv.timeout,
+      timeout = s.timeout,
       autostart = true,
       call_now = true,
       callback = function()
-        serv.update("timeout")
+        s.update("timeout")
       end,
     }
   else
-    serv.update("init")
+    s.update("init")
   end
 
-  serv.status = M.status.RUNNING
+  s.status = M.status.RUNNING
 end
 
-M.register = function(serv, name, timeout)
-  serv.name = "service::" .. name
-  serv.timeout = timeout or 0
-  serv.status = M.status.STOPPED
-  serv.run = function()
-    run(serv)
+M.register = function(s, name, timeout)
+  s.name = "service::" .. name
+  s.timeout = timeout or 0
+  s.status = M.status.STOPPED
+  s.run = function()
+    service_run(s)
   end
-  if serv.get_async then
-    serv.update = function(src)
-      serv.get_async(function(result)
-        awesome.emit_signal(serv.name, result, src)
+
+  -- update
+  if s.get_async then
+    s.update = function(src)
+      s.get_async(function(result)
+        awesome.emit_signal(s.name, result, src)
       end)
     end
-  elseif serv.get then
-    serv.update = function(src)
-      awesome.emit_signal(serv.name, serv.get(), src)
+  elseif s.get then
+    s.update = function(src)
+      awesome.emit_signal(s.name, s.get(), src)
     end
   else
     naughty.notify {
       preset = naughty.config.presets.warn,
-      title = serv.name,
+      title = s.name,
       text = "missing get_async() or get()",
     }
   end
 
   -- return setmetatable(serv, { __index = service })
-  return serv
+  return s
 end
 
 return M

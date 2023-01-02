@@ -1,7 +1,7 @@
 local M = {
   cpu = "",
   memory = "",
-  temperature = "﨏", -- "",
+  thermal = "﨏", -- "",
   brightness = "",
 }
 
