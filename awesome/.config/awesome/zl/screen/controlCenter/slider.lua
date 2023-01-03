@@ -5,16 +5,16 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
 
-local factory = function(args)
-  local defaults = {
-    min = 0,
-    max = 100,
-    init = nil,
-    on_value_change = nil,
-    on_icon_press = nil,
-  }
+local defaults = {
+  min = 0,
+  max = 100,
+  init = nil,
+  on_value_change = nil,
+  on_icon_press = nil,
+}
 
-  args = utils.table.deep_extend(defaults, args)
+local factory = function(args)
+  args = utils.table.extend(defaults, args)
 
   local slider = wibox.widget {
     widget = wibox.widget.slider,

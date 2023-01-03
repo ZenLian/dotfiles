@@ -1,11 +1,7 @@
 local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
 local hotkeys_popup = require("awful.hotkeys_popup")
-local utils = require("zl.utils")
 local service = require("zl.service")
-local O = require("zl.configs").options
+local O = require("zl.config")
 
 local modkey = "Mod4"
 local ctrl = "Control"

@@ -30,9 +30,8 @@ M.options = {
   gap = 5,
 }
 
-function M.setup(opt)
-  -- TODO: merge configs to M.options
-  local O = gears.table.merge(M.options, opt or {})
+function M.setup(options)
+  local O = utils.table.extend(M.options, options or {})
   local C = require("zl.theme.palettes").get(O.flavour)
 
   local theme = {

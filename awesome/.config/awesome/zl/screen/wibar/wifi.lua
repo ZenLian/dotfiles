@@ -11,8 +11,7 @@ local defaults = {
 }
 
 local factory = function(args)
-  -- args = gears.table.crust(defaults, args)
-  args = utils.table.deep_extend(defaults, args or {})
+  args = utils.table.extend(defaults, args or {})
 
   local wifi = wibox.widget.imagebox()
 

@@ -12,7 +12,7 @@ local defaults = {
 local M = {}
 
 M.new = function(args)
-  args = utils.table.deep_extend(defaults, args or {})
+  args = utils.table.extend(defaults, args or {})
 
   local bat = wibox.widget.textbox("bat")
 

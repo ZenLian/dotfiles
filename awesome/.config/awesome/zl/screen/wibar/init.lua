@@ -2,7 +2,6 @@ local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local modkey = require("zl.configs").options.keys.modkey
 local theme = require("zl.theme")
 local utils = require("zl.utils")
 local widgets = {
@@ -10,6 +9,8 @@ local widgets = {
   battery = require(... .. ".battery"),
   wifi = require(... .. ".wifi"),
 }
+
+local modkey = require("zl.config").keys.modkey
 
 local spacer = function(n)
   local spaces = string.rep(" ", n or 1)
