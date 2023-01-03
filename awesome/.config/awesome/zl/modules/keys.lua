@@ -1,18 +1,22 @@
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local service = require("zl.service")
-local O = require("zl.config")
+local menu = require("zl.modules.menu")
+local C = require("zl.config")
 
-local modkey = "Mod4"
+local modkey = C.keys.modkey or "Mod4"
 local ctrl = "Control"
 local shift = "Shift"
 local alt = "Mod1"
 
--- {{{ awesome awesomes!
+-- {{{ awesome stuff
 awful.keyboard.append_global_keybindings {
   awful.key({ modkey }, "F1", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
   awful.key({ modkey, ctrl }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
   awful.key({ modkey, ctrl }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+  awful.key({ modkey, ctrl }, "p", function()
+    menu:toggle()
+  end, { description = "toggle menu", group = "awesome" }),
   awful.key({ modkey }, "a", function()
     local screen = awful.screen.focused()
     require("zl.screen.controlCenter").toggle(screen)
@@ -23,20 +27,20 @@ awful.keyboard.append_global_keybindings {
 -- {{{ launchers
 awful.keyboard.append_global_keybindings {
   awful.key({ modkey }, "Return", function()
-    awful.spawn(O.apps.terminal)
+    awful.spawn(C.apps.terminal)
   end, { description = "terminal", group = "launcher" }),
 
   awful.key({ modkey }, "b", function()
-    awful.spawn(O.apps.browser)
+    awful.spawn(C.apps.browser)
   end, { description = "web browser", group = "launcher" }),
 
   awful.key({ modkey }, "e", function()
-    awful.spawn(O.apps.explorer)
+    awful.spawn(C.apps.explorer)
   end, { description = "file explorer", group = "launcher" }),
 
   -- TODO: configurable
   awful.key({ modkey }, "p", function()
-    awful.spawn(O.apps.launcher)
+    awful.spawn(C.apps.launcher)
   end, { description = "rofi drun", group = "launcher" }),
   awful.key({ modkey }, "r", function()
     awful.spawn("rofi -show run")
@@ -50,14 +54,14 @@ awful.keyboard.append_global_keybindings {
 -- }}}
 
 -- {{{ wibar
-awful.keyboard.append_client_keybindings {
-  awful.key({ modkey }, "\\", function()
-    awesome.emit_signal("zl::cal_show", { timeout = 5 })
-  end),
-}
+-- awful.keyboard.append_client_keybindings {
+--   awful.key({ modkey }, "\\", function()
+--     awesome.emit_signal("zl::cal_show", { timeout = 5 })
+--   end),
+-- }
 -- }}}
 
--- media control(fn)
+-- {{{ fn keys(media control)
 awful.keyboard.append_global_keybindings {
   awful.key({}, "XF86MonBrightnessUp", function()
     service.brightness.set("15%+")
@@ -87,6 +91,7 @@ awful.keyboard.append_global_keybindings {
   -- 	misc.musicMenu()
   -- end, { description = "music menu", group = "control" }),
 }
+-- }}}
 
 --- {{{ tags
 awful.keyboard.append_global_keybindings {
@@ -289,15 +294,15 @@ awful.keyboard.append_global_keybindings {
 -- }}}
 
 awful.mouse.append_global_mousebindings {
-  -- awful.button({}, 3, function()
-  -- 	mymainmenu:toggle()
-  -- end),
+  awful.button({}, 3, function()
+    menu:toggle()
+  end),
   awful.button({}, 4, awful.tag.viewnext),
   awful.button({}, 5, awful.tag.viewprev),
 }
 
 local clientkeys = {
-  awful.key({ modkey, shift }, "f", function(c)
+  awful.key({ modkey }, "f", function(c)
     c.fullscreen = not c.fullscreen
     c:raise()
   end, { description = "toggle fullscreen", group = "client" }),
@@ -306,7 +311,7 @@ local clientkeys = {
     c:kill()
   end, { description = "quit", group = "client" }),
 
-  awful.key({ modkey }, "f", function(c)
+  awful.key({ modkey, shift }, "f", function(c)
     awful.client.floating.toggle()
   end, { description = "toggle floating", group = "client" }),
 

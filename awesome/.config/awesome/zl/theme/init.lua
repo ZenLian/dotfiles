@@ -4,6 +4,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local gears = require("gears")
 local utils = require("zl.utils")
+
 local sys_themes_path = require("gears.filesystem").get_themes_dir()
 local theme_path = os.getenv("HOME") .. "/.config/awesome/" .. string.gsub(..., "%.", "/")
 
@@ -223,7 +224,7 @@ function M.setup(options)
   theme.menu_bg = C.surface0
   theme.menu_fg = theme.fg_normal
   theme.menu_font = O.font.family .. " 10"
-  theme.menu_submenu_icon = sys_themes_path .. "default/submenu.png"
+  theme.menu_submenu_icon = M.icons.get_mdi("menu-right-outline", theme.fg_normal) --sys_themes_path .. "default/submenu.png"
   theme.menu_height = dpi(25)
   theme.menu_width = dpi(150)
   -- theme.menu_border_radius = 200

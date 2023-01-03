@@ -13,6 +13,10 @@ local icons = {
   volume = "墳",
   volume_muted = "婢",
   brightness = "", --"󰃟", -- ""
+
+  -- apps
+  web = "",
+  files = "",
 }
 
 icons.get_battery = function(perc, charging)
