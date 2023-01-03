@@ -4,6 +4,7 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local slider = require("zl.screen.controlCenter.slider")
 local utils = require("zl.utils")
+local theme = require("zl.theme")
 local service = require("zl.service")
 
 local volume = slider {
@@ -11,7 +12,7 @@ local volume = slider {
   max = 100,
   init = function(self)
     service.volume.get_async(function(result)
-      local icon = utils.icons.volume(result.muted)
+      local icon = theme.icons.get_volume(result.muted)
       self.icon = icon
       self.value = result.volume
     end)
@@ -25,7 +26,7 @@ local volume = slider {
 }
 
 awesome.connect_signal("service::volume", function(result, src)
-  local icon = utils.icons.volume(result.muted)
+  local icon = theme.icons.get_volume(result.muted)
   volume.icon = icon
   -- ignore self-emit signal
   if src ~= "cc_slider" then
@@ -37,7 +38,7 @@ local brightness = slider {
   min = 0,
   max = 100,
   init = function(self)
-    self.icon = utils.icons.brightness
+    self.icon = theme.icons.brightness
     service.brightness.get_async(function(result)
       self.value = result.percentage
     end)
@@ -48,7 +49,7 @@ local brightness = slider {
 }
 
 awesome.connect_signal("service::brightness", function(result, src)
-  -- local icon = utils.icons.volume(result.percentage)
+  -- local icon = theme.icons.get_volume(result.percentage)
   -- volume.icon = icon
   -- ignore self-emit signal
   if src ~= "cc_slider" then

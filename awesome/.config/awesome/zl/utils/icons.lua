@@ -2,7 +2,7 @@ local M = {
   cpu = "",
   memory = "",
   thermal = "﨏", -- "",
-  brightness = "",
+  brightness = "", --"",
 }
 
 M.volume = function(muted)

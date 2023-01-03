@@ -10,7 +10,7 @@ local M = {
 }
 
 M.run = function()
-  local services = { "volume", "brightness", "cpu", "memory", "thermal", "battery" }
+  local services = { "volume", "brightness", "cpu", "memory", "thermal", "battery", "network" }
   for _, name in ipairs(services) do
     require("zl.service." .. name).run()
   end
@@ -44,7 +44,7 @@ end
 
 M.register = function(s, name, timeout)
   s.name = "service::" .. name
-  s.timeout = timeout or 0
+  s.timeout = timeout or s.timeout or 0
   s.status = M.status.STOPPED
   s.run = function()
     service_run(s)

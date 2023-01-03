@@ -2,49 +2,53 @@ local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local zwidgets = require("zl.widgets")
 local modkey = require("zl.configs").options.keys.modkey
+local theme = require("zl.theme")
 local utils = require("zl.utils")
+local widgets = {
+  volume = require(... .. ".volume"),
+  battery = require(... .. ".battery"),
+  wifi = require(... .. ".wifi"),
+}
 
-local kbd = zwidgets.keyboard()
+local spacer = function(n)
+  local spaces = string.rep(" ", n or 1)
+  return wibox.widget.textbox(spaces)
+end
 
 local clk = wibox.widget.textclock("%H:%M")
 
-local vol = zwidgets.volume {
+local vol = widgets.volume {
   fg = beautiful.palette.green,
 }
 
-local bat = require("zl.screen.wibar.battery") {
+local bat = widgets.battery {
   fg = beautiful.palette.teal,
 }
 
--- local net = zwidgets.network {
---   fg = beautiful.palette.blue,
--- }
-
--- local bat = zwidgets.battery {
---   fg = beautiful.palette.teal,
--- }
+local wifi = widgets.wifi {
+  fg = beautiful.palette.blue,
+}
 
 local cpu = wibox.widget.textbox()
 awesome.connect_signal("service::cpu", function(result)
-  local text = string.format("%s %s%%", utils.icons.cpu, result.usage)
+  local text = string.format("%s %s%%", theme.icons.cpu, result.usage)
   cpu.markup = utils.markup.fg(text, beautiful.palette.lavender)
 end)
 
 local mem = wibox.widget.textbox()
 awesome.connect_signal("service::memory", function(result)
-  local text = string.format("%s %s%%", utils.icons.memory, result.perc)
+  local text = string.format("%s %s%%", theme.icons.memory, result.perc)
   mem.markup = utils.markup.fg(text, beautiful.palette.yellow)
 end)
 
 local thermal = wibox.widget.textbox()
 awesome.connect_signal("service::thermal", function(result)
-  local text = string.format("%s %s°C", utils.icons.thermal, result.thermal)
+  local text = string.format("%s %s°C", theme.icons.thermal, result.thermal)
   thermal.markup = utils.markup.fg(text, beautiful.palette.pink)
 end)
 
-local wi_systat = wibox.widget {
+local wb_systat = wibox.widget {
   cpu,
   mem,
   thermal,
@@ -52,9 +56,9 @@ local wi_systat = wibox.widget {
   spacing = dpi(10),
 }
 
-local wi_control = wibox.widget {
+local wb_control = wibox.widget {
   vol,
-  -- net,
+  wifi,
   bat,
   -- kbd,
   layout = wibox.layout.fixed.horizontal,
@@ -105,7 +109,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
-  s.mytaglist = awful.widget.taglist {
+  s.wb_taglist = awful.widget.taglist {
     screen = s,
     filter = awful.widget.taglist.filter.all,
     widget_template = {
@@ -148,7 +152,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   }
 
   -- Create a tasklist widget
-  s.mytasklist = awful.widget.tasklist {
+  s.wb_tasklist = awful.widget.tasklist {
     screen = s,
     filter = awful.widget.tasklist.filter.currenttags,
     widget_template = {
@@ -179,8 +183,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
+  if s == screen.primary then
+    s.wb_systat = wb_systat
+  end
+
   -- Create the wibox
-  s.mywibar = awful.wibar {
+  s.wibar = awful.wibar {
     screen = s,
     visible = true,
     ontop = false,
@@ -192,12 +200,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
     -- margins = { left = dpi(10), right = dpi(10), top = dpi(10), bottom = dpi(14) },
   }
 
-  s.mywibar:setup {
+  s.wibar:setup {
+    -- Left
     {
-      s.mytaglist,
+      s.wb_taglist,
       layout = wibox.layout.fixed.horizontal,
     },
-    s.mytasklist,
+    -- Middle
+    s.wb_tasklist,
+    -- Right
     {
       {
         {
@@ -208,9 +219,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         widget = wibox.container.margin,
         margins = dpi(4),
       },
-      wi_systat,
-      wi_control,
+      s.wb_systat,
+      wb_control,
       clk,
+      spacer(),
       layout = wibox.layout.fixed.horizontal,
       spacing = dpi(10),
     },

@@ -1,12 +1,12 @@
-local M = {}
-
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
 
-M.inited = false
+local M = {
+  inited = false,
+}
 
 function M.setup()
   if M.inited then
@@ -25,8 +25,8 @@ function M.setup()
       visible = false,
     }
 
-    s.x = s.geometry.x + s.geometry.width - s.mycc.width - beautiful.useless_gap * 2
-    s.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap * 2
+    s.mycc.x = s.geometry.x + s.geometry.width - s.mycc.width - beautiful.useless_gap
+    s.mycc.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap
 
     -- widgets
     local sliders = require("zl.screen.controlCenter.sliders")

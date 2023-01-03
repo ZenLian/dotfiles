@@ -13,11 +13,6 @@ M.run_once = function(command)
   awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", name, command))
 end
 
--- Material Design Icons path
-M.mdi = function(name)
-  return os.getenv("HOME") .. "/.config/awesome/mods/mdi/svg/" .. name .. ".svg"
-end
-
 local PREFIX = ... .. "."
 
 return setmetatable(M, {

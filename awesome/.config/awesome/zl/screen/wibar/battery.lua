@@ -3,6 +3,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local service = require("zl.service")
 local utils = require("zl.utils")
+local theme = require("zl.theme")
 
 local defaults = {
   fg = beautiful.fg_normal,
@@ -54,7 +55,7 @@ M.new = function(args)
     if result.percentage ~= "N/A" then
       percentage = result.percentage
     end
-    local icon = utils.icons.battery(percentage, charging) .. " "
+    local icon = theme.icons.get_battery(percentage, charging) .. " "
     bat.markup = utils.markup.fg(icon, args.fg)
   end)
 

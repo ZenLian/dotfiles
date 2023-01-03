@@ -21,7 +21,8 @@
 - Audio:
   - alsa-utils
 - Network:
-  - Networking Manager
+  - Network Manager
+  - nmcli
 
 Optional:
 

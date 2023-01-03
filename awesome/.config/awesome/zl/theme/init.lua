@@ -1,5 +1,3 @@
-local M = {}
-
 local beautiful = require("beautiful")
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
@@ -7,7 +5,11 @@ local dpi = xresources.apply_dpi
 local gears = require("gears")
 local utils = require("zl.utils")
 local sys_themes_path = require("gears.filesystem").get_themes_dir()
-local theme_path = os.getenv("HOME") .. "/.config/awesome/zl/theme"
+local theme_path = os.getenv("HOME") .. "/.config/awesome/" .. string.gsub(..., "%.", "/")
+
+local M = {
+  icons = require(... .. ".icons"),
+}
 
 M.options = {
   flavour = "mocha",

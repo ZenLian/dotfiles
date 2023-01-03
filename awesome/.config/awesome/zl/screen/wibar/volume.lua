@@ -2,6 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local utils = require("zl.utils")
+local theme = require("zl.theme")
 local service = require("zl.service")
 local O = require("zl.configs").options
 
@@ -15,7 +16,7 @@ local factory = function(args)
   local vol = wibox.widget.textbox()
 
   awesome.connect_signal("service::volume", function(result)
-    local icon = utils.icons.volume(result.muted)
+    local icon = theme.icons.get_volume(result.muted)
     local text = string.format("%s %s%%", icon, result.volume)
     local markup = utils.markup.fg(text, args.fg)
     vol.markup = markup
