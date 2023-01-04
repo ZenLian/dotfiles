@@ -1,8 +1,6 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local ruled = require("ruled")
-local gears = require("gears")
-local utils = require("zl.utils")
 
 ruled.client.connect_signal("request::rules", function()
   -- Global
@@ -14,72 +12,93 @@ ruled.client.connect_signal("request::rules", function()
       raise = true,
       size_hints_honor = false,
       screen = awful.screen.preferred,
-      titlebars_enabled = true,
+      -- titlebars_enabled = true,
       placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
       -- shape = utils.shape.rrect(8),
     },
   }
 
-  -- tasklist order
-  ruled.client.append_rule {
-    id = "tasklist_order",
-    rule = {},
-    properties = {},
-    callback = awful.client.setslave,
-  }
-
-  -- Floating
+  -- Floating clients.
   ruled.client.append_rule {
     id = "floating",
     rule_any = {
-      class = { "Sxiv", "Zathura", "Galculator", "Xarchiver", "Lxappearance" },
-      role = { "pop-up" },
-      instance = { "spad", "discord", "music" },
+      instance = {
+        "copyq",
+        "pinentry",
+        --
+        "spad",
+        "discord",
+        "music",
+      },
+      class = {
+        "Arandr",
+        "Blueman-manager",
+        "Gpick",
+        "Kruler",
+        "Sxiv",
+        "Tor Browser",
+        "Wpa_gui",
+        "veromix",
+        "xtightvncviewer",
+        --
+        "Lxappearance",
+        "Galculator",
+        "Xarchiver",
+        "Zathura",
+      },
+      -- Note that the name property shown in xprop might be set slightly after creation of the client
+      -- and the name shown there might not match defined rules here.
+      name = {
+        "Event Tester", -- xev.
+      },
+      role = {
+        "AlarmWindow", -- Thunderbird's calendar.
+        "ConfigManager", -- Thunderbird's about:config.
+        "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
+      },
     },
     properties = { floating = true, placement = awful.placement.centered },
   }
 
-  -- Borders
+  -- Add titlebars to normal clients and dialogs
   ruled.client.append_rule {
-    id = "borders",
+    id = "titlebars",
     rule_any = { type = { "normal", "dialog" } },
-    except_any = {
-      role = { "Popup" },
-      type = { "splash" },
-      name = { "^discord.com is sharing your screen.$" },
-    },
-    properties = {
-      border_width = beautiful.border_width,
-      border_color = beautiful.border_normal,
-    },
+    properties = { titlebars_enabled = true },
   }
+
+  -- Set Firefox to always map on the tag named "2" on screen 1.
+  -- ruled.client.append_rule {
+  --     rule       = { class = "Firefox"     },
+  --     properties = { screen = 1, tag = "2" }
+  -- }
+
+  -- NOTE: below not defaults
+  -- Borders
+  -- ruled.client.append_rule {
+  --   id = "borders",
+  --   rule_any = { type = { "normal", "dialog" } },
+  --   except_any = {
+  --     role = { "Popup" },
+  --     type = { "splash" },
+  --     name = { "^discord.com is sharing your screen.$" },
+  --   },
+  --   properties = {
+  --     border_width = beautiful.border_width,
+  --     border_color = beautiful.border_normal,
+  --   },
+  -- }
 
   -- Center Placement
-  ruled.client.append_rule {
-    id = "center_placement",
-    rule_any = {
-      type = { "dialog" },
-      class = { "Steam", "discord", "markdown_input", "nemo", "thunar" },
-      instance = { "markdown_input" },
-      role = { "GtkFileChooserDialog" },
-    },
-    properties = { placement = awful.placement.center },
-  }
-
-  -- Titlebar rules
   -- ruled.client.append_rule {
-  --   id = "titlebars",
+  --   id = "center_placement",
   --   rule_any = {
-  --     type = {
-  --       "dialog",
-  --       "splash",
-  --     },
-  --     name = {
-  --       "^discord.com is sharing your screen.$",
-  --       "file_progress",
-  --     },
+  --     type = { "dialog" },
+  --     class = { "Steam", "discord", "markdown_input", "nemo", "thunar" },
+  --     instance = { "markdown_input" },
+  --     role = { "GtkFileChooserDialog" },
   --   },
-  --   properties = { titlebars_enabled = false },
+  --   properties = { placement = awful.placement.center },
   -- }
 end)
 

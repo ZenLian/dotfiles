@@ -1,6 +1,7 @@
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local service = require("zl.service")
+local menubar = require("menubar")
 local menu = require("zl.modules.menu")
 local C = require("zl.config")
 
@@ -17,6 +18,9 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, ctrl }, "p", function()
     menu:toggle()
   end, { description = "toggle menu", group = "awesome" }),
+  awful.key({ modkey }, "p", function()
+    menubar.show()
+  end, { description = "show the menubar", group = "launcher" }),
   awful.key({ modkey }, "a", function()
     local screen = awful.screen.focused()
     require("zl.screen.controlCenter").toggle(screen)
@@ -39,9 +43,9 @@ awful.keyboard.append_global_keybindings {
   end, { description = "file explorer", group = "launcher" }),
 
   -- TODO: configurable
-  awful.key({ modkey }, "p", function()
-    awful.spawn(C.apps.launcher)
-  end, { description = "rofi drun", group = "launcher" }),
+  -- awful.key({ modkey }, "p", function()
+  --   awful.spawn(C.apps.launcher)
+  -- end, { description = "rofi drun", group = "launcher" }),
   awful.key({ modkey }, "r", function()
     awful.spawn("rofi -show run")
   end, { description = "rofi run", group = "launcher" }),

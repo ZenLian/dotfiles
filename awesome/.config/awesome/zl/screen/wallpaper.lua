@@ -15,4 +15,3 @@ screen.connect_signal("request::wallpaper", function(s)
     },
   }
 end)
--- }}}
