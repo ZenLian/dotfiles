@@ -1,5 +1,4 @@
 local awful = require("awful")
-local beautiful = require("beautiful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
@@ -42,6 +41,7 @@ ruled.client.connect_signal("request::rules", function()
         "xtightvncviewer",
         --
         "Lxappearance",
+        "kcalc",
         "Galculator",
         "Xarchiver",
         "Zathura",
@@ -60,12 +60,12 @@ ruled.client.connect_signal("request::rules", function()
     properties = { floating = true, placement = awful.placement.centered },
   }
 
-  -- Add titlebars to normal clients and dialogs
-  ruled.client.append_rule {
-    id = "titlebars",
-    rule_any = { type = { "normal", "dialog" } },
-    properties = { titlebars_enabled = true },
-  }
+  -- Add titlebars
+  -- ruled.client.append_rule {
+  --   id = "titlebars",
+  --   rule_any = { type = { "dialog" } },
+  --   properties = { titlebars_enabled = true },
+  -- }
 
   -- Set Firefox to always map on the tag named "2" on screen 1.
   -- ruled.client.append_rule {
@@ -101,13 +101,3 @@ ruled.client.connect_signal("request::rules", function()
   --   properties = { placement = awful.placement.center },
   -- }
 end)
-
--- Music client
--- ruled.client.append_rule({
--- 	rule_any = { class = { "music" }, instance = { "music" } },
--- 	properties = {
--- 		floating = true,
--- 		width = 700,
--- 		height = 444,
--- 	},
--- })

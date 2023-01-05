@@ -24,7 +24,7 @@ local factory = function(args)
       local image = theme.icons.get_mdi_wifi(dev.wifi.level, args.fg)
       wifi:set_image(image)
     else
-      local image = theme.icons.get_mdi("wifi_off", args.fg)
+      local image = theme.icons.get_mdi("wifi-off", args.fg)
       wifi:set_image(image)
     end
   end)

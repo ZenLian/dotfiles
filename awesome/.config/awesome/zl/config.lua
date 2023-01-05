@@ -8,8 +8,8 @@ M.options = {
     terminal = "alacritty",
     editor = "alacritty -e nvim",
     browser = "microsoft-edge-stable",
-    explorer = "dolphin", -- "thunar"
-    screenshoter = "",
+    -- explorer = "dolphin",
+    explorer = "thunar",
   },
   keys = {
     modkey = "Mod4",

@@ -1,6 +1,6 @@
 local C = require("zl.config")
 
--- misc stuff
+-- {{{ misc stuff
 require("awful.autofocus")
 require("awful.util").shell = "bash"
 require("menubar.utils").terminal = C.apps.terminal
@@ -10,8 +10,10 @@ require("menubar.utils").terminal = C.apps.terminal
 --   c:activate { context = "mouse_enter", raise = false }
 -- end)
 
+--- {{{ modules
 require("zl.modules.menu")
 require("zl.modules.layout")
 require("zl.modules.keys")
 require("zl.modules.rules")
 require("zl.modules.autostart")
+-- }}}

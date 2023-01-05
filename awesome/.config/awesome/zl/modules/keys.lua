@@ -90,10 +90,21 @@ awful.keyboard.append_global_keybindings {
   awful.key({}, "XF86AudioMute", function()
     service.volume.set("toggle")
   end, { description = "mute volume", group = "control" }),
+}
+-- }}}
 
-  -- awful.key({ modkey }, "F2", function()
-  -- 	misc.musicMenu()
-  -- end, { description = "music menu", group = "control" }),
+-- {{{ screenshot
+-- TODO: config
+awful.keyboard.append_global_keybindings {
+  awful.key({}, "Print", function()
+    awful.spawn("flameshot gui")
+  end, { description = "screenshot", group = "control" }),
+  awful.key({ modkey }, "Print", function()
+    awful.spawn.with_shell("flameshot full --clipboard")
+  end, { description = "screenshot fullscreen", group = "control" }),
+  awful.key({}, "XF86ScreenSaver", function()
+    awful.spawn.with_shell("flameshot launcher")
+  end, { description = "screenshot launcher", group = "control" }),
 }
 -- }}}
 
@@ -328,8 +339,12 @@ local clientkeys = {
   end, { description = "move to screen", group = "client" }),
 
   awful.key({ modkey }, "t", function(c)
-    c.ontop = not c.ontop
-  end, { description = "toggle keep on top", group = "client" }),
+    awful.titlebar.toggle(c)
+  end, { description = "toggle titlebar", group = "client" }),
+
+  awful.key({ modkey, shift }, "t", function()
+    require("zl.screen.titlebar").toggle()
+  end, { description = "toggle all titlebar", group = "client" }),
 
   awful.key({ modkey }, "z", function(c)
     c.minimized = true

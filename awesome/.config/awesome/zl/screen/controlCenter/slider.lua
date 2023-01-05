@@ -5,6 +5,8 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
 
+local M = {}
+
 local defaults = {
   min = 0,
   max = 100,
@@ -13,7 +15,7 @@ local defaults = {
   on_icon_press = nil,
 }
 
-local factory = function(args)
+M.new = function(args)
   args = utils.table.extend(defaults, args)
 
   local slider = wibox.widget {
@@ -120,8 +122,8 @@ local factory = function(args)
 end
 
 -- return factory
-return setmetatable({}, {
+return setmetatable(M, {
   __call = function(_, ...)
-    return factory(...)
+    return M.new(...)
   end,
 })

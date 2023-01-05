@@ -1,21 +1,18 @@
--- appearences each screen
-local awful = require("awful")
+-- appearance for each screen
 
-require(... .. ".wallpaper")
+local PREFIX = ... .. "."
+local submodule = function(name)
+  return require(PREFIX .. name)
+end
 
--- {{{ tags
--- TODO: move to tags
-local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-
--- default tags
+submodule("wallpaper")
+submodule("titlebar")
+-- autosetup when toggle
+submodule("controlCenter").setup()
+submodule("notification")
 
 screen.connect_signal("request::desktop_decoration", function(s)
   screen[s].padding = { left = 0, right = 0, top = 0, bottom = 0 }
-  awful.tag(tags, s, awful.layout.layouts[1])
+  submodule("tag").init(s)
+  submodule("wibar").init(s)
 end)
--- }}}
-
-require("zl.screen.wibar")
-require("zl.screen.titlebar")
-require("zl.screen.controlCenter")
-require("zl.screen.notification")

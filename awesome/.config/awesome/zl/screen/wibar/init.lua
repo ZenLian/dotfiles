@@ -10,6 +10,8 @@ local widgets = {
   wifi = require(... .. ".wifi"),
 }
 
+local M = {}
+
 local modkey = require("zl.config").keys.modkey
 
 local spacer = function(n)
@@ -89,7 +91,7 @@ local taglist_buttons = {
   end),
 }
 
-screen.connect_signal("request::desktop_decoration", function(s)
+M.init = function(s)
   -- Create an imagebox widget which will contain an icon indicating which layout we're using.
   -- We need one layoutbox per screen.
   s.mylayoutbox = awful.widget.layoutbox {
@@ -230,4 +232,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     layout = wibox.layout.align.horizontal,
     expand = "none",
   }
-end)
+end
+
+return M

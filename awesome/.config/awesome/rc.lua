@@ -1,11 +1,11 @@
 pcall(require, "luarocks.loader")
+local naughty = require("naughty")
 
 -- {{{ mods path
 local cfg_path = require("gears").filesystem.get_configuration_dir()
 package.path = cfg_path .. "mods/?.lua;" .. cfg_path .. "mods/?/init.lua;" .. package.path
 -- }}}
 
-local naughty = require("naughty")
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)

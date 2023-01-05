@@ -1,72 +1,96 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
 
 local M = {
-  inited = false,
+  _setup = false,
+  -- show in which screen
+  screen = nil,
 }
 
-function M.setup()
-  if M.inited then
-    return
-  end
-  awful.screen.connect_for_each_screen(function(s)
-    s.mycc = wibox {
-      type = "dock",
-      shape = utils.shape.rrect(),
-      screen = s,
-      width = beautiful.cc_width,
-      height = beautiful.cc_height,
-      bg = beautiful.cc_bg,
-      -- margins = dpi(20),
-      ontop = true,
-      visible = false,
-    }
+-- add to screen
+M.create = function(s)
+  local mycc = wibox {
+    type = "dock",
+    shape = utils.shape.rrect(),
+    screen = s,
+    width = beautiful.cc_width,
+    height = beautiful.cc_height,
+    bg = beautiful.cc_bg,
+    -- margins = dpi(20),
+    ontop = true,
+    visible = false,
+    -- opacity = 0.95,
+  }
+  s.mycc = mycc
 
-    s.mycc.x = s.geometry.x + s.geometry.width - s.mycc.width - beautiful.useless_gap
-    s.mycc.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap
+  mycc.x = s.geometry.x + s.geometry.width - mycc.width - beautiful.useless_gap
+  mycc.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap
 
-    -- widgets
-    local sliders = require("zl.screen.controlCenter.sliders")
+  -- widgets
+  local sliders = require("zl.screen.controlCenter.sliders")
 
-    s.mycc:setup {
-      {
-        sliders,
-        layout = wibox.layout.fixed.vertical,
-      },
-      widget = wibox.container.margin,
-      margins = beautiful.cc_spacing,
-    }
-  end)
+  mycc:setup {
+    {
+      sliders,
+      layout = wibox.layout.fixed.vertical,
+    },
+    widget = wibox.container.margin,
+    margins = beautiful.cc_spacing,
+  }
 
-  M.inited = true
+  mycc:buttons {
+    awful.button({}, 3, function()
+      M.hide()
+    end),
+  }
+
+  return mycc
 end
 
-M.toggle = function(s)
-  if not M.inited then
-    M.setup()
+function M.hide()
+  if M.screen then
+    M.screen.mycc.visible = false
+  end
+  M.screen = nil
+end
+
+function M.show(s)
+  s = s or screen.primary
+
+  if M.screen ~= s then
+    M.hide()
+  end
+  s.mycc.visible = true
+  M.screen = s
+end
+
+function M.toggle(s)
+  if M.screen == nil or M.screen ~= s then
+    M.show(s)
+  else
+    M.hide()
+  end
+end
+
+function M.setup()
+  if M._setup then
+    return
   end
 
-  if not s then
-    s = screen.primary
-  end
+  -- add to screen
+  awful.screen.connect_for_each_screen(function(s)
+    M.create(s)
+  end)
 
-  local cc = s.mycc
+  screen.connect_signal("request::remove", function(s)
+    if M.screen == s then
+      M.hide()
+    end
+  end)
 
-  -- cc.x = s.geometry.x + (dpi(48) + beautiful.useless_gap * 4)
-  -- cc.y = s.geometry.y + s.geometry.height - (cc.height + beautiful.useless_gap * 2)
-  cc.visible = not cc.visible
-
-  --   require("naughty").notify {
-  --     title = "cc",
-  --     -- stylua: ignore
-  --     text = string.format("visible: %s\n", cc.visible)
-  --         .. string.format("pos: (%s, %s)\n", cc.x, cc.y)
-  --         .. string.format("width: %s, height: %s", cc.width, cc.height)
-  -- ,
-  --   }
+  M._setup = true
 end
 
 return M

@@ -1,7 +1,12 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local ruled = require("ruled")
 local beautiful = require("beautiful")
+
+local M = {
+  _enabled = false,
+}
 
 local function create_button(args) --{color, action, c}
   -- the widget
@@ -114,35 +119,36 @@ client.connect_signal("request::titlebars", function(c)
       widget = wibox.container.margin,
       margins = { right = beautiful.titlebar_button_margin },
     },
-    -- {
-    --   {
-    --     layout = wibox.layout.align.vertical,
-    --     expand = "none",
-    --   },
-    --   margins = { right = dpi(24) },
-    --   widget = wibox.container.margin,
-    -- },
-
-    -- { -- Left
-    --   awful.titlebar.widget.iconwidget(c),
-    --   buttons = buttons,
-    --   layout = wibox.layout.fixed.horizontal,
-    -- },
-    -- { -- Middle
-    --   { -- Title
-    --     align = "center",
-    --     widget = awful.titlebar.widget.titlewidget(c),
-    --   },
-    --   buttons = buttons,
-    --   layout = wibox.layout.flex.horizontal,
-    -- },
-    -- { -- Right
-    --   awful.titlebar.widget.floatingbutton(c),
-    --   awful.titlebar.widget.maximizedbutton(c),
-    --   awful.titlebar.widget.stickybutton(c),
-    --   awful.titlebar.widget.ontopbutton(c),
-    --   awful.titlebar.widget.closebutton(c),
-    --   layout = wibox.layout.fixed.horizontal(),
-    -- },
   }
 end)
+
+-- always add titlebars to dialog
+ruled.client.append_rule {
+  id = "titlebars_always",
+  rule_any = { type = { "dialog" } },
+  properties = { titlebars_enabled = true },
+}
+
+-- Add toggleable titlebars to normal clients
+ruled.client.append_rule {
+  id = "titlebars",
+  rule_any = { type = { "normal" } },
+  properties = { titlebars_enabled = M._enabled },
+}
+
+M.toggle = function()
+  M._enabled = not M._enabled
+  local toggle = M._enabled and awful.titlebar.show or awful.titlebar.hide
+  for _, c in ipairs(client.get()) do
+    toggle(c)
+  end
+
+  ruled.client.remove_rule("titlebars")
+  ruled.client.append_rule {
+    id = "titlebars",
+    rule_any = { type = { "normal" } },
+    properties = { titlebars_enabled = M._enabled },
+  }
+end
+
+return M
