@@ -8,6 +8,7 @@ local widgets = {
   volume = require(... .. ".volume"),
   battery = require(... .. ".battery"),
   wifi = require(... .. ".wifi"),
+  bluetooth = require(... .. ".bluetooth"),
 }
 
 local M = {}
@@ -30,6 +31,10 @@ local bat = widgets.battery {
 }
 
 local wifi = widgets.wifi {
+  fg = beautiful.palette.blue,
+}
+
+local bluetooth = widgets.bluetooth {
   fg = beautiful.palette.blue,
 }
 
@@ -61,6 +66,7 @@ local wb_systat = wibox.widget {
 
 local wb_control = wibox.widget {
   vol,
+  bluetooth,
   wifi,
   bat,
   -- kbd,

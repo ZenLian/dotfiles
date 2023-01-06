@@ -1,8 +1,8 @@
--- volume signal
--- ("service::volume"), function({volume=int, muted=boolean}, src(string))
-
+-- "service::volume"
+-- * volume(number) 0~100
+-- * muted(boolean)
+--
 local awful = require("awful")
-local gtimer = require("gears.timer")
 local service = require("zl.service.core")
 
 local M = {}

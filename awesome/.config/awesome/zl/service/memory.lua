@@ -1,5 +1,11 @@
 -- "service::memory"
--- percentage, src(string)
+-- * total
+-- * free
+-- * used
+-- * perc
+-- * swap
+--   * total
+--   * free
 local service = require("zl.service.core")
 
 local M = {}

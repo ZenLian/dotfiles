@@ -10,7 +10,17 @@ local M = {
 }
 
 M.run = function()
-  local services = { "volume", "brightness", "cpu", "memory", "thermal", "battery", "network" }
+  local services = {
+    --
+    "volume",
+    "brightness",
+    "cpu",
+    "memory",
+    "thermal",
+    "battery",
+    "network",
+    "bluetooth",
+  }
   for _, name in ipairs(services) do
     require("zl.service." .. name).run()
   end

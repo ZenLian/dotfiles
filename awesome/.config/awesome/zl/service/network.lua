@@ -1,4 +1,15 @@
 -- "service::network"
+-- keys are network interface names, e.g. wlan0, eth0, lo
+-- * wlan0
+--   * carrier(string) "1" | "0"
+--   * state(string) "on" | "off"
+--   * up/down(number) upload/download speed in bytes
+--   * tx/rx(number) total tx/rx bytes
+--   * wifi(table) only for wlan interface
+--     * level(number)
+--       signal quality in dBm
+--     * signal(number)
+--       signal quality in percentage(possibly >100 or <0)
 local service = require("zl.service.core")
 local utils = require("zl.utils")
 
@@ -47,8 +58,9 @@ M.get = function()
       local up = (tx - M.devices[name].tx) / interval
       local down = (rx - M.devices[name].rx) / interval
 
-      dev.up = string.format("%.1f", up)
-      dev.down = string.format("%.1f", down)
+      -- dev.up = string.format("%.1f", up)
+      -- dev.down = string.format("%.1f", down)
+      dev.up, dev.down = up, down
     end
     dev.time = now
 

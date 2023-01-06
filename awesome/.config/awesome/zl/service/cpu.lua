@@ -1,5 +1,5 @@
 -- "service::cpu"
--- { usage = int}, src(string)
+-- * usage(number) 0~100
 local service = require("zl.service.core")
 local utils = require("zl.utils")
 

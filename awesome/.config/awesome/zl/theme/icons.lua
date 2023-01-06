@@ -7,6 +7,10 @@ local icons = {
   memory = "",
   thermal = "﨏", -- "",
   wifi = "直",
+  bluetooth = "",
+  bluetooth_off = "",
+  bluetooth_audio = "",
+  bluetooth_connect = "",
   battery = "",
   battery_charging = { "", "", "", "", "", "", "", "", "", "", "" },
   battery_discharging = { "", "", "", "", "", "", "", "", "", "", "" },
@@ -31,6 +35,8 @@ end
 icons.get_volume = function(muted)
   return muted and icons.volume_muted or icons.volume
 end
+
+icons.get_bluetooth = function(name) end
 
 -- get Material Design Icon SVG image
 local MDI_ICON_PATH = gears.filesystem.get_configuration_dir() .. "mods/mdi/svg/%s.svg"
