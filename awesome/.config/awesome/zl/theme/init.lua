@@ -91,7 +91,7 @@ function M.setup(options)
   theme.notification_fg = C.text
   theme.notification_bg = C.mantle
   theme.notification_border_width = 0
-  -- theme.notification_border_color = C.mantle
+  theme.notification_border_color = C.blue
   theme.notification_shape = gears.shape.rounded_rect
   theme.notification_opacity = 0.9
   theme.notification_margin = dpi(10)

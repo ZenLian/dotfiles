@@ -1,4 +1,6 @@
 local awful = require("awful")
+local naughty = require("naughty")
+local beautiful = require("beautiful")
 
 local M = {}
 
@@ -11,6 +13,30 @@ M.run_once = function(command)
   end
 
   awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", name, command))
+end
+
+M.debug = function(text, args)
+  local opts = {
+    title = "<span><b>Debug</b></span>",
+    text = text,
+    timeout = 0,
+    fg = beautiful.palette.blue,
+    bg = beautiful.palette.base,
+    border_color = beautiful.palette.blue,
+  }
+  opts = M.table.extend(opts, args)
+  naughty.notify(opts)
+end
+
+M.error = function(text)
+  naughty.notify {
+    title = "<b>Error</b>",
+    text = text,
+    timeout = 0,
+    fg = beautiful.palette.red,
+    bg = beautiful.palette.base,
+    border_color = beautiful.palette.red,
+  }
 end
 
 local PREFIX = ... .. "."

@@ -9,23 +9,6 @@ local M = {
   },
 }
 
-M.run = function()
-  local services = {
-    --
-    "volume",
-    "brightness",
-    "cpu",
-    "memory",
-    "thermal",
-    "battery",
-    "network",
-    "bluetooth",
-  }
-  for _, name in ipairs(services) do
-    require("zl.service." .. name).run()
-  end
-end
-
 local service_run = function(s)
   if s.status ~= M.status.STOPPED then
     return

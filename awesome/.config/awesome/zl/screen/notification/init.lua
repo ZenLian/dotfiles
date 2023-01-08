@@ -3,6 +3,8 @@ local naughty = require("naughty")
 local beautiful = require("beautiful")
 local ruled = require("ruled")
 
+local M = {}
+
 naughty.config.presets.critical = {
   bg = beautiful.notification_bg_critical,
   fg = beautiful.notification_fg_critical,
@@ -25,3 +27,5 @@ naughty.connect_signal("request::display", function(n)
   naughty.layout.box { notification = n }
 end)
 -- }}}
+
+return M

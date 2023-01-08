@@ -5,6 +5,10 @@ local utils = require("zl.utils")
 local theme = require("zl.theme")
 local service = require("zl.service")
 
+-- DEBUG
+-- local SERVICE = "bluetooth"
+local SERVICE = "bt"
+
 local M = {}
 
 local defaults = {
@@ -15,7 +19,7 @@ M.new = function(args)
   args = utils.table.extend(defaults, args or {})
 
   local widget = wibox.widget.textbox(theme.icons.bluetooth_off)
-  awesome.connect_signal("service::bluetooth", function(result)
+  awesome.connect_signal("service::" .. SERVICE, function(result)
     local icon = result.status ~= "off" and theme.icons.bluetooth or theme.icons.bluetooth_off
     local text = string.format("%s ", icon)
     widget.markup = utils.markup.fg(text, beautiful.palette.blue)
@@ -28,7 +32,7 @@ M.new = function(args)
     timeout = 5,
     timer_function = function()
       local content = {}
-      local result = service.bluetooth.get()
+      local result = service[SERVICE].get()
 
       table.insert(content, string.format("Status: %s", result.status))
       for addr, dev in pairs(result.devices) do
@@ -37,6 +41,12 @@ M.new = function(args)
 
       return table.concat(content, "\n")
     end,
+  }
+
+  widget:buttons {
+    awful.button({}, 1, function() -- left click
+      service.bt.toggle()
+    end),
   }
 
   return widget

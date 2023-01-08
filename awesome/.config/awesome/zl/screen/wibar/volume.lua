@@ -27,7 +27,7 @@ local factory = function(args)
     -- }
   end)
 
-  vol:buttons(awful.util.table.join(
+  vol:buttons {
     awful.button({}, 1, function() -- left click
       service.volume.set("toggle")
     end),
@@ -43,8 +43,8 @@ local factory = function(args)
     end),
     awful.button({}, 5, function() -- scroll down
       service.volume.set("1%-")
-    end)
-  ))
+    end),
+  }
 
   return vol
 end
