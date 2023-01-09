@@ -13,7 +13,7 @@ M.run = function()
     "battery",
     "network",
     "bluetooth",
-    "bt",
+    -- "bt",
   }
   for _, name in ipairs(services) do
     require(NAME .. name).run()
