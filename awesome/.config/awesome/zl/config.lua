@@ -14,6 +14,33 @@ M.options = {
   keys = {
     modkey = "Mod4",
   },
+  screens = {
+    eDP = {
+      dpi = 192,
+    },
+  },
+  device = {
+    wifi = "wlan0",
+  },
+
+  theme = {
+    flavour = "mocha",
+    --font = "JetBrainsMono Nerd Font 10"
+    font = {
+      family = "Caskaydia Cove Nerd Font",
+      size = 12,
+    },
+    icon_font = {
+      family = "Material Design Icons",
+      size = 12,
+    },
+    taglist = {
+      square = false,
+    },
+    border_width = 1,
+    border_radius = 10,
+    gap = 5,
+  },
 }
 
 M.setup = function(options)

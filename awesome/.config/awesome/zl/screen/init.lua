@@ -15,4 +15,17 @@ screen.connect_signal("request::desktop_decoration", function(s)
   screen[s].padding = { left = 0, right = 0, top = 0, bottom = 0 }
   submodule("tag").init(s)
   submodule("wibar").init(s)
+
+  local text = string.format(
+    [[
+dpi: %s
+prefered_dpi: %s
+]],
+    s.dpi,
+    s.preferred_dpi
+  )
+  require("naughty").notification {
+    screen = s,
+    text = text,
+  }
 end)

@@ -1,3 +1,4 @@
+local awful = require("awful")
 local beautiful = require("beautiful")
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
@@ -12,27 +13,9 @@ local M = {
   icons = require(... .. ".icons"),
 }
 
-M.options = {
-  flavour = "mocha",
-  --font = "JetBrainsMono Nerd Font 10"
-  font = {
-    family = "Caskaydia Cove Nerd Font",
-    size = 12,
-  },
-  icon_font = {
-    family = "Material Design Icons",
-    size = 12,
-  },
-  taglist = {
-    square = false,
-  },
-  border_width = 1,
-  border_radius = 10,
-  gap = 5,
-}
-
-function M.setup(options)
-  local O = utils.table.extend(M.options, options or {})
+function M.setup()
+  -- local O = utils.table.extend(M.options, options or {})
+  local O = require("zl.config").theme
   local C = require("zl.theme.palettes").get(O.flavour)
 
   local theme = {

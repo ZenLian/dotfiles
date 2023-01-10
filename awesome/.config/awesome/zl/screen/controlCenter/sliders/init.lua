@@ -2,7 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local slider = require("zl.screen.controlCenter.slider")
+local slider = require(... .. ".slider")
 local utils = require("zl.utils")
 local theme = require("zl.theme")
 local service = require("zl.service")
@@ -70,7 +70,7 @@ return wibox.widget {
   },
   widget = wibox.container.background,
   forced_height = dpi(120),
-  bg = beautiful.cc_widget_bg .. "99",
-  border_color = beautiful.fg_normal .. "33",
+  bg = beautiful.cc_widget_bg, --  .. "99",
+  -- border_color = beautiful.fg_normal, --.. "33",
   shape = utils.shape.rrect(),
 }

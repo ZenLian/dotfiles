@@ -1,3 +1,5 @@
+local awful = require("awful")
+local naughty = require("naughty")
 local C = require("zl.config")
 
 -- {{{ misc stuff

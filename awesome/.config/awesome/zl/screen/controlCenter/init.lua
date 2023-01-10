@@ -2,6 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local utils = require("zl.utils")
+local PREFIX = ...
 
 local M = {
   _setup = false,
@@ -29,12 +30,15 @@ M.create = function(s)
   mycc.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap
 
   -- widgets
-  local sliders = require("zl.screen.controlCenter.sliders")
+  local sliders = require(PREFIX .. ".sliders")
+  local buttons = require(PREFIX .. ".buttons")
 
   mycc:setup {
     {
       sliders,
+      buttons,
       layout = wibox.layout.fixed.vertical,
+      spacing = beautiful.cc_spacing,
     },
     widget = wibox.container.margin,
     margins = beautiful.cc_spacing,
