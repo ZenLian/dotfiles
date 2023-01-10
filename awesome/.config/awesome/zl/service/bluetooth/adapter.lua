@@ -3,8 +3,11 @@ local Device = require("zl.service.bluetooth.device")
 
 local M = {}
 
-local function on_properties_changed(proxy, changed_properties, invalidated_properties)
-  utils.debug(string.format("%s\n", proxy:get_interface_name()))
+local function on_properties_changed(adapter, proxy, changed_properties, invalidated_properties)
+  -- utils.debug(string.format("%s\n", proxy:get_interface_name()))
+  if adapter.on_properties_changed then
+    adapter.on_properties_changed(proxy, changed_properties, invalidated_properties)
+  end
 end
 
 local function on_signal(proxy, sender, signal, params)
@@ -17,13 +20,10 @@ M.new = function(proxy)
     devices = {},
   }
 
-  proxy.on_g_properties_changed = function(...)
-    -- on_properties_changed(...)
-    if adapter.on_properties_changed then
-      adapter.on_properties_changed(...)
-    end
-  end
-  proxy.on_g_signal = on_signal
+  -- proxy.on_g_properties_changed = function(...)
+  --   on_properties_changed(adapter, ...)
+  -- end
+  -- proxy.on_g_signal = on_signal
 
   return setmetatable(adapter, { __index = M })
 end

@@ -133,7 +133,7 @@ function M:get_default_adapter()
 end
 
 function M:add_adapter(proxy)
-  utils.debug("add_adapter: " .. proxy:get_object_path())
+  -- utils.debug("add_adapter: " .. proxy:get_object_path())
   local adapter = Adapter(proxy)
   table.insert(self.adapters, adapter)
   if not self.adapter then
@@ -143,7 +143,7 @@ end
 
 function M:add_device(proxy)
   local adapter = self:find_parent(proxy)
-  utils.debug("add device: " .. proxy:get_object_path())
+  -- utils.debug("add device: " .. proxy:get_object_path())
   if not adapter then
     utils.error("parent not found")
     return
@@ -153,7 +153,7 @@ end
 
 function M:remove_adapter(proxy)
   local path = proxy:get_object_path()
-  utils.debug("remove_adapter: " .. path)
+  -- utils.debug("remove_adapter: " .. path)
   for i, adapter in ipairs(self.adapters) do
     if path == adapter.proxy:get_object_path() then
       table.remove(self.adapters, i)
@@ -164,7 +164,7 @@ end
 
 function M:remove_device(proxy)
   local adapter = self:find_parent(proxy)
-  utils.debug("remove_device: " .. proxy:get_object_path())
+  -- utils.debug("remove_device: " .. proxy:get_object_path())
   if not adapter then
     utils.error("remove_device: parent not found")
     return

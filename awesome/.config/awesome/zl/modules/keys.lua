@@ -208,14 +208,6 @@ awful.keyboard.append_global_keybindings {
     awful.client.focus.byidx(-1)
   end, { description = "focus previous", group = "client" }),
 
-  -- focus screen
-  awful.key({ modkey, ctrl }, "j", function()
-    awful.screen.focus_relative(1)
-  end, { description = "focus the next screen", group = "screen" }),
-  awful.key({ modkey, ctrl }, "k", function()
-    awful.screen.focus_relative(-1)
-  end, { description = "focus the previous screen", group = "screen" }),
-
   -- focus urgent client
   awful.key({ modkey }, "u", awful.client.urgent.jumpto, { description = "jump to urgent client", group = "client" }),
 
@@ -226,6 +218,22 @@ awful.keyboard.append_global_keybindings {
       c:emit_signal("request::activate", "key.unminimize", { raise = true })
     end
   end, { description = "restore minimized", group = "client" }),
+}
+-- }}}
+
+-- {{{ screen
+awful.keyboard.append_global_keybindings {
+  -- focus screen
+  awful.key({ modkey, ctrl }, "j", function()
+    awful.screen.focus_relative(1)
+  end, { description = "focus the next screen", group = "screen" }),
+  awful.key({ modkey, ctrl }, "k", function()
+    awful.screen.focus_relative(-1)
+  end, { description = "focus the previous screen", group = "screen" }),
+  -- screen arrangement
+  awful.key({ modkey }, "s", function()
+    require("xrandr").xrandr()
+  end, { description = "screen arrangement", group = "screen" }),
 }
 -- }}}
 
@@ -278,8 +286,7 @@ awful.keygrabber {
       modifiers = { modkey, shift },
       key = "space",
       on_press = function()
-        -- awful.layout.inc(-1)
-        -- awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, -1), nil)
+        awful.layout.inc(-1)
       end,
       description = "select previous layout",
       group = "layout",
@@ -288,8 +295,7 @@ awful.keygrabber {
       modifiers = { modkey },
       key = "space",
       on_press = function()
-        -- awful.layout.inc(1)
-        -- awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, 1), nil)
+        awful.layout.inc(1)
       end,
       description = "select next layout",
       group = "layout",
@@ -297,14 +303,14 @@ awful.keygrabber {
   },
 }
 
-awful.keyboard.append_global_keybindings {
-  awful.key({ modkey }, "space", function()
-    awful.layout.inc(1)
-  end, { description = "select next", group = "layout" }),
-  awful.key({ modkey, "Shift" }, "space", function()
-    awful.layout.inc(-1)
-  end, { description = "select previous", group = "layout" }),
-}
+-- awful.keyboard.append_global_keybindings {
+--   awful.key({ modkey }, "space", function()
+--     awful.layout.inc(1)
+--   end, { description = "select next", group = "layout" }),
+--   awful.key({ modkey, "Shift" }, "space", function()
+--     awful.layout.inc(-1)
+--   end, { description = "select previous", group = "layout" }),
+-- }
 -- }}}
 -- }}}
 

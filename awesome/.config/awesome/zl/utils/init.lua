@@ -25,18 +25,24 @@ M.debug = function(text, args)
     border_color = beautiful.palette.blue,
   }
   opts = M.table.extend(opts, args)
-  naughty.notify(opts)
+  naughty.notification(opts)
 end
 
-M.error = function(text)
-  naughty.notify {
-    title = "<b>Error</b>",
+M.error = function(text, args)
+  local opts = {
+    urgency = "critical",
     text = text,
-    timeout = 0,
-    fg = beautiful.palette.red,
-    bg = beautiful.palette.base,
-    border_color = beautiful.palette.red,
   }
+  opts = M.table.extend(opts, args)
+  naughty.notification(opts)
+  -- naughty.notify {
+  --   title = "<b>Error</b>",
+  --   text = text,
+  --   timeout = 0,
+  --   fg = beautiful.palette.red,
+  --   bg = beautiful.palette.base,
+  --   border_color = beautiful.palette.red,
+  -- }
 end
 
 local PREFIX = ... .. "."
