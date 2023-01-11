@@ -4,6 +4,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
+local theme = require("zl.theme")
 
 local M = {}
 
@@ -22,13 +23,13 @@ M.new = function(args)
     widget = wibox.widget.slider,
     bar_shape = gears.shape.rounded_bar,
     bar_height = dpi(5),
-    bar_color = beautiful.palette.surface0,
+    bar_color = theme.color.surface_variant,
     bar_margins = { bottom = dpi(18), top = dpi(18) },
-    bar_active_color = beautiful.palette.blue,
-    handle_color = beautiful.palette.blue,
+    bar_active_color = theme.color.primary,
+    handle_color = theme.color.primary,
     handle_shape = gears.shape.circle,
     handle_width = dpi(14),
-    -- handle_border_color = beautiful.palette.surface0,
+    -- handle_border_color = theme.color.surface,
     -- handle_border_width = dpi(2),
     -- forced_width = dpi(230),
     -- forced_height = dpi(42),

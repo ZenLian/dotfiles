@@ -24,6 +24,8 @@ M.options = {
   },
 
   theme = {
+    name = "catppuccin.mocha",
+
     flavour = "mocha",
     --font = "JetBrainsMono Nerd Font 10"
     font = {

@@ -1,13 +1,14 @@
 local awful = require("awful")
 local naughty = require("naughty")
-local beautiful = require("beautiful")
+-- local beautiful = require("beautiful")
+local theme = require("zl.theme")
 local ruled = require("ruled")
 
 local M = {}
 
 naughty.config.presets.critical = {
-  bg = beautiful.notification_bg_critical,
-  fg = beautiful.notification_fg_critical,
+  bg = theme.color.error,
+  fg = theme.color.on_error,
   timeout = 0,
 }
 

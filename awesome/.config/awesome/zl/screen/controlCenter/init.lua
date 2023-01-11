@@ -1,6 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local theme = require("zl.theme")
 local utils = require("zl.utils")
 local PREFIX = ...
 
@@ -16,9 +17,9 @@ M.create = function(s)
     type = "dock",
     shape = utils.shape.rrect(),
     screen = s,
-    width = beautiful.cc_width,
-    height = beautiful.cc_height,
-    bg = beautiful.cc_bg,
+    width = theme.control_center.width,
+    height = theme.control_center.height,
+    bg = theme.control_center.bg,
     -- margins = dpi(20),
     ontop = true,
     visible = false,
@@ -27,7 +28,7 @@ M.create = function(s)
   s.mycc = mycc
 
   mycc.x = s.geometry.x + s.geometry.width - mycc.width - beautiful.useless_gap
-  mycc.y = s.geometry.y + beautiful.wibar_height + beautiful.useless_gap
+  mycc.y = s.geometry.y + theme.wibar.height + beautiful.useless_gap
 
   -- widgets
   local sliders = require(PREFIX .. ".sliders")
@@ -38,10 +39,10 @@ M.create = function(s)
       sliders,
       buttons,
       layout = wibox.layout.fixed.vertical,
-      spacing = beautiful.cc_spacing,
+      spacing = theme.control_center.spacing,
     },
     widget = wibox.container.margin,
-    margins = beautiful.cc_spacing,
+    margins = theme.control_center.spacing,
   }
 
   mycc:buttons {

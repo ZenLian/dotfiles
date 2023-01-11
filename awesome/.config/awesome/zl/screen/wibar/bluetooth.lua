@@ -20,7 +20,7 @@ M.new = function(args)
   awesome.connect_signal("service::bluetooth", function(result)
     local icon = result.status ~= "off" and theme.icons.bluetooth or theme.icons.bluetooth_off
     local text = string.format("%s ", icon)
-    widget.markup = utils.markup.fg(text, beautiful.palette.blue)
+    widget.markup = utils.markup.fg(text, args.fg)
   end)
 
   -- tooltip

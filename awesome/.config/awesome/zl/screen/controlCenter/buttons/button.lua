@@ -3,6 +3,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
+local theme = require("zl.theme")
 
 local M = {}
 
@@ -18,6 +19,7 @@ function M.new(args)
     widget = wibox.widget.textbox,
     align = "center",
     valign = "center",
+    font = utils.icon_font(30),
     text = args.icon,
     -- fg = beautiful.fg_normal,
   }
@@ -26,6 +28,7 @@ function M.new(args)
     widget = wibox.widget.textbox,
     align = "center",
     valign = "center",
+    font = utils.font(12),
     text = args.text,
     -- fg = beautiful.fg_normal,
   }
@@ -35,12 +38,15 @@ function M.new(args)
       wicon,
       wtext,
       layout = wibox.layout.fixed.vertical,
+      spacing = dpi(10),
+      -- layout = wibox.layout.align.vertical,
+      -- expand = "none",
     },
     widget = wibox.container.background,
-    bg = beautiful.cc_widget_bg,
+    bg = theme.color.surface,
     shape = utils.shape.rrect(),
-    forced_width = dpi(70),
-    forced_height = dpi(70),
+    forced_width = dpi(90),
+    forced_height = dpi(90),
     -- width = dpi(200),
     -- height = dpi(200),
   }
@@ -57,9 +63,11 @@ function M.new(args)
     if old_value ~= value then
       -- change color
       if value then
-        self.bg = beautiful.palette.blue
+        self.bg = theme.color.primary
+        self.fg = theme.color.on_primary
       else
-        self.bg = beautiful.cc_widget_bg
+        self.bg = theme.color.surface
+        self.fg = theme.color.on_surface
       end
       -- user callback
       if args.toggle then
@@ -75,14 +83,6 @@ function M.new(args)
       -- widget.enabled = not widget.enabled
     end),
   }
-
-  widget:connect_signal("property::enabled", function(_, value)
-    if value then
-      widget.bg = beautiful.palette.blue
-    else
-      widget.bg = beautiful.cc_widget_bg
-    end
-  end)
 
   return widget
 

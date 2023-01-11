@@ -23,37 +23,37 @@ end
 local clk = wibox.widget.textclock("%H:%M")
 
 local vol = widgets.volume {
-  fg = beautiful.palette.green,
+  fg = theme.widgets.volume.fg,
 }
 
 local bat = widgets.battery {
-  fg = beautiful.palette.teal,
+  fg = theme.widgets.battery.fg,
 }
 
 local wifi = widgets.wifi {
-  fg = beautiful.palette.blue,
+  fg = theme.widgets.wifi.fg,
 }
 
 local bluetooth = widgets.bluetooth {
-  fg = beautiful.palette.blue,
+  fg = theme.widgets.bluetooth.fg,
 }
 
 local cpu = wibox.widget.textbox()
 awesome.connect_signal("service::cpu", function(result)
   local text = string.format("%s %s%%", theme.icons.cpu, result.usage)
-  cpu.markup = utils.markup.fg(text, beautiful.palette.lavender)
+  cpu.markup = utils.markup.fg(text, theme.widgets.cpu.fg)
 end)
 
 local mem = wibox.widget.textbox()
 awesome.connect_signal("service::memory", function(result)
   local text = string.format("%s %s%%", theme.icons.memory, result.perc)
-  mem.markup = utils.markup.fg(text, beautiful.palette.yellow)
+  mem.markup = utils.markup.fg(text, theme.widgets.memory.fg)
 end)
 
 local thermal = wibox.widget.textbox()
 awesome.connect_signal("service::thermal", function(result)
   local text = string.format("%s %s°C", theme.icons.thermal, result.thermal)
-  thermal.markup = utils.markup.fg(text, beautiful.palette.pink)
+  thermal.markup = utils.markup.fg(text, theme.widgets.thermal.fg)
 end)
 
 local wb_systat = wibox.widget {
@@ -203,9 +203,9 @@ M.init = function(s)
     ontop = false,
     type = "dock",
     -- width = s.geometry.width - beautiful.useless_gap * 5,
-    height = beautiful.wibar_height,
+    height = theme.wibar.height,
     -- shape = utils.shape.rrect(beautiful.border_radius / 2),
-    bg = beautiful.wibar_bg,
+    bg = theme.wibar.bg,
     -- margins = { left = dpi(10), right = dpi(10), top = dpi(10), bottom = dpi(14) },
   }
 
