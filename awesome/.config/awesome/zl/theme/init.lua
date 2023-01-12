@@ -21,8 +21,6 @@ function M.init()
       bg = c.background,
     },
     control_center = {
-      width = dpi(400),
-      height = dpi(300),
       spacing = dpi(20),
       bg = c.background,
       surface = c.surface,

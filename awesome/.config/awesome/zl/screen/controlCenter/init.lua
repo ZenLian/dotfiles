@@ -1,6 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 local theme = require("zl.theme")
 local utils = require("zl.utils")
 local PREFIX = ...
@@ -17,8 +18,8 @@ M.create = function(s)
     type = "dock",
     shape = utils.shape.rrect(),
     screen = s,
-    width = theme.control_center.width,
-    height = theme.control_center.height,
+    width = dpi(400),
+    height = dpi(400),
     bg = theme.control_center.bg,
     -- margins = dpi(20),
     ontop = true,
@@ -31,11 +32,13 @@ M.create = function(s)
   mycc.y = s.geometry.y + theme.wibar.height + beautiful.useless_gap
 
   -- widgets
+  local powers = require(PREFIX .. ".powers")
   local sliders = require(PREFIX .. ".sliders")
   local switchers = require(PREFIX .. ".switchers")
 
   mycc:setup {
     {
+      powers,
       sliders,
       switchers,
       layout = wibox.layout.fixed.vertical,
