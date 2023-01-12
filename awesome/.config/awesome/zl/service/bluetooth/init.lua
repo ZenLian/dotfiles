@@ -93,11 +93,16 @@ M.get = function()
   return result
 end
 
-M.toggle = function()
+M.toggle = function(value)
   -- utils.debug(type(default_adapter))
   local adapter = client:get_default_adapter()
   local powered = adapter:get_property("Powered")
-  utils.gdbus.set_property(adapter.proxy, "Powered", "b", not powered)
+  if value == nil then
+    value = not powered
+  end
+  if value ~= powered then
+    utils.gdbus.set_property(adapter.proxy, "Powered", "b", not powered)
+  end
 end
 
-return service.register(M, "bluetooth", 0)
+return service.register(M, "bluetooth")

@@ -4,16 +4,10 @@ local naughty = require("naughty")
 local button = require(... .. ".button")
 local service = require("zl.service")
 
-local DEVICE = require("zl.config").device.wifi
-
 local wifi = button {
   icon = theme.icons.wifi,
   text = "wifi",
-  -- init = function(self)
-  --   local devices = service.network.get()
-  --   return
-  -- end,
-  toggle = function(value)
+  on_toggle = function(value)
     -- service.network.
     naughty.notification {
       text = "turn " .. tostring(value),
@@ -22,6 +16,7 @@ local wifi = button {
 }
 
 -- awesome.connect_signal("service::network", function(devices)
+--   local DEVICE = require("zl.config").device.wifi
 --   local dev = devices and devices[DEVICE]
 --   if not dev then
 --     return
@@ -33,7 +28,26 @@ local wifi = button {
 --   end
 -- end)
 
+local bluetooth = button {
+  icon = theme.icons.bluetooth,
+  text = "bluetooth",
+  on_toggle = function(value)
+    service.bluetooth.toggle(value)
+  end,
+}
+
+awesome.connect_signal("service::bluetooth", function(result)
+  local status = result.status
+  if status == "off" then
+    bluetooth:set_enabled(false)
+  else
+    bluetooth:set_enabled(true)
+  end
+end)
+
 return wibox.widget {
   wifi,
+  bluetooth,
   layout = wibox.layout.fixed.horizontal,
+  spacing = theme.control_center.spacing,
 }

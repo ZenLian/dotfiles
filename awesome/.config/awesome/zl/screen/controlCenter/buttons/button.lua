@@ -19,9 +19,8 @@ function M.new(args)
     widget = wibox.widget.textbox,
     align = "center",
     valign = "center",
-    font = utils.icon_font(30),
+    font = utils.icon_font(28),
     text = args.icon,
-    -- fg = beautiful.fg_normal,
   }
   --
   local wtext = wibox.widget {
@@ -30,7 +29,6 @@ function M.new(args)
     valign = "center",
     font = utils.font(12),
     text = args.text,
-    -- fg = beautiful.fg_normal,
   }
   --
   local widget = wibox.widget {
@@ -52,26 +50,30 @@ function M.new(args)
   }
 
   widget.enabled = false
+  -- without user action
+  function widget:set_enabled(value)
+    rawset(widget, "enabled", value)
+    -- change color
+    if value then
+      self.bg = theme.color.primary
+      self.fg = theme.color.on_primary
+    else
+      self.bg = theme.color.surface
+      self.fg = theme.color.on_surface
+    end
+  end
 
-  widget.toggle = function(self, value)
+  function widget:toggle(value)
     if value == nil then
       value = not self.enabled
     end
 
     local old_value = self.enabled
-    self.enabled = value
+    self:set_enabled(value)
     if old_value ~= value then
-      -- change color
-      if value then
-        self.bg = theme.color.primary
-        self.fg = theme.color.on_primary
-      else
-        self.bg = theme.color.surface
-        self.fg = theme.color.on_surface
-      end
       -- user callback
-      if args.toggle then
-        args.toggle(value)
+      if args.on_toggle then
+        args.on_toggle(value)
       end
     end
   end
@@ -85,15 +87,6 @@ function M.new(args)
   }
 
   return widget
-
-  -- local button = {
-  --   status = "off",
-  --   widget = widget,
-  --   wicon = wicon,
-  --   wtext = wtext,
-  -- }
-
-  -- return setmetatable(button, { __index = M })
 end
 
 return setmetatable(M, {

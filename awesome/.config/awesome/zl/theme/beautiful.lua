@@ -4,7 +4,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local gears = require("gears")
 local utils = require("zl.utils")
-local theme_path = os.getenv("HOME") .. "/.config/awesome/" .. string.gsub(..., "%.", "/")
+local theme_path = os.getenv("HOME") .. "/.config/awesome/zl/theme"
 
 local function init(M)
   local O = require("zl.config").theme
