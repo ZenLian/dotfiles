@@ -40,19 +40,19 @@ local bluetooth = widgets.bluetooth {
 
 local cpu = wibox.widget.textbox()
 awesome.connect_signal("service::cpu", function(result)
-  local text = string.format("%s %s%%", theme.icons.cpu, result.usage)
+  local text = string.format("%s%s%%", theme.icons.cpu, result.usage)
   cpu.markup = utils.markup.fg(text, theme.widgets.cpu.fg)
 end)
 
 local mem = wibox.widget.textbox()
 awesome.connect_signal("service::memory", function(result)
-  local text = string.format("%s %s%%", theme.icons.memory, result.perc)
+  local text = string.format("%s%s%%", theme.icons.memory, result.perc)
   mem.markup = utils.markup.fg(text, theme.widgets.memory.fg)
 end)
 
 local thermal = wibox.widget.textbox()
 awesome.connect_signal("service::thermal", function(result)
-  local text = string.format("%s %s°C", theme.icons.thermal, result.thermal)
+  local text = string.format("%s%s°C", theme.icons.thermal, result.thermal)
   thermal.markup = utils.markup.fg(text, theme.widgets.thermal.fg)
 end)
 

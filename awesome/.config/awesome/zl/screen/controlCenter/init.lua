@@ -32,12 +32,12 @@ M.create = function(s)
 
   -- widgets
   local sliders = require(PREFIX .. ".sliders")
-  local buttons = require(PREFIX .. ".buttons")
+  local switchers = require(PREFIX .. ".switchers")
 
   mycc:setup {
     {
       sliders,
-      buttons,
+      switchers,
       layout = wibox.layout.fixed.vertical,
       spacing = theme.control_center.spacing,
     },

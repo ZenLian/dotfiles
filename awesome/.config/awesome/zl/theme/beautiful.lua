@@ -37,7 +37,7 @@ local function init(M)
   theme.border_width = dpi(O.border_width)
   theme.border_width_maximized = 0
   theme.border_color_maximized = c.background
-  theme.border_color_normal = c.on_background
+  theme.border_color_normal = c.surface
   theme.border_color_active = c.primary
   theme.border_color_marked = p.mauve
   theme.border_radius = dpi(O.border_radius) -- not builtin
@@ -55,7 +55,7 @@ local function init(M)
   theme.notification_fg = c.on_background
   theme.notification_bg = c.background
   theme.notification_border_width = 0
-  -- theme.notification_border_color = c.primary
+  theme.notification_border_color = c.surface
   theme.notification_shape = gears.shape.rounded_rect
   theme.notification_opacity = 0.9
   theme.notification_margin = dpi(10)

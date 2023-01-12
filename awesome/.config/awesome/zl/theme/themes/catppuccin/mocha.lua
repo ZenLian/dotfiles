@@ -86,4 +86,9 @@ M.widgets = {
   },
 }
 
+M.control_center = {
+  bg = C.mantle,
+  surface = C.base,
+}
+
 return M

@@ -22,10 +22,10 @@ function M.init()
     },
     control_center = {
       width = dpi(400),
-      height = dpi(500),
+      height = dpi(300),
       spacing = dpi(20),
       bg = c.background,
-      widget_bg = c.surface,
+      surface = c.surface,
     },
   }
   -- }}}

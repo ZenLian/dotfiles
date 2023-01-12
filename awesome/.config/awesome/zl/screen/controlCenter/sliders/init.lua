@@ -70,7 +70,7 @@ return wibox.widget {
   },
   widget = wibox.container.background,
   forced_height = dpi(120),
-  bg = theme.control_center.widget_bg,
+  bg = theme.control_center.surface,
   -- border_color = beautiful.fg_normal, --.. "33",
   shape = utils.shape.rrect(),
 }

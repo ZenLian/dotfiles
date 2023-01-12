@@ -1,12 +1,7 @@
 -- "service::bluetooth"
-local awful = require("awful")
-local naughty = require("naughty")
-local gears = require("gears")
 local utils = require("zl.utils")
 local service = require("zl.service.core")
 local bt = require("zl.service.bluetooth.client")
-local lgi = require("lgi")
-local Gio, GLib = lgi.Gio, lgi.GLib
 
 local M = {}
 

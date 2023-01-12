@@ -1,4 +1,4 @@
--- "service::bluetooth"
+-- WARN: deprecated, use service.bluetooth instead
 local awful = require("awful")
 local service = require("zl.service.core")
 -- TODO: use lgi.Gio.DBus_*

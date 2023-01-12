@@ -17,7 +17,7 @@ local factory = function(args)
 
   awesome.connect_signal("service::volume", function(result)
     local icon = theme.icons.get_volume(result.muted)
-    local text = string.format("%s %3d%%", icon, result.volume)
+    local text = string.format("%s%3d%%", icon, result.volume)
     local markup = utils.markup.fg(text, args.fg)
     vol.markup = markup
     -- local naughty = require("naughty")

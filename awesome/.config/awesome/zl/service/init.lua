@@ -1,6 +1,6 @@
-local M = require(... .. ".core")
+local PREFIX = ... .. "."
 
-local NAME = ... .. "."
+local M = require(PREFIX .. "core")
 
 M.run = function()
   local services = {
@@ -11,18 +11,19 @@ M.run = function()
     "memory",
     "thermal",
     "battery",
-    "network",
-    "bluetooth",
+    -- "network",
+    "nm",
     -- "bt",
+    "bluetooth",
   }
   for _, name in ipairs(services) do
-    require(NAME .. name).run()
+    require(PREFIX .. name).run()
   end
 end
 
 return setmetatable(M, {
   __index = function(self, key)
-    local service = require(NAME .. key)
+    local service = require(PREFIX .. key)
     rawset(self, key, service)
     return service
   end,

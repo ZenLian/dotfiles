@@ -29,11 +29,15 @@ M.options = {
     flavour = "mocha",
     --font = "JetBrainsMono Nerd Font 10"
     font = {
+      -- family = "Material Design Icons",
+      -- family = "JetBrainsMono Nerd Font",
+      -- family = "WenQuanYi Micro Hei Mono",
       family = "Caskaydia Cove Nerd Font",
       size = 12,
     },
     icon_font = {
-      family = "Material Design Icons",
+      family = "Material Design Icons Desktop Regular",
+      -- family = "JetBrainsMono Nerd Font",
       size = 12,
     },
     taglist = {

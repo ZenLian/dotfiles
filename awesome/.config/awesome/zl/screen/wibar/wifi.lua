@@ -4,47 +4,49 @@ local dpi = beautiful.xresources.apply_dpi
 local wibox = require("wibox")
 local utils = require("zl.utils")
 local theme = require("zl.theme")
+local service = require("zl.service")
+local config = require("zl.config")
 
 local defaults = {
   fg = beautiful.fg_normal,
-  device = "wlan0",
+  device = config.device.wifi,
 }
 
 local factory = function(args)
   args = utils.table.extend(defaults, args or {})
 
-  local wifi = wibox.widget.imagebox()
+  local wifi = wibox.widget {
+    widget = wibox.widget.textbox(),
+    font = utils.icon_font(),
+    markup = theme.icons.wifi_off,
+  }
 
-  awesome.connect_signal("service::network", function(devices)
+  awesome.connect_signal("service::nm", function(devices)
     local dev = devices and devices[args.device]
     if not dev then
       return
     end
-    if dev.wifi then
-      local image = theme.icons.get_mdi_wifi(dev.wifi.level, args.fg)
-      wifi:set_image(image)
+    if dev.state == "ACTIVATED" then
+      local icon = theme.icons.get_wifi(dev.wifi.strength or 100)
+      wifi:set_markup(utils.markup.fg(icon, args.fg))
     else
-      local image = theme.icons.get_mdi("wifi-off", args.fg)
-      wifi:set_image(image)
+      local icon = theme.icons.wifi_off
+      wifi:set_markup(utils.markup.fg(icon, args.fg))
     end
   end)
 
-  -- awful.tooltip {
-  --   ontop = true,
-  --   objects = { net },
-  --   timer_function = function()
-  --     local text = {}
-  --     local devices = service.network.devices
-  --     for name, dev in pairs(devices) do
-  --       local line = string.format("%s: %s  %s 祝%s", name, dev.state, dev.down, dev.up)
-  --       if dev.wifi then
-  --         line = line .. string.format(" signal(%s%%)", dev.wifi.signal)
-  --       end
-  --       table.insert(text, line)
-  --     end
-  --     return table.concat(text, "\n")
-  --   end,
-  -- }
+  awful.tooltip {
+    ontop = true,
+    objects = { wifi },
+    timer_function = function()
+      local dev = service.nm.devices[args.device]
+      local text = {}
+      table.insert(text, string.format("%s: %s", dev.name, dev.state))
+      table.insert(text, string.format("%s(%s)", dev.wifi.name, dev.wifi.strength))
+      -- text[#text + 1] = "bitrate" --string.format("%s bit/s", dev.wifi.bitrate)
+      return table.concat(text, "\n")
+    end,
+  }
 
   return wibox.widget {
     wifi,

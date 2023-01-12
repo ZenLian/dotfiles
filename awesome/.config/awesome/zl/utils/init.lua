@@ -16,13 +16,13 @@ end
 
 function M.font(size)
   local config = require("zl.config")
-  size = size or config.theme.font.family
+  size = size or config.theme.font.size
   return string.format("%s %d", config.theme.font.family, size)
 end
 
 function M.icon_font(size)
   local config = require("zl.config")
-  size = size or config.theme.icon_font.family
+  size = size or config.theme.icon_font.size
   return string.format("%s %d", config.theme.icon_font.family, size)
 end
 

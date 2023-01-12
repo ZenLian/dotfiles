@@ -10,6 +10,10 @@ local M = {}
 local defaults = {
   icon = "",
   text = "",
+  fg_on = theme.color.on_primary,
+  bg_on = theme.color.primary,
+  fg_off = theme.color.on_surface,
+  bg_off = theme.color.surface,
 }
 
 function M.new(args)
@@ -17,49 +21,58 @@ function M.new(args)
 
   local wicon = wibox.widget {
     widget = wibox.widget.textbox,
-    align = "center",
-    valign = "center",
-    font = utils.icon_font(28),
+    halign = "center",
+    valign = "bottom",
+    font = utils.icon_font(18),
     text = args.icon,
   }
   --
   local wtext = wibox.widget {
     widget = wibox.widget.textbox,
-    align = "center",
-    valign = "center",
+    halign = "center",
+    valign = "top",
     font = utils.font(12),
     text = args.text,
   }
+
+  local wrapper = wibox.widget {
+    wicon,
+    wtext,
+    layout = wibox.layout.ratio.vertical,
+    spacing = dpi(5),
+  }
+  wrapper:set_ratio(1, 0.5)
   --
   local widget = wibox.widget {
     {
-      wicon,
-      wtext,
-      layout = wibox.layout.fixed.vertical,
-      spacing = dpi(10),
-      -- layout = wibox.layout.align.vertical,
-      -- expand = "none",
+      wrapper,
+      margins = dpi(4),
+      widget = wibox.container.margin,
     },
     widget = wibox.container.background,
-    bg = theme.color.surface,
+    bg = args.bg_off,
     shape = utils.shape.rrect(),
-    forced_width = dpi(90),
-    forced_height = dpi(90),
+    forced_width = dpi(100),
+    forced_height = dpi(100),
     -- width = dpi(200),
     -- height = dpi(200),
   }
 
-  widget.enabled = false
+  rawset(widget, "enabled", false)
   -- without user action
   function widget:set_enabled(value)
+    if value == rawget(widget, "enabled") then
+      return
+    end
     rawset(widget, "enabled", value)
     -- change color
+    -- utils.debug("set_enabled: " .. tostring(value))
     if value then
-      self.bg = theme.color.primary
-      self.fg = theme.color.on_primary
+      self.bg = args.bg_on
+      self.fg = args.fg_on
     else
-      self.bg = theme.color.surface
-      self.fg = theme.color.on_surface
+      self.bg = args.bg_off
+      self.fg = args.fg_off
     end
   end
 
