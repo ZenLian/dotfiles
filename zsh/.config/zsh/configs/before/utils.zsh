@@ -18,20 +18,22 @@ plug_source() {
 }
 
 plug() {
-  PLUG_NAME=$(echo $1 | cut -d "/" -f 2)
-  # source config if any
-  plug_source "$PLUG_CFG_DIR/$PLUG_NAME.zsh"
-  # source plugin
-  if [ -d "$PLUG_DIR/$PLUG_NAME" ]; then
-    plug_source "$PLUG_DIR/$PLUG_NAME/$PLUG_NAME.plugin.zsh" || \
-    plug_source "$PLUG_DIR/$PLUG_NAME/$PLUG_NAME.zsh" || \
-    plug_source "$PLUG_DIR/$PLUG_NAME/$PLUG_NAME.zsh-theme" || \
-    plug_source "$PLUG_DIR/$PLUG_NAME/$2.zsh"
-  else
-    cd $ZDOTDIR
-    git submodule add "https://github.com/$1.git" "plugins/$PLUG_NAME"
-    cd -
-  fi
+    # name=$(echo $1 | cut -d "/" -f 2)
+    repo=$1
+    name=${repo##*/}
+    # source config if any
+    plug_source "$PLUG_CFG_DIR/$name.zsh"
+    # source plugin
+    if [ -d "$PLUG_DIR/$name" ]; then
+        plug_source "$PLUG_DIR/$name/$name.plugin.zsh" || \
+            plug_source "$PLUG_DIR/$name/$name.zsh" || \
+            plug_source "$PLUG_DIR/$name/$name.zsh-theme" || \
+            plug_source "$PLUG_DIR/$name/$2.zsh"
+    else
+        cd $ZDOTDIR
+        git submodule add "https://github.com/$1.git" "plugins/$name"
+        cd -
+    fi
 }
 
 zsh_sync() {
@@ -39,4 +41,3 @@ zsh_sync() {
     git submodule update --remote --merge
     cd -
 }
-
