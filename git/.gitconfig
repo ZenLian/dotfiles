@@ -40,6 +40,6 @@
 ; [url "https://github.com.cnpmjs.org/"]
 ; [url "https://gitclone.com/github.com/"]
 ; [url "https://kgithub.com/"]
-;  	insteadOf = https://github.com/
+ 	; insteadOf = https://github.com/
 [protocol "https"]
 	allow = always

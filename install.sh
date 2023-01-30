@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
 usage() {
-    printf "\
-        usage:
-    $0 [name]
-    $0 all
-    "
+    printf 'usage:\n'
+    printf '  %s [name]\n' "$0"
+    printf '  %s all\n' "$0"
 }
 
 if [[ -n "$1" ]]; then
     if [[ "$1" == "all" ]]; then
-        all="awesome zsh alacritty tmux nvim git bat lf npm conda lazygit luarocks asdf pip"
+        all="zsh wezterm tmux nvim git bat lf npm conda lazygit luarocks asdf pip"
     else
         all=$*
     fi
@@ -21,7 +19,7 @@ fi
 
 for i in $all; do
     echo "installing: $i"
-    stow -t $HOME $i || exit -1
+    stow -t "$HOME" "$i" || exit 1
 done
 
 echo "Installation success!"
