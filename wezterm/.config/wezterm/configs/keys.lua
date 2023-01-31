@@ -16,8 +16,8 @@ local keys = {
   { key = ".", mods = CA, action = wezterm.action.MoveTabRelative(1) },
 
   -- split pane
-  { key = "-", mods = CA, action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" } },
-  { key = "=", mods = CA, action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" } },
+  { key = "-", mods = CA, action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" } },
+  { key = "=", mods = CA, action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" } },
   -- navigate pane
   { key = "h", mods = CA, action = wezterm.action.ActivatePaneDirection("Left") },
   { key = "j", mods = CA, action = wezterm.action.ActivatePaneDirection("Down") },
