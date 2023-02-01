@@ -4,7 +4,9 @@
 	name = Zenlian
 [core]
 	editor = nvim
+{{- if lookPath "delta"}}
 	pager = delta
+{{- end }}
 	quotepath = false
 [merge]
 	tool = nvim
@@ -13,6 +15,7 @@
 [diff]
 	colorMoved = default
 	navigate = true
+{{- if lookPath "delta"}}
 [delta]
 	features = line-numbers decorations
 	side-by-side = true
@@ -22,6 +25,7 @@
   file-style = bold yellow ul
 [interactive]
   diffFilter = delta --color-only
+{{- end }}
 [color]
 	ui = true
 [push]
@@ -43,3 +47,9 @@
  	; insteadOf = https://github.com/
 [protocol "https"]
 	allow = always
+{{- if lookPath "gh" }}
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !gh auth git-credential
+{{- end }}

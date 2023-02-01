@@ -6,5 +6,15 @@
 {{- $email := "zeninglian@gmail.com" -}}
 
 [data]
-    osid = {{ $osid | quote }}
-    email = {{ $email | quote }}
+osid = {{ $osid | quote }}
+email = {{ $email | quote }}
+
+[merge]
+command = "nvim"
+args = ["-d", '-c "wincmd l"', '-c "norm ]c"']
+
+{{- if lookPath "delta" }}
+[diff]
+pager = "delta"
+{{- end }}
+{{/* vim:ft=toml: */}}

@@ -9,3 +9,5 @@ printf 'source dir: %s\n' "$CWD"
 version=$(chezmoi --version)
 $! || (echo 'chezmoi: not installed' && exit 1)
 printf '%s\n' "$version"
+
+# chezmoi apply
