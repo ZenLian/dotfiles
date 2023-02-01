@@ -1,13 +1,15 @@
 {{ if eq .osid "linux-arch" -}}
 
 {{ $packages := list
-     "curl"
-     "git"
-     "zsh"
-     "neovim"
-     "ripgrep"
-     "fzf"
-     "lf" -}}
+    "curl"
+    "git"
+    "zsh"
+    "neovim"
+    "fzf"
+    "ripgrep"
+    "fd"
+    "lf"
+-}}
 
 {{ $sudo := "sudo " -}}
 {{ if eq .chezmoi.username "root" -}}
@@ -16,6 +18,6 @@
 
 #!/usr/bin/env bash
 
-{{ $sudo }}pacman -Sy {{ $packages | join " " }}
+{{ $sudo }}pacman -Sy --noconfirm --needed {{ $packages | join " " }}
 
 {{ end -}}

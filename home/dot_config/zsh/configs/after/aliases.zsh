@@ -37,6 +37,7 @@ exists "bat" && alias cat=bat
 alias ra=ranger
 alias cht='cht.sh'
 alias lg='lazygit'
+exists "chezmoi" && alias cz=chezmoi
 
 ##########################################
 # directories
