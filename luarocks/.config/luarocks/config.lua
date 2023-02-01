@@ -1,1 +1,0 @@
--- rocks_tree = home .. "/.luarocks"

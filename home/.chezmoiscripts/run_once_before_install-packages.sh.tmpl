@@ -1,0 +1,21 @@
+{{ if eq .osid "linux-arch" -}}
+
+{{ $packages := list
+     "curl"
+     "git"
+     "zsh"
+     "neovim"
+     "ripgrep"
+     "fzf"
+     "lf" -}}
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+#!/usr/bin/env bash
+
+{{ $sudo }}pacman -Sy {{ $packages | join " " }}
+
+{{ end -}}
