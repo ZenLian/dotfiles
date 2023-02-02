@@ -1,4 +1,4 @@
-{{ if eq .osid "linux-arch" -}}
+{{- if eq .osid "linux-arch" -}}
 
 {{ $packages := list
     "curl"
@@ -22,4 +22,4 @@
 
 {{ $sudo }}pacman -Sy --noconfirm --needed {{ $packages | join " " }}
 
-{{ end -}}
+{{- end -}}
