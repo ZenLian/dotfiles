@@ -1,22 +1,43 @@
+{{/* global booleans */}}
+{{- $personal := false -}}
+{{- $headless := false -}}{{/* has no screen and keyboard */}}
+{{- $rootless := false -}}{{/* has no root access */}}
+
 {{- $osid := .chezmoi.os -}}
 {{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
+{{- if eq .chezmoi.hostname "arch-yoga14s" -}}
+{{-   $personal = true }}
+{{- else -}}
+{{-   $headless = true }}
+{{-   $rootless = true }}
+{{- end -}}
+
 {{- $email := "zeninglian@gmail.com" -}}
+{{- $name := "ZenLian" -}}
+
+{{- if (not $personal) -}}
+{{-   $name = "lianzn" -}}
+{{- end -}}
 
 [data]
-osid = {{ $osid | quote }}
 email = {{ $email | quote }}
-rootless = false
-headless = false
+name = {{ $name | quote }}
+personal = {{ $personal }}
+rootless = {{ $rootless }}
+headless = {{ $headless }}
+osid = {{ $osid | quote }}
 
+{{- if lookPath "nvim"}}
 [merge]
 command = "nvim"
 args = ["-d", '-c "wincmd l"', '-c "norm ]c"']
+{{- end -}}
 
-{{- if lookPath "delta" }}
+{{- if lookPath "delta"}}
 [diff]
 pager = "delta"
-{{- end }}
+{{- end -}}
 {{/* vim:set ft=toml: */}}
