@@ -52,9 +52,10 @@
     refreshPeriod = "168h"
 
 {{- if .rootless }}
+
 # binaries
 {{/*- $chezmoiVersion := (trimPrefix "v" (gitHubLatestRelease "twpayne/chezmoi").TagName) */}}
-{{ $chezmoiVersion := "2.29.4" }}
+{{- $chezmoiVersion := "2.29.4" }}
 [".local/bin/chezmoi"]
     type = "file"
     executable = true
@@ -65,7 +66,7 @@
     executable = true
     url = "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
 {{/*- $zoxideVersion := (trimPrefix "v" (gitHubLatestRelease "ajeetdsouza/zoxide").TagName) */}}
-{{ $zoxideVersion := "0.9.0" }}
+{{- $zoxideVersion := "0.9.0" }}
 [".local/bin/zoxide"]
     type = "file"
     executable = true
@@ -78,13 +79,36 @@
     executable = true
     url = "https://github.com/junegunn/fzf/releases/download/{{$fzfVersion}}/fzf-{{$fzfVersion}}-{{.chezmoi.os}}_{{.chezmoi.arch}}.tar.gz"
     filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "fzf"] }
+{{- $ripgrepVersion := "13.0.0"}}
+[".local/bin/rg"]
+    type = "file"
+    executable = true
+    url = "https://github.com/BurntSushi/ripgrep/releases/download/{{$ripgrepVersion}}/ripgrep-{{$ripgrepVersion}}-x86_64-unknown-linux-musl.tar.gz"
+    filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "ripgrep-{{$ripgrepVersion}}-x86_64-unknown-linux-musl/rg"] }
+{{- $fdVersion := "8.6.0"}}
+[".local/bin/fd"]
+    type = "file"
+    executable = true
+    url = "https://github.com/sharkdp/fd/releases/download/v{{$fdVersion}}/fd-v{{$fdVersion}}-x86_64-unknown-linux-musl.tar.gz"
+    filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "fd-v{{$fdVersion}}-x86_64-unknown-linux-musl/fd"] }
+{{- $batVersion := "0.22.1"}}
+[".local/bin/bat"]
+    type = "file"
+    executable = true
+    url = "https://github.com/sharkdp/bat/releases/download/v{{$batVersion}}/bat-v{{$batVersion}}-x86_64-unknown-linux-musl.tar.gz"
+    filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-v{{$batVersion}}-x86_64-unknown-linux-musl/rg"] }
+[".local/bin/lf"]
+    type = "file"
+    executable = true
+    url = "https://github.com/gokcehan/lf/releases/latest/download/lf-{{$.chezmoi.os}}-{{$.chezmoi.arch}}.tar.gz"
+    filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "lf"] }
 {{- if (not (lookPath "zsh")) }}
 [".local/opt/zsh"]
     type = "archive"
     url = "https://github.com/romkatv/zsh-bin/releases/latest/download/zsh-5.8-linux-x86_64.tar.gz"
     exact = true
-    stripComponents = 1
     refreshPeriod = "168h"
-{{- end }}
-{{- end }}
+{{- end -}}
+
+{{- end -}}{{/* rootless */}}
 {{/* vim: set ft=toml: */}}
