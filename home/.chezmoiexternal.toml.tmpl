@@ -58,7 +58,7 @@
     type = "file"
     executable = true
     url = "https://github.com/twpayne/chezmoi/releases/download/v{{ $chezmoiVersion }}/chezmoi_{{ $chezmoiVersion }}_{{ .chezmoi.os }}_{{ .chezmoi.arch }}.tar.gz"
-    filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "chezmoi/chezmoi"] }
+    filter = { command = "tar", args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "chezmoi"] }
 [".local/bin/nvim"]
     type = "file"
     executable = true
