@@ -13,7 +13,10 @@ local defaults = {
 local factory = function(args)
   args = utils.table.extend(defaults, args or {})
 
-  local vol = wibox.widget.textbox()
+  local vol = wibox.widget {
+    widget = wibox.widget.textbox,
+    font = utils.icon_font(),
+  }
 
   awesome.connect_signal("service::volume", function(result)
     local icon = theme.icons.get_volume(result.muted)

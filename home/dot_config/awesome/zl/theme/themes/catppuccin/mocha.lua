@@ -76,13 +76,14 @@ M.widgets = {
     fg = C.blue,
   },
   volume = {
-    fg = C.green,
+    fg = C.blue,
   },
   wifi = {
     fg = C.blue,
   },
   battery = {
-    fg = C.teal,
+    fg = C.green,
+    fg_low = C.red,
   },
 }
 

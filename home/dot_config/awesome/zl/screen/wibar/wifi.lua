@@ -16,7 +16,7 @@ local factory = function(args)
   args = utils.table.extend(defaults, args or {})
 
   local wifi = wibox.widget {
-    widget = wibox.widget.textbox(),
+    widget = wibox.widget.textbox,
     font = utils.icon_font(),
     markup = theme.icons.wifi_off,
   }
