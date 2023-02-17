@@ -39,6 +39,7 @@ M.options = {
       family = "Material Design Icons",
       -- family = "Material Design Icons Desktop",
       -- family = "JetBrainsMono Nerd Font",
+      -- family = "e",
       size = 12,
     },
     taglist = {

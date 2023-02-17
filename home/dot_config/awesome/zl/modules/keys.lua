@@ -190,21 +190,33 @@ awful.keyboard.append_global_keybindings {
   end, { description = "go back", group = "client" }),
 
   -- focus by direction
-  awful.key {
-    modifiers = { modkey },
-    keygroup = awful.key.keygroup.ARROWS,
-    description = "focus by direction",
-    group = "client",
-    on_press = function(dir)
-      awful.client.focus.bydirection(dir:lower())
-    end,
-  },
+  -- awful.key {
+  --   modifiers = { modkey },
+  --   keygroup = awful.key.keygroup.ARROWS,
+  --   description = "focus by direction",
+  --   group = "client",
+  --   on_press = function(dir)
+  --     awful.client.focus.bydirection(dir:lower())
+  --   end,
+  -- },
+  awful.key({ modkey }, "h", function()
+    awful.client.focus.bydirection("left")
+  end, { description = "focus left", group = "client" }),
+  awful.key({ modkey }, "j", function()
+    awful.client.focus.bydirection("down")
+  end, { description = "focus down", group = "client" }),
+  awful.key({ modkey }, "k", function()
+    awful.client.focus.bydirection("up")
+  end, { description = "focus up", group = "client" }),
+  awful.key({ modkey }, "l", function()
+    awful.client.focus.bydirection("right")
+  end, { description = "focus right", group = "client" }),
 
   -- focus by index
-  awful.key({ modkey }, "k", function()
+  awful.key({ modkey }, "Right", function()
     awful.client.focus.byidx(1)
   end, { description = "focus next", group = "client" }),
-  awful.key({ modkey }, "j", function()
+  awful.key({ modkey }, "Left", function()
     awful.client.focus.byidx(-1)
   end, { description = "focus previous", group = "client" }),
 
@@ -345,10 +357,14 @@ local clientkeys = {
   end, { description = "move to screen", group = "client" }),
 
   awful.key({ modkey }, "t", function(c)
+    c.ontop = not c.ontop
+  end, { description = "toggle ontop", group = "client" }),
+
+  awful.key({ modkey, shift }, "t", function(c)
     awful.titlebar.toggle(c)
   end, { description = "toggle titlebar", group = "client" }),
 
-  awful.key({ modkey, shift }, "t", function()
+  awful.key({ modkey, ctrl }, "t", function()
     require("zl.screen.titlebar").toggle()
   end, { description = "toggle all titlebar", group = "client" }),
 

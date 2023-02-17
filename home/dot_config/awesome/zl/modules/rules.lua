@@ -100,4 +100,21 @@ ruled.client.connect_signal("request::rules", function()
   --   },
   --   properties = { placement = awful.placement.center },
   -- }
+
+  -- Terminal: Float/Center/Always On Top
+  -- ruled.client.append_rule {
+  --   id = "terminal",
+  --   rule_any = {
+  --     class = { "Alacritty" },
+  --   },
+  --   properties = {
+  --     floating = true,
+  --     placement = awful.placement.centered,
+  --     ontop = true,
+  --     width = 800,
+  --     height = 600,
+  --     x = 2000,
+  --     y = 1120,
+  --   },
+  -- }
 end)

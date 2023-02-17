@@ -1,18 +1,16 @@
 {{- if eq .osid "linux-arch" -}}
+{{- if not .headless -}}
 
 {{ $packages := list
-    "curl"
-    "git"
-    "zsh"
-    "tmux"
-    "neovim"
-    "fzf"
-    "ripgrep"
-    "fd"
-    "vifm"
-    "bat"
-    "exa"
-    "git-delta"
+  "sddm"
+  "awesome-git"
+  "picom-git"
+  "rofi"
+  "upower"
+  "brightnessctl"
+  "alacritty"
+  "fcitx5"
+  "fcitx5-chinese-addons"
 -}}
 
 {{ $sudo := "sudo " -}}
@@ -24,4 +22,5 @@
 
 {{ $sudo }}pacman -Sy --noconfirm --needed {{ $packages | join " " }}
 
+{{- end -}}
 {{- end -}}
