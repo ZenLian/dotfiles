@@ -35,12 +35,6 @@ local config = {
       -- family = "JetBrainsMono Nerd Font",
       size = 12,
     },
-    taglist = {
-      square = false,
-    },
-    border_width = 1,
-    border_radius = 10,
-    gap = 5,
   },
 }
 

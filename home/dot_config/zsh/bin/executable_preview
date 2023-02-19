@@ -40,7 +40,9 @@ case "$file" in
     *.bmp|*.jpg|*.jpeg|*.png|*.xpm)
         [[ "$h" -gt 0 ]] && HEIGHT="-h $h"
         [[ "$w" -gt 0 ]] && WIDTH="-w $w"
-        viu -s ${HEIGHT:-} ${WIDTH:-} "$file" ;;
+        feh "$file" 2> /dev/null || \
+            (viu -s ${HEIGHT:-} ${WIDTH:-} "$file") || \
+            (echo ' you need an image viewer(feh)') ;;
     *)
         if [[ $(file --mime -L "$file") =~ binary ]]; then
             echo "🚀 binary file:" "$file"

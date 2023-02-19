@@ -19,7 +19,7 @@ local function init()
   theme.font = O.font.family .. " " .. O.font.size
   -- theme.wallpaper = theme_path .. "/wallpapers/LockScreen/arch-rainbow-1920x1080.png"
   theme.wallpaper = theme_path .. "/wallpapers/LockScreen/doggocat.png"
-  -- theme.icon_theme = "/usr/share/icons/breeze"
+  theme.icon_theme = "/usr/share/icons/Papirus"
   -- }}}
   --
 
@@ -29,10 +29,11 @@ local function init()
 
   -- TODO: move below to comp/beautiful
   -- {{{ gap/border/rounded
-  theme.useless_gap = dpi(O.gap)
-  theme.border_width = dpi(O.border_width)
+  theme.useless_gap = dpi(5)
+  theme.border_width = dpi(1)
   theme.border_width_maximized = 0
-  theme.border_radius = dpi(O.border_radius) -- not builtin
+  -- custom
+  theme.border_radius = dpi(10) -- not builtin
   -- }}}
 
   --------------------

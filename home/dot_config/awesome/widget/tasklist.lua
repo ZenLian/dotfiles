@@ -45,25 +45,26 @@ local tasklist = function(s)
     },
     widget_template = {
       {
-        -- {
-        --   id = "clientclass",
-        --   widget = wibox.widget.textbox,
-        -- },
         {
-          id = "clienticon",
-          widget = awful.widget.clienticon,
+          id = "clientclass",
+          widget = wibox.widget.textbox,
         },
+        -- {
+        --   id = "clienticon",
+        --   widget = awful.widget.clienticon,
+        -- },
         -- margins = { left = dpi(8), right = dpi(8), top = dpi(3), bottom = dpi(3) },
         margins = dpi(4),
         widget = wibox.container.margin,
       },
       id = "background_role",
       widget = wibox.container.background,
-      forced_width = dpi(32),
-      create_callback = function(self, c)
-        self:get_children_by_id("clienticon")[1].client = c
-      end,
-      -- update_callback = tasklist_update,
+      -- forced_width = dpi(32),
+      -- create_callback = function(self, c)
+      --   self:get_children_by_id("clienticon")[1].client = c
+      -- end,
+      create_callback = tasklist_update,
+      update_callback = tasklist_update,
     },
     buttons = tasklist_buttons,
   }

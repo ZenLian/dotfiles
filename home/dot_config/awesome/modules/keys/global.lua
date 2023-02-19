@@ -325,4 +325,10 @@ awful.mouse.append_global_mousebindings {
   end),
   awful.button({}, 4, awful.tag.viewnext),
   awful.button({}, 5, awful.tag.viewprev),
+  awful.button({ "Control" }, 4, function()
+    require("service.volume").set("1%+")
+  end),
+  awful.button({ "Control" }, 5, function()
+    require("service.volume").set("1%-")
+  end),
 }

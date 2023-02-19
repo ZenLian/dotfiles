@@ -3,3 +3,5 @@ export LANGUAGE=zh_CN:en_US
 
 xset s on
 xset s 300 # 5min before screen down
+# keyboard auto-repeat
+xset r rate 200 20
