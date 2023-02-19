@@ -144,8 +144,8 @@ local function init()
   ----------------
   -- Tooltips {{{
   ----------------
-  theme.tooltip_bg = p.surface
-  theme.tooltip_fg = p.on_surface
+  theme.tooltip_bg = p.surface0
+  theme.tooltip_fg = p.text
   theme.tooltip_opacity = 0.95
   theme.tooltip_border_width = 0
   theme.tooltip_align = "top"

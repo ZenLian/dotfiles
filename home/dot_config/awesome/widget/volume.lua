@@ -6,7 +6,7 @@ local widget = require("widget")
 local O = require("config")
 
 local factory = function()
-  local fg = theme.comp.wibar.volume.fg
+  local fg = theme.palette.teal
   local vol = widget.iconic {
     icon = theme.icons.get_volume(),
     desc = "N/A",

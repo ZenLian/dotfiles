@@ -1,6 +1,5 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 local utils = require("utils")
 local theme = require("theme")
 local service = require("service")
@@ -9,13 +8,9 @@ local service = require("service")
 
 local M = {}
 
-local defaults = {
-  fg = beautiful.fg_normal,
-}
+local fg = theme.palette.blue
 
-M.new = function(args)
-  args = utils.table.extend(defaults, args or {})
-
+M.new = function()
   -- local widget = wibox.widget.textbox(theme.icons.bluetooth_off)
   local widget = wibox.widget {
     widget = wibox.widget.textbox,
@@ -25,7 +20,7 @@ M.new = function(args)
   awesome.connect_signal("service::bluetooth", function(result)
     local icon = result.status ~= "off" and theme.icons.bluetooth or theme.icons.bluetooth_off
     local text = string.format("%s", icon)
-    widget.markup = utils.markup.fg(text, args.fg)
+    widget.markup = utils.markup.fg(text, fg)
   end)
 
   -- tooltip

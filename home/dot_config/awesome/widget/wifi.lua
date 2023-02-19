@@ -7,14 +7,11 @@ local theme = require("theme")
 local service = require("service")
 local config = require("config")
 
-local defaults = {
-  fg = beautiful.fg_normal,
-  device = config.device.wifi,
-}
+-- args
+local fg = theme.palette.lavender
+local device = config.device.wifi
 
-local factory = function(args)
-  args = utils.table.extend(defaults, args or {})
-
+local factory = function()
   local wifi = wibox.widget {
     widget = wibox.widget.textbox,
     font = utils.icon_font(),
@@ -22,16 +19,16 @@ local factory = function(args)
   }
 
   awesome.connect_signal("service::nm", function(devices)
-    local dev = devices and devices[args.device]
+    local dev = devices and devices[device]
     if not dev then
       return
     end
     if dev.state == "ACTIVATED" then
       local icon = theme.icons.get_wifi(dev.wifi.strength or 100)
-      wifi:set_markup(utils.markup.fg(icon, args.fg))
+      wifi:set_markup(utils.markup.fg(icon, fg))
     else
       local icon = theme.icons.wifi_off
-      wifi:set_markup(utils.markup.fg(icon, args.fg))
+      wifi:set_markup(utils.markup.fg(icon, fg))
     end
   end)
 
@@ -39,7 +36,7 @@ local factory = function(args)
     ontop = true,
     objects = { wifi },
     timer_function = function()
-      local dev = service.nm.devices[args.device]
+      local dev = service.nm.devices[device]
       local text = {}
       table.insert(text, string.format("%s: %s", dev.name, dev.state))
       table.insert(text, string.format("%s(%s)", dev.wifi.name, dev.wifi.strength))

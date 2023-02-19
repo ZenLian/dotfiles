@@ -78,7 +78,7 @@ local top_panel = function(s)
     spacing = dpi(10),
   }
 
-  local clk = wibox.widget.textclock("%m-%d %H:%M")
+  s.clock = widget.clock(s)
   s.systray = wibox.widget {
     widget = wibox.container.margin,
     left = dpi(5),
@@ -109,7 +109,7 @@ local top_panel = function(s)
       s.systray,
       s.systat,
       s.syscontrol,
-      clk,
+      s.clock,
     },
   }
 
