@@ -30,7 +30,7 @@ local function init()
   -- TODO: move below to comp/beautiful
   -- {{{ gap/border/rounded
   theme.useless_gap = dpi(5)
-  theme.border_width = dpi(1)
+  theme.border_width = dpi(2)
   theme.border_width_maximized = 0
   -- custom
   theme.border_radius = dpi(10) -- not builtin

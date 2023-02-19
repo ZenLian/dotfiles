@@ -4,7 +4,7 @@
 {{ $packages := list
   "sddm"
   "awesome-git"
-  "picom-git"
+  "picom-jonaburg-git"
   "rofi"
   "upower"
   "brightnessctl"
@@ -20,7 +20,7 @@
 
 #!/usr/bin/env bash
 
-{{ $sudo }}pacman -Sy --noconfirm --needed {{ $packages | join " " }}
+{{ $sudo }}yay -Sy --noconfirm --needed {{ $packages | join " " }}
 
 {{- end -}}
 {{- end -}}
