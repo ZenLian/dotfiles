@@ -1,5 +1,7 @@
 pcall(require, "luarocks.loader")
 local naughty = require("naughty")
+local awful = require("awful")
+require("awful.autofocus")
 
 -- {{{ mods path
 local cfg_path = require("gears").filesystem.get_configuration_dir()
@@ -7,8 +9,7 @@ package.path = cfg_path .. "mods/?.lua;" .. cfg_path .. "mods/?/init.lua;" .. pa
 -- }}}
 
 -- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
+-- NOTE: must put before other config
 naughty.connect_signal("request::display_error", function(message, startup)
   naughty.notification {
     urgency = "critical",
@@ -18,4 +19,9 @@ naughty.connect_signal("request::display_error", function(message, startup)
 end)
 -- }}}
 
-require("zl").setup {}
+awful.util.shell = "bash"
+
+require("theme").init()
+require("modules")
+require("layout")
+require("service").run()

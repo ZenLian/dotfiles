@@ -1,8 +1,15 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-# -c 1e1e2e
-i3lock -n -k \
-    -i $HOME/.config/awesome/zl/theme/wallpapers/LockScreen/arch-rainbow-1920x1080.png -F\
+images=($HOME/.config/awesome/zl/theme/wallpapers/LockScreen/*)
+count=${#images[@]}
+i=$((RANDOM % count))
+IMAGE=${images[i]}
+# IMAGE=$HOME/.config/awesome/zl/theme/wallpapers/LockScreen/arch-rainbow-1920x1080.png
+SIZE=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+# convert $IMAGE -resize $SIZE RGB:- | \
+    # i3lock --raw $SIZE:rgb --image /dev/stdin
+i3lock -i $IMAGE -F \
+    -n -k \
     -B 0.5 \
     --inside-color=1e1e2e88 \
     --ring-color=1e1e2ecc \
