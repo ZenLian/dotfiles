@@ -32,8 +32,6 @@ M.debug = function(text, args)
     title = "<span><b>Debug</b></span>",
     text = text,
     timeout = 0,
-    -- fg = theme.color.custom.blue,
-    -- bg = theme.color.
     -- border_color = ,
   }
   opts = M.table.extend(opts, args)

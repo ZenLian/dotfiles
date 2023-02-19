@@ -51,5 +51,5 @@ return wibox.widget {
   bluetooth,
   placeholder,
   layout = wibox.layout.flex.horizontal,
-  spacing = theme.control_center.spacing,
+  spacing = theme.comp.controlhub.spacing,
 }

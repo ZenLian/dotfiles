@@ -5,20 +5,15 @@ local service = require("zl.service")
 local utils = require("zl.utils")
 local theme = require("zl.theme")
 
-local defaults = {
-  fg = beautiful.fg_normal,
-  fg_low = beautiful.fg_urgent,
-}
-
 local M = {}
 
-M.new = function(args)
-  args = utils.table.extend(defaults, args or {})
-
+M.new = function()
+  local fg_normal = theme.comp.wibar.battery.fg
+  local fg_low = beautiful.fg_urgent
   local bat = wibox.widget {
     widget = wibox.widget.textbox,
     font = utils.icon_font(),
-    markup = "bat",
+    markup = "N/A",
   }
 
   -- tooltip
@@ -61,9 +56,9 @@ M.new = function(args)
       percentage = result.percentage
     end
     local icon = theme.icons.get_battery(percentage, charging)
-    local fg = args.fg
+    local fg = fg_normal
     if percentage < 15 then
-      fg = args.fg_low
+      fg = fg_low
     end
     bat.markup = utils.markup.fg(icon, fg)
   end)

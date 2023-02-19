@@ -4,25 +4,22 @@ local beautiful = require("beautiful")
 local utils = require("zl.utils")
 local theme = require("zl.theme")
 local service = require("zl.service")
+local widgets = require("zl.widgets")
 local O = require("zl.config")
 
-local defaults = {
-  fg = beautiful.fg_normal,
-}
-
-local factory = function(args)
-  args = utils.table.extend(defaults, args or {})
-
-  local vol = wibox.widget {
-    widget = wibox.widget.textbox,
-    font = utils.icon_font(),
+local factory = function()
+  local fg = theme.comp.wibar.volume.fg
+  local vol = widgets.iconic {
+    icon = theme.icons.get_volume(),
+    desc = "N/A",
+    fg = theme.comp.wibar.volume.fg,
   }
 
   awesome.connect_signal("service::volume", function(result)
     local icon = theme.icons.get_volume(result.muted)
-    local text = string.format("%s%3d%%", icon, result.volume)
-    local markup = utils.markup.fg(text, args.fg)
-    vol.markup = markup
+    local desc = string.format("%3d%%", result.volume)
+    vol.icon.markup = utils.markup.fg(icon, fg)
+    vol.desc.markup = utils.markup.fg(desc, fg)
     -- local naughty = require("naughty")
     -- naughty.notify {
     --   title = "service::volume",

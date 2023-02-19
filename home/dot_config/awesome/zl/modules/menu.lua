@@ -29,7 +29,7 @@ local apps_menu = {
 local mainmenu = awful.menu {
   items = {
     { "awesome", awesome_menu, beautiful.awesome_icon },
-    { "open terminal", config.apps.terminal, theme.icons.get_mdi("console-line", theme.color.primary) },
+    { "open terminal", config.apps.terminal, theme.icons.get_mdi("console-line", theme.comp.menu.icon.fg) },
     { "apps", apps_menu },
   },
 }

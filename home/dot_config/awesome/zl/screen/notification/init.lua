@@ -1,16 +1,10 @@
 local awful = require("awful")
 local naughty = require("naughty")
 -- local beautiful = require("beautiful")
-local theme = require("zl.theme")
+local color = require("zl.theme.sys.color")
 local ruled = require("ruled")
 
 local M = {}
-
--- naughty.config.presets.critical = {
---   bg = theme.color.error,
---   fg = theme.color.on_error,
---   timeout = 0,
--- }
 
 -- {{{ Notification rules
 ruled.notification.connect_signal("request::rules", function()
@@ -27,8 +21,8 @@ ruled.notification.connect_signal("request::rules", function()
     rule = { urgency = "critical" },
     properties = {
       timeout = 0,
-      bg = theme.color.error,
-      fg = theme.color.on_error,
+      bg = color.error,
+      fg = color.on_error,
     },
   }
 end)

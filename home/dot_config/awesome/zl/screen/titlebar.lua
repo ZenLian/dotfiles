@@ -2,7 +2,7 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local ruled = require("ruled")
-local beautiful = require("beautiful")
+local comp = require("zl.theme.comp.titlebar")
 
 local M = {
   _enabled = false,
@@ -12,20 +12,20 @@ local function create_button(args) --{color, action, c}
   -- the widget
   local w = wibox.widget {
     widget = wibox.container.background,
-    bg = beautiful.titlebar_button_bg,
-    shape = gears.shape.circle, -- utils.shape.prrect(beautiful.border_radius, true, true, false, true),
-    forced_width = beautiful.titlebar_button_size,
-    forced_height = beautiful.titlebar_button_size,
+    bg = comp.button.bg,
+    shape = gears.shape.circle,
+    forced_width = comp.button.width,
+    forced_height = comp.button.height,
   }
   w.main_color = args.color
 
   -- hover effect
   w:connect_signal("mouse::enter", function()
-    w.bg = w.main_color .. "99"
+    w.bg = w.main_color
   end)
 
   w:connect_signal("mouse::leave", function()
-    w.bg = w.main_color
+    w.bg = comp.button.bg
   end)
 
   -- press effect
@@ -38,18 +38,17 @@ local function create_button(args) --{color, action, c}
   -- end)
 
   -- focus color
-  local function on_focus_changed(c)
-    if client.focus == c then
-      w.bg = w.main_color
-    else
-      w.bg = beautiful.titlebar_button_bg
-    end
-  end
+  -- local function on_focus_changed(c)
+  --   if client.focus == c then
+  --     w.bg = w.main_color
+  --   else
+  --     w.bg = comp.button.bg
+  --   end
+  -- end
 
   -- apply dynamic color
-  args.client:connect_signal("focus", on_focus_changed)
-
-  args.client:connect_signal("unfocus", on_focus_changed)
+  -- args.client:connect_signal("focus", on_focus_changed)
+  -- args.client:connect_signal("unfocus", on_focus_changed)
 
   -- button action
   w:buttons(gears.table.join(awful.button({}, 1, args.action)))
@@ -71,7 +70,7 @@ client.connect_signal("request::titlebars", function(c)
 
   local titlebar = awful.titlebar(c, {
     position = "top",
-    size = beautiful.titlebar_size,
+    size = comp.container.height,
     -- font =,
     -- fg =,
     -- bg =
@@ -92,14 +91,14 @@ client.connect_signal("request::titlebars", function(c)
     {
       {
         create_button {
-          color = beautiful.titlebar_minimize_button_bg,
+          color = comp.minimize_button.bg,
           action = function()
             awful.client.floating.toggle(c)
           end,
           client = c,
         },
         create_button {
-          color = beautiful.titlebar_maximize_button_bg,
+          color = comp.maximize_button.bg,
           action = function()
             c.maximized = not c.maximized
             c:raise()
@@ -107,17 +106,17 @@ client.connect_signal("request::titlebars", function(c)
           client = c,
         },
         create_button {
-          color = beautiful.titlebar_close_button_bg,
+          color = comp.close_button.bg,
           action = function()
             c:kill()
           end,
           client = c,
         },
         layout = wibox.layout.flex.horizontal,
-        spacing = beautiful.titlebar_button_margin,
+        spacing = comp.button.margin,
       },
       widget = wibox.container.margin,
-      margins = { right = beautiful.titlebar_button_margin },
+      margins = { right = comp.button.margin },
     },
   }
 end)

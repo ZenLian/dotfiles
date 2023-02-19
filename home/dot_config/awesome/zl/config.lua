@@ -8,8 +8,7 @@ M.options = {
     terminal = "alacritty",
     editor = "alacritty -e nvim",
     browser = "microsoft-edge-stable",
-    -- explorer = "dolphin",
-    explorer = "thunar",
+    explorer = "alacritty -e vifm",
   },
   keys = {
     modkey = "Mod4",
@@ -24,22 +23,20 @@ M.options = {
   },
 
   theme = {
-    name = "catppuccin.mocha",
-
-    flavour = "mocha",
     --font = "JetBrainsMono Nerd Font 10"
     font = {
       -- family = "Material Design Icons",
       -- family = "JetBrainsMono Nerd Font",
       -- family = "WenQuanYi Micro Hei Mono",
-      family = "Caskaydia Cove Nerd Font Mono",
+      -- family = "Caskaydia Cove Nerd Font Mono",
+      family = "DejaVuSansMono Nerd Font",
       size = 12,
     },
     icon_font = {
-      family = "Material Design Icons",
-      -- family = "Material Design Icons Desktop",
+      -- family = "Caskaydia Cove Nerd Font",
+      -- family = "DejaVuSansMono Nerd Font",
+      family = "Material Design Icons Desktop",
       -- family = "JetBrainsMono Nerd Font",
-      -- family = "e",
       size = 12,
     },
     taglist = {

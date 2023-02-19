@@ -290,7 +290,8 @@ awful.keygrabber {
     awesome.emit_signal("zl::layout_visible", false)
     -- layout_popup.visible = false
   end,
-  export_keybindings = true,
+  -- TODO: not work
+  -- export_keybindings = true,
   stop_event = "release",
   stop_key = modkey, --{ "Escape", "Super_L", "Super_R", modkey },
   keybindings = {

@@ -2,7 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local theme = require("zl.theme")
+local comp = require("zl.theme.comp")
 local utils = require("zl.utils")
 local PREFIX = ...
 
@@ -20,7 +20,7 @@ M.create = function(s)
     screen = s,
     width = dpi(400),
     height = dpi(400),
-    bg = theme.control_center.bg,
+    bg = comp.controlhub.container.bg,
     -- margins = dpi(20),
     ontop = true,
     visible = false,
@@ -29,7 +29,7 @@ M.create = function(s)
   s.mycc = mycc
 
   mycc.x = s.geometry.x + s.geometry.width - mycc.width - beautiful.useless_gap
-  mycc.y = s.geometry.y + theme.wibar.height + beautiful.useless_gap
+  mycc.y = s.geometry.y + comp.wibar.height + beautiful.useless_gap
 
   -- widgets
   local powers = require(PREFIX .. ".powers")
@@ -42,10 +42,10 @@ M.create = function(s)
       sliders,
       switchers,
       layout = wibox.layout.fixed.vertical,
-      spacing = theme.control_center.spacing,
+      spacing = comp.controlhub.spacing,
     },
     widget = wibox.container.margin,
-    margins = theme.control_center.spacing,
+    margins = comp.controlhub.spacing,
   }
 
   mycc:buttons {

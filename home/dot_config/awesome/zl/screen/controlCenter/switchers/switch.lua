@@ -3,17 +3,17 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("zl.utils")
-local theme = require("zl.theme")
+local color = require("zl.theme.sys.color")
 
 local M = {}
 
 local defaults = {
   icon = "",
   text = "",
-  fg_on = theme.color.on_primary,
-  bg_on = theme.color.primary,
-  fg_off = theme.color.on_surface,
-  bg_off = theme.color.surface,
+  fg_on = color.on_primary,
+  bg_on = color.primary,
+  fg_off = color.on_surface,
+  bg_off = color.surface,
 }
 
 function M.new(args)

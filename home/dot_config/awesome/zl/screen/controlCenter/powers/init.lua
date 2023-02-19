@@ -2,7 +2,7 @@ local wibox = require("wibox")
 local gears = require("gears")
 local dpi = require("beautiful").xresources.apply_dpi
 local utils = require("zl.utils")
-local theme = require("zl.theme")
+local color = require("zl.theme.sys.color")
 
 local power_button = wibox.widget {
   {
@@ -15,8 +15,8 @@ local power_button = wibox.widget {
     margins = dpi(10),
   },
   widget = wibox.container.background,
-  fg = theme.color.on_surface,
-  bg = theme.color.surface,
+  fg = color.on_surface,
+  bg = color.surface,
   shape = gears.shape.rounded_bar,
 }
 

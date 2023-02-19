@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 
 # -c 1e1e2e
-i3lock -n -k --indicator \
+i3lock -n -k \
     -i $HOME/.config/awesome/zl/theme/wallpapers/LockScreen/arch-rainbow-1920x1080.png -F\
     -B 0.5 \
     --inside-color=1e1e2e88 \
-    --ring-color=1e1e2e88 \
-    --insidever-color=1e1e2e \
-    --ringver-color=1e1e2e \
-    --verif-color=89b4fa \
-    --insidewrong-color=1e1e2e \
-    --ringwrong-color=1e1e2e \
-    --wrong-color=f38ba8 \
-    --line-color=6c7086 \
+    --ring-color=1e1e2ecc \
+    --insidever-color=1e1e2e88 \
+    --ringver-color=89b4facc \
+    --verif-color=cdd6f4 \
+    --insidewrong-color=1e1e2e88 \
+    --ringwrong-color=f38ba8cc \
+    --wrong-color=cdd6f4 \
+    --line-color=1e1e1e88 \
     --keyhl-color=a6e3a1 \
     --bshl-color=f38ba8 \
     --layout-color=cdd6f4 \
