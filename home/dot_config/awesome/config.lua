@@ -18,6 +18,12 @@ local config = {
     wifi = "wlan0",
   },
 
+  layout = {
+    top_panel = {
+      height = 32,
+    },
+  },
+
   theme = {
     --font = "JetBrainsMono Nerd Font 10"
     font = {

@@ -27,7 +27,6 @@ local function init()
     theme[k] = v
   end
 
-  -- TODO: move below to comp/beautiful
   -- {{{ gap/border/rounded
   theme.useless_gap = dpi(5)
   theme.border_width = dpi(2)

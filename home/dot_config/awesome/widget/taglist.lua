@@ -2,7 +2,12 @@ local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
+local config = require("config")
 local modkey = require("config").keys.modkey
+local theme = require("theme")
+
+local total_height = config.layout.top_panel.height
+local indicator_height = 2
 
 local taglist_buttons = {
   awful.button({}, 1, function(t)
@@ -41,31 +46,27 @@ local taglist = function(s)
           {
             id = "text_role",
             widget = wibox.widget.textbox,
+            align = "center",
           },
-          layout = wibox.layout.fixed.horizontal,
+          id = "mainbox",
+          widget = wibox.container.background,
+          bg = beautiful.bg_normal,
+          forced_width = dpi(total_height - indicator_height - 4),
+          forced_height = dpi(total_height - indicator_height),
         },
-        left = dpi(8),
-        right = dpi(8),
-        -- margins = dpi(8),
-        widget = wibox.container.margin,
+        layout = wibox.layout.fixed.vertical,
       },
       id = "background_role",
       widget = wibox.container.background,
       -- Add support for hover colors and an index label
       ---@diagnostic disable-next-line: unused-local
       create_callback = function(self, c, index, objects) --luacheck: no unused args
-        -- self:get_children_by_id("index_role")[1].markup = "<b> " .. c3.index .. " </b>"
+        local mainbox = self:get_children_by_id("mainbox")[1]
         self:connect_signal("mouse::enter", function()
-          if self.bg ~= beautiful.bg_focus then
-            self.old_bg = self.bg
-          end
-          self.bg = beautiful.bg_focus
+          mainbox.bg = theme.palette.surface0
         end)
         self:connect_signal("mouse::leave", function()
-          if self.old_bg then
-            self.bg = self.old_bg
-            self.old_bg = nil
-          end
+          mainbox.bg = theme.palette.base
         end)
       end,
       -- update_callback = function(self, c3, index, objects) --luacheck: no unused args

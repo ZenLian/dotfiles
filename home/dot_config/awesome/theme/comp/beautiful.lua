@@ -27,10 +27,10 @@ M = {
   notification_border_color = p.surface,
   -- }}}
   -- {{{ taglist
-  taglist_bg_focus = c.surface,
-  taglist_fg_focus = c.on_primary,
-  -- taglist_bg_urgent = c.error,
-  taglist_fg_urgent = c.on_error,
+  taglist_bg_focus = p.blue,
+  taglist_fg_focus = p.blue,
+  taglist_bg_urgent = p.red,
+  taglist_fg_urgent = p.base,
   taglist_bg_occupied = p.base,
   taglist_fg_occupied = p.text,
   taglist_bg_empty = p.base,

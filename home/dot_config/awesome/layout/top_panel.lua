@@ -6,6 +6,7 @@ local widget = require("widget")
 local icons = require("theme.icons")
 local utils = require("utils")
 local comp = require("theme.comp")
+local config = require("config")
 
 local top_panel = function(s)
   local panel = awful.wibar {
@@ -13,7 +14,7 @@ local top_panel = function(s)
     visible = true,
     ontop = false,
     type = "dock",
-    height = dpi(32),
+    height = dpi(config.layout.top_panel.height),
     bg = beautiful.bg_normal,
     fg = beautiful.fg_normal,
   }
