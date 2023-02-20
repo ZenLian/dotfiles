@@ -93,6 +93,8 @@ local top_panel = function(s)
     },
   }
 
+  s.layoutbox = widget.layoutbox(s)
+
   panel:setup {
     layout = wibox.layout.align.horizontal,
     -- expand = "none",
@@ -106,11 +108,12 @@ local top_panel = function(s)
     },
     {
       layout = wibox.layout.fixed.horizontal,
-      spacing = dpi(10),
+      spacing = dpi(8),
       s.systray,
       s.systat,
       s.syscontrol,
       s.clock,
+      s.layoutbox,
     },
   }
 

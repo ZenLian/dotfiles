@@ -34,6 +34,10 @@ awful.keyboard.append_global_keybindings {
     awful.spawn(C.apps.terminal)
   end, { description = "terminal", group = "launcher" }),
 
+  awful.key({ modkey }, " ", function()
+    awful.spawn(C.apps.terminal .. " --class=Floaterm")
+  end, { description = "float terminal", group = "launcher" }),
+
   awful.key({ modkey }, "b", function()
     awful.spawn(C.apps.browser)
   end, { description = "web browser", group = "launcher" }),
@@ -251,19 +255,19 @@ awful.keyboard.append_global_keybindings {
     awful.client.swap.byidx(-1)
   end, { description = "swap with previous client by index", group = "client" }),
 
-  awful.key({ modkey }, "l", function()
+  awful.key({ modkey, shift }, "l", function()
     awful.tag.incmwfact(0.05)
   end, { description = "increase master width factor", group = "layout" }),
-  awful.key({ modkey }, "h", function()
+  awful.key({ modkey, shift }, "h", function()
     awful.tag.incmwfact(-0.05)
   end, { description = "decrease master width factor", group = "layout" }),
 
-  awful.key({ modkey, shift }, "h", function()
-    awful.tag.incnmaster(1, nil, true)
-  end, { description = "increase the number of master clients", group = "layout" }),
-  awful.key({ modkey, shift }, "l", function()
-    awful.tag.incnmaster(-1, nil, true)
-  end, { description = "decrease the number of master clients", group = "layout" }),
+  -- awful.key({ modkey, shift }, "h", function()
+  --   awful.tag.incnmaster(1, nil, true)
+  -- end, { description = "increase the number of master clients", group = "layout" }),
+  -- awful.key({ modkey, shift }, "l", function()
+  --   awful.tag.incnmaster(-1, nil, true)
+  -- end, { description = "decrease the number of master clients", group = "layout" }),
   awful.key({ modkey, ctrl }, "h", function()
     awful.tag.incncol(1, nil, true)
   end, { description = "increase the number of columns", group = "layout" }),
@@ -273,6 +277,11 @@ awful.keyboard.append_global_keybindings {
 }
 
 -- {{{ select layouts
+awful.keyboard.append_global_keybindings {
+  awful.key({ modkey }, "\\", function()
+    awful.layout.inc(1)
+  end, { description = "select next layout", group = "layout" }),
+}
 awful.keygrabber {
   start_callback = function()
     awesome.emit_signal("zl::layout_visible", true)

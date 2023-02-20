@@ -22,26 +22,10 @@ ruled.client.connect_signal("request::rules", function()
     id = "floating",
     rule_any = {
       instance = {
-        "copyq",
-        "pinentry",
-        --
-        "spad",
-        "discord",
-        "music",
+        "Floaterm",
       },
       class = {
-        "Arandr",
-        "Blueman-manager",
-        "Gpick",
-        "Kruler",
-        "Sxiv",
-        "Tor Browser",
-        "Wpa_gui",
-        "veromix",
-        "xtightvncviewer",
-        --
         "Lxappearance",
-        "kcalc",
         "Galculator",
         "Xarchiver",
         "Zathura",
@@ -103,19 +87,19 @@ ruled.client.connect_signal("request::rules", function()
   -- }
 
   -- Terminal: Float/Center/Always On Top
-  -- ruled.client.append_rule {
-  --   id = "terminal",
-  --   rule_any = {
-  --     class = { "Alacritty" },
-  --   },
-  --   properties = {
-  --     floating = true,
-  --     placement = awful.placement.centered,
-  --     ontop = true,
-  --     width = 800,
-  --     height = 600,
-  --     x = 2000,
-  --     y = 1120,
-  --   },
-  -- }
+  ruled.client.append_rule {
+    id = "terminal",
+    rule_any = {
+      class = { "Floaterm" },
+    },
+    properties = {
+      floating = true,
+      placement = awful.placement.centered,
+      ontop = true,
+      -- width = 800,
+      -- height = 600,
+      -- x = 2000,
+      -- y = 1120,
+    },
+  }
 end)

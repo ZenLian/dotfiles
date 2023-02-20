@@ -15,7 +15,9 @@ local factory = function(s)
 
   clock = wibox.widget {
     clock,
-    margins = dpi(8),
+    -- margins = dpi(8),
+    -- up = dpi(8),
+    -- down = dpi(8),
     widget = wibox.container.margin,
   }
 
