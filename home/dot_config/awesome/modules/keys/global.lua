@@ -18,7 +18,7 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, ctrl }, "p", function()
     menu:toggle()
   end, { description = "toggle menu", group = "awesome" }),
-  awful.key({ modkey }, "p", function()
+  awful.key({ modkey }, "r", function()
     menubar.show()
   end, { description = "show the menubar", group = "launcher" }),
   awful.key({ modkey }, "a", function()
@@ -50,8 +50,8 @@ awful.keyboard.append_global_keybindings {
   -- awful.key({ modkey }, "p", function()
   --   awful.spawn(C.apps.launcher)
   -- end, { description = "rofi drun", group = "launcher" }),
-  awful.key({ modkey }, "r", function()
-    awful.spawn("rofi -show run")
+  awful.key({ modkey }, "p", function()
+    awful.spawn(C.apps.launcher)
   end, { description = "rofi run", group = "launcher" }),
   awful.key({ modkey }, "w", function()
     awful.spawn("rofi -show window")

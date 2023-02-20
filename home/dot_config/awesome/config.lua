@@ -1,6 +1,6 @@
 local config = {
   apps = {
-    launcher = "rofi -show drun -matching fuzzy",
+    launcher = "rofi -show combi -combi-mode -matching fuzzy",
     terminal = "alacritty",
     editor = "alacritty -e nvim",
     browser = "microsoft-edge-stable",

@@ -7,6 +7,12 @@ local theme = require("theme")
 
 local M = {}
 
+local battery_buttons = {
+  awful.button({}, 1, function()
+    awful.spawn("xfce4-power-manager-settings")
+  end),
+}
+
 M.new = function()
   local fg_normal = theme.comp.wibar.battery.fg
   local fg_low = beautiful.fg_urgent
@@ -15,6 +21,8 @@ M.new = function()
     font = utils.icon_font(),
     markup = "N/A",
   }
+
+  bat:buttons(battery_buttons)
 
   -- tooltip
   local bat_tip = awful.tooltip {
