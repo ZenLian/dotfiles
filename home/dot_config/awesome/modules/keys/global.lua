@@ -14,7 +14,9 @@ local shift = "Shift"
 awful.keyboard.append_global_keybindings {
   awful.key({ modkey }, "F1", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
   awful.key({ modkey, ctrl }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-  awful.key({ modkey, ctrl }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+  awful.key({ modkey, ctrl }, "q", function()
+    awesome.emit_signal("layout::exit_screen::show")
+  end, { description = "quit awesome", group = "awesome" }),
   awful.key({ modkey, ctrl }, "p", function()
     menu:toggle()
   end, { description = "toggle menu", group = "awesome" }),

@@ -3,6 +3,7 @@ local wibox = require("wibox")
 local utils = require("utils")
 local theme = require("theme")
 local service = require("service")
+local config = require("config")
 
 -- DEBUG
 
@@ -42,8 +43,11 @@ M.new = function()
   }
 
   widget:buttons {
-    awful.button({}, 1, function() -- left click
+    awful.button({}, 1, function()
       service.bluetooth.toggle()
+    end),
+    awful.button({}, 2, function()
+      awful.spawn.with_shell(config.apps.terminal .. " -e bluetoothctl")
     end),
   }
 

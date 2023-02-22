@@ -45,6 +45,12 @@ local factory = function()
     end,
   }
 
+  wifi:buttons {
+    awful.button({}, "1", function()
+      awful.spawn(config.apps.terminal .. " -e nmtui-connect")
+    end),
+  }
+
   return wibox.widget {
     wifi,
     margins = {

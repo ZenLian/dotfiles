@@ -44,7 +44,7 @@ local top_panel = function(s)
   end)
 
   local thermal = widget.iconic {
-    icon = icons.memory,
+    icon = icons.thermal,
     desc = "N/A",
     fg = comp.wibar.thermal.fg,
   }

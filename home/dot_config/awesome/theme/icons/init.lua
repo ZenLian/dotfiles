@@ -71,4 +71,9 @@ icons.get_mdi_wifi = function(level, fg)
   end
 end
 
-return icons
+local ICON_PATH = gears.filesystem.get_configuration_dir() .. "theme/icons/%s.svg"
+return setmetatable(icons, {
+  __call = function(_, name)
+    return ICON_PATH:format(name)
+  end,
+})
