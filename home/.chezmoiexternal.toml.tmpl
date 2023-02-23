@@ -51,6 +51,12 @@
     stripComponents = 1
     refreshPeriod = "168h"
 
+{{- if not .headless }}
+[".config/awesome"]
+    type = "git-repo"
+    url = "https://github.com/zenlian/awesome.git"
+{{- end -}}
+
 {{- if .rootless }}
 
 # binaries

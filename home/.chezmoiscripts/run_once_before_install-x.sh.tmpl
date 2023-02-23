@@ -11,6 +11,7 @@
   "alacritty"
   "fcitx5"
   "fcitx5-chinese-addons"
+  "paru"
 -}}
 
 {{ $sudo := "sudo " -}}
@@ -20,7 +21,7 @@
 
 #!/usr/bin/env bash
 
-{{ $sudo }}yay -Sy --noconfirm --needed {{ $packages | join " " }}
+paru -Sy --noconfirm --needed {{ $packages | join " " }}
 
 {{- end -}}
 {{- end -}}

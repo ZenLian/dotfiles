@@ -1,5 +1,7 @@
 export LANG=zh_CN.UTF-8
 export LANGUAGE=zh_CN:en_US
+export TERM=alacritty
+export TERMINAL="alacritty -e"
 
 xset s on
 xset s 300 # 5min before screen down
