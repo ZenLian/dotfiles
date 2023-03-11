@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+file=$1
+h=$2
+w=$3
+# local x=$4
+# local y=$(($5 + 1))
+
+if [[ -d $file ]]; then
+    exa -ahl --git --no-permissions --no-user --time-style=iso --icons --color=always "$file" 2> /dev/null || \
+        ( ls -A1 --color=always "$file" )
+    exit 0
+fi
+
+do_cat() {
+    if [[ $file = *.md ]]; then
+        glow -s dark "$file"
+        return 0
+    fi
+    [[ "$h" -gt 0 ]] && LINE_RANGE="--line-range=:$h"
+    bat --color=always --style=numbers,changes ${LINE_RANGE:-} "$file" 2> /dev/null || \
+        ( cat "$file" 2> /dev/null ) || ( echo '🙃 unknown file' )
+}
+
+do_lsar() {
+    lsar "$file" 2> /dev/null && return 0
+    case "$file" in
+        *.tar*) tar tf "$file" ;;
+        *.zip) unzip -l "$file" ;;
+        *.rar) unrar l "$file" ;;
+        *.7z) 7z l "$file" ;;
+    esac
+}
+
+case "$file" in
+    *.tar*|*.gz|*.tgz|*.xz|*.zip|*.rar|*.7z) do_lsar "$file" ;; # require unarchiver
+    *.[1-8]) man "$file" | col -b ;;
+    *.o) nm "$file" | less ;;
+        # *.pdf) pdftotext "$1" - ;;
+    *.bmp|*.jpg|*.jpeg|*.png|*.xpm)
+        [[ "$h" -gt 0 ]] && HEIGHT="-h $h"
+        [[ "$w" -gt 0 ]] && WIDTH="-w $w"
+        feh "$file" 2> /dev/null || \
+            (viu -s ${HEIGHT:-} ${WIDTH:-} "$file") || \
+            (echo ' you need an image viewer(feh)') ;;
+    *)
+        if [[ $(file --mime -L "$file") =~ binary ]]; then
+            echo "🚀 binary file:" "$file"
+        else
+            do_cat
+        fi;
+esac

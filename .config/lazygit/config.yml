@@ -1,0 +1,17 @@
+gui:
+  expandFocusedSidePanel: true
+  theme:
+    lightTheme: false
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - white
+    optionsTextColor:
+      - blue
+    selectedLineBgColor:
+      - '#2b2d37'
+      - bold
+    selectedRangeBgColor:
+      - blue
+
