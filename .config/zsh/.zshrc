@@ -5,7 +5,6 @@
 
 path+=($HOME/.local/bin $ZDOTDIR/bin)
 
-
 fpath=($ZDOTDIR/functions $ZDOTDIR/completions $fpath)
 autoload -U $ZDOTDIR/functions/*(:t)
 
@@ -13,8 +12,8 @@ for cfg in $ZDOTDIR/configs/before/*.zsh; do
     source $cfg
 done
 
+exists "starship" && eval "$(starship init zsh)"
 plug "romkatv/zsh-defer"
-plug "romkatv/powerlevel10k"
 plug "jeffreytse/zsh-vi-mode"
 zsh-defer plug "Aloxaf/fzf-tab"
 zsh-defer plug "zsh-users/zsh-autosuggestions"
