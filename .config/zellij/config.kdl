@@ -1,5 +1,5 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
-keybinds {
+keybinds clear-defaults=true {
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
@@ -8,7 +8,7 @@ keybinds {
         bind "Ctrl g" { SwitchToMode "Normal"; }
     }
     resize {
-        bind "Ctrl n" { SwitchToMode "Normal"; }
+        bind "Ctrl r" { SwitchToMode "Normal"; }
         bind "h" "Left" { Resize "Increase Left"; }
         bind "j" "Down" { Resize "Increase Down"; }
         bind "k" "Up" { Resize "Increase Up"; }
@@ -68,7 +68,7 @@ keybinds {
     scroll {
         bind "Ctrl s" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
-        bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
+        bind "s" "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
         bind "k" "Up" { ScrollUp; }
@@ -108,35 +108,56 @@ keybinds {
     }
     session {
         bind "Ctrl o" { SwitchToMode "Normal"; }
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        bind "Ctrl s" "v" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
     }
     tmux {
-        bind "[" { SwitchToMode "Scroll"; }
-        bind "Ctrl b" { Write 2; SwitchToMode "Normal"; }
-        bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
-        bind "%" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "Ctrl g" { SwitchToMode "Locked"; }
+        bind "Ctrl r" { SwitchToMode "Resize"; }
+        bind "Ctrl p" { SwitchToMode "Pane"; }
+        bind "Ctrl t" { SwitchToMode "Tab"; }
+        bind "Ctrl m" { SwitchToMode "Move"; }
+        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Ctrl s" "s" "v" { SwitchToMode "Scroll"; }
+
+        //resize
+        bind "H" "Left" { Resize "Increase Left"; }
+        bind "J" "Down" { Resize "Increase Down"; }
+        bind "K" "Up" { Resize "Increase Up"; }
+        bind "L" "Right" { Resize "Increase Right"; }
+
+        //pane
+        bind "_" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "-" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "Left" { MoveFocus "Left"; }
+        bind "Right" { MoveFocus "Right"; }
+        bind "Down" { MoveFocus "Down"; }
+        bind "Up" { MoveFocus "Up"; }
+        bind "h" { MoveFocus "Left"; }
+        bind "l" { MoveFocus "Right"; }
+        bind "j" { MoveFocus "Down"; }
+        bind "k" { MoveFocus "Up"; }
+        bind "o" { FocusNextPane; }
+        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+
+        //tab
         bind "c" { NewTab; SwitchToMode "Normal"; }
         bind "," { SwitchToMode "RenameTab"; }
-        bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
-        bind "n" { GoToNextTab; SwitchToMode "Normal"; }
-        bind "Left" { MoveFocus "Left"; SwitchToMode "Normal"; }
-        bind "Right" { MoveFocus "Right"; SwitchToMode "Normal"; }
-        bind "Down" { MoveFocus "Down"; SwitchToMode "Normal"; }
-        bind "Up" { MoveFocus "Up"; SwitchToMode "Normal"; }
-        bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
-        bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
-        bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
-        bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
-        bind "o" { FocusNextPane; }
-        bind "d" { Detach; }
+        bind "p" { GoToPreviousTab; }
+        bind "n" { GoToNextTab; }
+        bind ";" { ToggleTab; }
         bind "Space" { NextSwapLayout; }
-        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "X" { CloseTab; SwitchToMode "Normal"; }
+
+        // session
+        bind "d" { Detach; }
+        bind "q" { Quit; }
     }
     shared_except "locked" {
-        bind "Ctrl g" { SwitchToMode "Locked"; }
-        bind "Ctrl q" { Quit; }
+        bind "Ctrl g" { SwitchToMode "Tmux"; }
+        //bind "Ctrl q" { Quit; }
         bind "Alt n" { NewPane; }
         bind "Alt t" { NewTab; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
@@ -147,30 +168,42 @@ keybinds {
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
+        bind "Alt 1" { GoToTab 1; }
+        bind "Alt 2" { GoToTab 2; }
+        bind "Alt 3" { GoToTab 3; }
+        bind "Alt 4" { GoToTab 4; }
+        bind "Alt 5" { GoToTab 5; }
+        bind "Alt 6" { GoToTab 6; }
+        bind "Alt 7" { GoToTab 7; }
+        bind "Alt 8" { GoToTab 8; }
+        bind "Alt 9" { GoToTab 9; }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
-    shared_except "pane" "locked" {
-        bind "Ctrl p" { SwitchToMode "Pane"; }
+    shared_except "normal" "locked" "tmux" {
+        bind "q" { SwitchToMode "Normal"; }
     }
-    shared_except "resize" "locked" {
-        bind "Ctrl n" { SwitchToMode "Resize"; }
-    }
-    shared_except "scroll" "locked" {
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
-    }
-    shared_except "session" "locked" {
-        bind "Ctrl o" { SwitchToMode "Session"; }
-    }
-    shared_except "tab" "locked" {
-        bind "Ctrl t" { SwitchToMode "Tab"; }
-    }
-    shared_except "move" "locked" {
-        bind "Ctrl m" { SwitchToMode "Move"; }
-    }
+    //shared_except "pane" "locked" {
+    //    bind "Ctrl p" { SwitchToMode "Pane"; }
+    //}
+    //shared_except "resize" "locked" {
+    //    bind "Ctrl n" { SwitchToMode "Resize"; }
+    //}
+    //shared_except "scroll" "locked" {
+    //    bind "Ctrl s" { SwitchToMode "Scroll"; }
+    //}
+    //shared_except "session" "locked" {
+    //    bind "Ctrl o" { SwitchToMode "Session"; }
+    //}
+    //shared_except "tab" "locked" {
+    //    bind "Ctrl t" { SwitchToMode "Tab"; }
+    //}
+    //shared_except "move" "locked" {
+    //    bind "Ctrl m" { SwitchToMode "Move"; }
+    //}
     shared_except "tmux" "locked" {
-        bind "Ctrl b" { SwitchToMode "Tmux"; }
+        bind "Ctrl g" { SwitchToMode "Tmux"; }
     }
 }
 
@@ -248,7 +281,7 @@ default_layout "compact"
 // Choose the mode that zellij uses when starting up.
 // Default: normal
 //
-default_mode "locked"
+// default_mode "locked"
 
 // Toggle enabling the mouse mode.
 // On certain configurations, or terminals this could
