@@ -2,20 +2,42 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local ruled = require("ruled")
-local comp = require("theme.comp.titlebar")
+local dpi = require("beautiful.xresources").apply_dpi
+local p = require("theme.palette")
 
 local M = {
   _enabled = false,
+}
+
+local styles = {
+  container = {
+    height = dpi(32),
+  },
+  button = {
+    width = dpi(14),
+    height = dpi(14),
+    margin = dpi(14),
+    bg = p.surface1,
+  },
+  minimize_button = {
+    bg = p.yellow,
+  },
+  maximize_button = {
+    bg = p.green,
+  },
+  close_button = {
+    bg = p.red,
+  },
 }
 
 local function create_button(args) --{color, action, c}
   -- the widget
   local w = wibox.widget {
     widget = wibox.container.background,
-    bg = comp.button.bg,
+    bg = styles.button.bg,
     shape = gears.shape.circle,
-    forced_width = comp.button.width,
-    forced_height = comp.button.height,
+    forced_width = styles.button.width,
+    forced_height = styles.button.height,
   }
   w.main_color = args.color
 
@@ -25,7 +47,7 @@ local function create_button(args) --{color, action, c}
   end)
 
   w:connect_signal("mouse::leave", function()
-    w.bg = comp.button.bg
+    w.bg = styles.button.bg
   end)
 
   -- press effect
@@ -42,7 +64,7 @@ local function create_button(args) --{color, action, c}
   --   if client.focus == c then
   --     w.bg = w.main_color
   --   else
-  --     w.bg = comp.button.bg
+  --     w.bg =
   --   end
   -- end
 
@@ -70,7 +92,7 @@ client.connect_signal("request::titlebars", function(c)
 
   local titlebar = awful.titlebar(c, {
     position = "top",
-    size = comp.container.height,
+    size = styles.container.height,
     -- font =,
     -- fg =,
     -- bg =
@@ -91,14 +113,14 @@ client.connect_signal("request::titlebars", function(c)
     {
       {
         create_button {
-          color = comp.minimize_button.bg,
+          color = styles.minimize_button.bg,
           action = function()
             awful.client.floating.toggle(c)
           end,
           client = c,
         },
         create_button {
-          color = comp.maximize_button.bg,
+          color = styles.maximize_button.bg,
           action = function()
             c.maximized = not c.maximized
             c:raise()
@@ -106,17 +128,17 @@ client.connect_signal("request::titlebars", function(c)
           client = c,
         },
         create_button {
-          color = comp.close_button.bg,
+          color = styles.close_button.bg,
           action = function()
             c:kill()
           end,
           client = c,
         },
         layout = wibox.layout.flex.horizontal,
-        spacing = comp.button.margin,
+        spacing = styles.button.margin,
       },
       widget = wibox.container.margin,
-      margins = { right = comp.button.margin },
+      margins = { right = styles.button.margin },
     },
   }
 end)

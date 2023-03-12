@@ -1,10 +1,11 @@
-local PREFIX = ... .. "."
+local beautiful = require("beautiful")
 
+local PREFIX = ... .. "."
 local M = {}
 
 function M.init()
   -- init awesome's beautiful module
-  require("theme.beautiful").init()
+  require(PREFIX .. "beautiful").init()
 end
 
 return setmetatable(M, {

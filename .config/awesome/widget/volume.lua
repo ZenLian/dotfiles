@@ -3,6 +3,7 @@ local utils = require("utils")
 local theme = require("theme")
 local service = require("service")
 local widget = require("widget")
+local p = require("theme.palette")
 local O = require("config")
 
 local factory = function()
@@ -10,7 +11,7 @@ local factory = function()
   local vol = widget.iconic {
     icon = theme.icons.get_volume(),
     desc = "N/A",
-    fg = theme.comp.wibar.volume.fg,
+    fg = p.rosewater,
   }
 
   awesome.connect_signal("service::volume", function(result)

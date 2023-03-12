@@ -2,7 +2,6 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local comp = require("theme.comp")
 local utils = require("utils")
 local PREFIX = ...
 
@@ -10,6 +9,11 @@ local M = {
   _setup = false,
   -- show in which screen
   screen = nil,
+}
+
+local styles = {
+  spacing = dpi(10),
+  bg = p.mantle,
 }
 
 -- add to screen
@@ -20,7 +24,7 @@ M.create = function(s)
     screen = s,
     width = dpi(400),
     height = dpi(400),
-    bg = comp.controlhub.container.bg,
+    bg = styles.bg,
     -- margins = dpi(20),
     ontop = true,
     visible = false,
@@ -29,7 +33,7 @@ M.create = function(s)
   s.mycc = mycc
 
   mycc.x = s.geometry.x + s.geometry.width - mycc.width - beautiful.useless_gap
-  mycc.y = s.geometry.y + comp.wibar.height + beautiful.useless_gap
+  mycc.y = s.geometry.y + dpi(config.layout.top_panel.height) + beautiful.useless_gap
 
   -- widgets
   local powers = require(PREFIX .. ".powers")
@@ -42,10 +46,10 @@ M.create = function(s)
       sliders,
       switchers,
       layout = wibox.layout.fixed.vertical,
-      spacing = comp.controlhub.spacing,
+      spacing = styles.spacing,
     },
     widget = wibox.container.margin,
-    margins = comp.controlhub.spacing,
+    margins = styles.spacing,
   }
 
   mycc:buttons {

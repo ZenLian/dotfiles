@@ -14,8 +14,8 @@ local battery_buttons = {
 }
 
 M.new = function()
-  local fg_normal = theme.comp.wibar.battery.fg
-  local fg_low = beautiful.fg_urgent
+  local fg_normal = theme.palette.green
+  local fg_low = theme.palette.red
   local bat = wibox.widget {
     widget = wibox.widget.textbox,
     font = utils.icon_font(),

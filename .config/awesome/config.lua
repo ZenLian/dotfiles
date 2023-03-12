@@ -27,6 +27,7 @@ local config = {
     },
     right_panel = {
       width = 350,
+      spacing = 10,
     },
   },
 
@@ -45,6 +46,7 @@ local config = {
       family = "Material Design Icons Desktop",
       size = 12,
     },
+    icon_theme = "Papirus",
     random_wallpaper = {
       auto_timeout = 15, -- auto change wallpaper every 1 minutes
     },

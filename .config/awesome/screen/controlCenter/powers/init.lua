@@ -2,7 +2,7 @@ local wibox = require("wibox")
 local gears = require("gears")
 local dpi = require("beautiful").xresources.apply_dpi
 local utils = require("utils")
-local color = require("theme.sys.color")
+local p = require("theme.palette")
 
 local power_button = wibox.widget {
   {
@@ -15,8 +15,8 @@ local power_button = wibox.widget {
     margins = dpi(10),
   },
   widget = wibox.container.background,
-  fg = color.on_surface,
-  bg = color.surface,
+  fg = p.text,
+  bg = p.surface0,
   shape = gears.shape.rounded_bar,
 }
 

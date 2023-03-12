@@ -3,17 +3,17 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local utils = require("utils")
-local color = require("theme.sys.color")
+local palette = require("theme.palette")
 
 local M = {}
 
 local defaults = {
   icon = "",
   text = "",
-  fg_on = color.on_primary,
-  bg_on = color.primary,
-  fg_off = color.on_surface,
-  bg_off = color.surface,
+  fg_on = palette.blue,
+  bg_on = palette.base,
+  fg_off = palette.text,
+  bg_off = palette.surface0,
 }
 
 function M.new(args)

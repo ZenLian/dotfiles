@@ -2,6 +2,7 @@ local wibox = require("wibox")
 local theme = require("theme")
 local switch = require(... .. ".switch")
 local service = require("service")
+local config = require("config")
 
 local wifi = switch {
   icon = theme.icons.wifi,
@@ -51,5 +52,5 @@ return wibox.widget {
   bluetooth,
   placeholder,
   layout = wibox.layout.flex.horizontal,
-  spacing = theme.comp.controlhub.spacing,
+  spacing = dpi(config.layout.right_panel.spacing),
 }

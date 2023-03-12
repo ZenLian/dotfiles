@@ -2,7 +2,7 @@ local awful = require("awful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local beautiful = require("beautiful")
-local color = require("theme.sys.color")
+local palette = require("theme.palette")
 local ruled = require("ruled")
 
 local M = {}
@@ -22,8 +22,8 @@ ruled.notification.connect_signal("request::rules", function()
     rule = { urgency = "critical" },
     properties = {
       timeout = 0,
-      bg = color.error,
-      fg = color.on_error,
+      bg = palette.base,
+      fg = palette.red,
     },
   }
 end)

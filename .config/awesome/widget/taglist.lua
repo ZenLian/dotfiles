@@ -70,6 +70,9 @@ local taglist = function(s)
       -- end,
     },
     buttons = taglist_buttons,
+    style = {
+      fg_urgent = theme.palette.red,
+    },
   }
 end
 

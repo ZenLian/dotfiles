@@ -3,9 +3,6 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local widget = require("widget")
-local icons = require("theme.icons")
-local utils = require("utils")
-local comp = require("theme.comp")
 local config = require("config")
 
 local top_panel = function(s)
