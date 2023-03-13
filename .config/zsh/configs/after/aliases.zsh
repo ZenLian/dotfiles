@@ -72,6 +72,16 @@ alias rd=rmdir
 # compdef _dirs d
 
 ##########################################
+# dotbare
+##########################################
+if exists dotbare; then
+    alias dot='dotbare'
+    alias dv='dotbare fedit'
+    alias dst='dot fstat'
+    alias dlg='dotbare flog'
+fi
+
+##########################################
 # git
 ##########################################
 g() {
@@ -180,3 +190,12 @@ alias ts='tmux new-session -s'
 alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
+
+##########################################
+# zellij
+##########################################
+if exists zellij; then
+    alias zl='zellij'
+    alias zls='zellij -s'
+    alias zla='zellij a'
+fi

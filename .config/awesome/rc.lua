@@ -20,6 +20,7 @@ end)
 -- }}}
 
 awful.util.shell = "bash"
+awful.screen.set_auto_dpi_enabled(true)
 
 require("theme").init()
 require("modules")
