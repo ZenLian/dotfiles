@@ -22,3 +22,5 @@ setopt long_list_jobs
 setopt globdots
 
 setopt print_exit_value
+
+unsetopt flow_control

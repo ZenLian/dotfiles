@@ -100,11 +100,11 @@ keybinds clear-defaults=true {
     }
     renametab {
         bind "Ctrl c" { SwitchToMode "Normal"; }
-        bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "Normal"; }
     }
     renamepane {
         bind "Ctrl c" { SwitchToMode "Normal"; }
-        bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
+        bind "Esc" { UndoRenamePane; SwitchToMode "Normal"; }
     }
     session {
         bind "Ctrl o" { SwitchToMode "Normal"; }
@@ -144,7 +144,7 @@ keybinds clear-defaults=true {
 
         //tab
         bind "c" { NewTab; SwitchToMode "Normal"; }
-        bind "," { SwitchToMode "RenameTab"; }
+        bind "," { SwitchToMode "RenameTab"; TabNameInput 0;}
         bind "p" { GoToPreviousTab; }
         bind "n" { GoToNextTab; }
         bind ";" { ToggleTab; SwitchToMode "Normal"; }
@@ -157,15 +157,16 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Tmux"; }
-        //bind "Ctrl q" { Quit; }
+        //pane
         bind "Alt n" { NewPane; }
-        bind "Alt t" { NewTab; }
+        bind "Alt w" { ToggleFloatingPanes; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
         bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
         bind "Alt j" "Alt Down" { MoveFocus "Down"; }
         bind "Alt k" "Alt Up" { MoveFocus "Up"; }
-        bind "Alt =" "Alt +" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt x" { CloseFocus; }
+        //tab
+        bind "Alt t" { NewTab; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
         bind "Alt 1" { GoToTab 1; }
@@ -177,6 +178,9 @@ keybinds clear-defaults=true {
         bind "Alt 7" { GoToTab 7; }
         bind "Alt 8" { GoToTab 8; }
         bind "Alt 9" { GoToTab 9; }
+        //resize
+        bind "Alt =" "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }

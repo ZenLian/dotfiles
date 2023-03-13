@@ -27,12 +27,14 @@ local taskicon_map = {
   ["arandr"] = "randr",
   ["alacritty"] = "terminal",
   ["lxappearance"] = "preferences-desktop-theme",
+  ["peek preview"] = "text-editor",
 }
 
 local tasklist_create = function(self, c)
   local imagebox = self:get_children_by_id("clienticon")[1]
   local candidates = {}
   local candidates = {
+    taskicon_map[c.icon_name and c.icon_name:lower()],
     taskicon_map[c.class:lower()],
     c.icon_name,
     c.icon_name and c.icon_name:lower(),
