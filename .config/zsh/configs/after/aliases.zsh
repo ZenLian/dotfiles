@@ -77,7 +77,15 @@ alias rd=rmdir
 if exists dotbare; then
     alias dot='dotbare'
     alias dv='dotbare fedit'
-    alias dst='dot fstat'
+    alias dg='dotbare fgrep'
+    alias dst='dotbare fstat'
+    alias dss='dotbare status -s'
+    alias da='dotbare add'
+    alias dau='dotbare add -u'
+    alias dca='dotbare commit -va'
+    alias dc='dotbare commit -v'
+    alias dcm='dotbare commit -m'
+    alias dp='dotbare push'
     alias dlg='dotbare flog'
 fi
 
