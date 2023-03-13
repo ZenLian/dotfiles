@@ -22,9 +22,29 @@ local tasklist_buttons = {
   end),
 }
 
+local taskicon_map = {
+  ["lxrandr"] = "randr",
+  ["arandr"] = "randr",
+}
+
 local tasklist_create = function(self, c)
   local imagebox = self:get_children_by_id("clienticon")[1]
-  local path = menubar.utils.lookup_icon(c.class) or menubar.utils.lookup_icon(c.class:lower())
+  local candidates = {
+    c.class,
+    c.class:lower(),
+    "applications-all",
+  }
+  local predefined = taskicon_map[c.class:lower()]
+  if predefined then
+    table.insert(candidates, 1, predefined)
+  end
+  local path
+  for _, v in ipairs(candidates) do
+    path = menubar.utils.lookup_icon(v)
+    if path then
+      break
+    end
+  end
   imagebox.image = path
 end
 

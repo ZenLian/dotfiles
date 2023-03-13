@@ -8,5 +8,5 @@ xset s 300 # 5min before screen down
 # keyboard auto-repeat
 xset r rate 250 30
 
-xrandr --dpi 192 --output eDP-1 --mode 2880x1800 --pos 0x1728 \
+xrandr --dpi 192 --output eDP-1 --mode 2880x1800 -scale 0.9999x0.9999 --pos 0x1728 \
   --output DP-1 --mode 2560x1440 --scale 1.2x1.2 --pos 0x0 --primary
