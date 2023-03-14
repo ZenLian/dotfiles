@@ -43,7 +43,11 @@ M.register = function(s, name, timeout)
     service_run(s)
   end
 
-  -- update
+  -- explicit update
+  if s.update then
+    return s
+  end
+  -- implicit update
   if s.get_async then
     s.update = function(src)
       s.get_async(function(result)

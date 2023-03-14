@@ -15,6 +15,7 @@ M.run = function()
     "nm",
     "bluetooth",
     "disk",
+    "xset",
   }
   for _, name in ipairs(services) do
     require(PREFIX .. name).run()
