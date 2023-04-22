@@ -37,6 +37,8 @@ local top_panel = function(s)
     widget = wibox.widget.systray,
     reverse = true,
     screen = "primary",
+    base_size = dpi(20),
+    -- opacity = 0,
   }
 
   s.layoutbox = widget.layoutbox(s)

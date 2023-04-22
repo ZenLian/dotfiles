@@ -2,11 +2,13 @@ local awful = require("awful")
 local naughty = require("naughty")
 
 -- run a command once, do nothing if another instance is running
-local run_once = function(command)
-  local name = command
-  local pos = command:find(" ")
-  if pos then
-    name = command:sub(0, pos - 1)
+local run_once = function(command, name)
+  if not name then
+    name = command
+    local pos = command:find(" ")
+    if pos then
+      name = command:sub(0, pos - 1)
+    end
   end
 
   -- awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", name, command))
@@ -31,8 +33,14 @@ local commands = {
   "picom --experimental-backend --config $HOME/.config/awesome/extra/picom.conf",
   "fcitx5 -d",
   "xss-lock -- $HOME/.config/awesome/extra/lock.sh",
+  "flameshot",
+  { "onedrivegui", "onedrive" },
 }
 
 for _, command in pairs(commands) do
-  run_once(command)
+  if type(command) == "string" then
+    run_once(command)
+  else
+    run_once(table.unpack(command))
+  end
 end

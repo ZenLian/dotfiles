@@ -130,9 +130,9 @@ local function init()
   --------------------------------------
   -- Systray
   --------------------------------------
-  theme.bg_systray = p.surface1
+  theme.bg_systray = p.base
   theme.systray_max_rows = 1
-  theme.systray_icon_spacing = dpi(2)
+  theme.systray_icon_spacing = dpi(5)
 
   --------------------------------------
   -- Tasklist

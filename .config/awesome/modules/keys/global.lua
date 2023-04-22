@@ -95,12 +95,15 @@ awful.keyboard.append_global_keybindings {
 -- {{{ screenshot
 -- TODO: config
 awful.keyboard.append_global_keybindings {
-  awful.key({}, "Print", function()
-    awful.spawn("flameshot gui")
+  awful.key({ modkey, shift }, "s", function()
+    awful.spawn.with_shell("flameshot gui")
   end, { description = "screenshot", group = "control" }),
-  awful.key({ modkey }, "Print", function()
-    awful.spawn.with_shell("flameshot full --clipboard")
+  awful.key({}, "Print", function()
+    awful.spawn.with_shell("flameshot screen --clipboard --path $HOME/Pictures/")
   end, { description = "screenshot fullscreen", group = "control" }),
+  awful.key({ modkey }, "Print", function()
+    awful.spawn.with_shell("flameshot launcher")
+  end, { description = "screenshot launcher", group = "control" }),
   awful.key({}, "XF86ScreenSaver", function()
     awful.spawn.with_shell("flameshot launcher")
   end, { description = "screenshot launcher", group = "control" }),

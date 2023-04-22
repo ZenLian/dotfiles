@@ -26,13 +26,13 @@ local taskicon_map = {
   ["lxrandr"] = "randr",
   ["arandr"] = "randr",
   ["alacritty"] = "terminal",
+  ["pcmanfm"] = "system-file-manager",
   ["lxappearance"] = "preferences-desktop-theme",
   ["peek preview"] = "text-editor",
 }
 
 local tasklist_create = function(self, c)
   local imagebox = self:get_children_by_id("clienticon")[1]
-  local candidates = {}
   local candidates = {
     taskicon_map[c.icon_name and c.icon_name:lower()],
     taskicon_map[c.class:lower()],
@@ -42,11 +42,11 @@ local tasklist_create = function(self, c)
     c.class:lower(),
     "applications-all",
   }
-  setmetatable(candidates, {
-    __len = function()
-      return 6
-    end,
-  })
+  -- setmetatable(candidates, {
+  --   __len = function()
+  --     return 6
+  --   end,
+  -- })
   local path
   for i = 1, #candidates do
     local v = candidates[i]

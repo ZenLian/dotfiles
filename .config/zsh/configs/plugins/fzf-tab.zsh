@@ -17,6 +17,7 @@ zstyle ':fzf-tab:*' show-group brief
 # ------------------------------------------
 # https://github.com/Freed-Wu/fzf-tab-source/blob/main/sources/_complete.zsh
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'preview ${realpath#--*=}'
+zstyle ':fzf-tab:complete:*:*' fzf-flags --height=80%
 
 # options
 zstyle ':fzf-tab:complete:*:options' fzf-preview 'echo $desc'

@@ -32,17 +32,22 @@ do_lsar() {
     esac
 }
 
+do_img() {
+    [[ "$h" -gt 0 ]] && HEIGHT="-h $h"
+    [[ "$w" -gt 0 ]] && WIDTH="-w $w"
+    chafa "$file" 2> /dev/null || \
+        (viu -s ${HEIGHT:-} ${WIDTH:-} "$file") || \
+        (echo ' you need an image viewer')
+}
+
 case "$file" in
-    *.tar*|*.gz|*.tgz|*.xz|*.zip|*.rar|*.7z) do_lsar "$file" ;; # require unarchiver
+    *.tar*|*.gz|*.tgz|*.xz|*.zip|*.rar|*.7z)
+        do_lsar "$file" ;;
     *.[1-8]) man "$file" | col -b ;;
     *.o) nm "$file" | less ;;
         # *.pdf) pdftotext "$1" - ;;
     *.bmp|*.jpg|*.jpeg|*.png|*.xpm)
-        [[ "$h" -gt 0 ]] && HEIGHT="-h $h"
-        [[ "$w" -gt 0 ]] && WIDTH="-w $w"
-        #feh "$file" 2> /dev/null ||
-        #    (viu -s ${HEIGHT:-} ${WIDTH:-} "$file") ||
-        (echo ' you need an image viewer') ;;
+        do_img ;;
     *)
         if [[ $(file --mime -L "$file") =~ binary ]]; then
             echo "🚀 binary file:" "$file"

@@ -6,8 +6,8 @@ local config = {
     window_searcher = "rofi -show window -config " .. rofi_config,
     terminal = "alacritty",
     editor = "alacritty -e nvim",
-    browser = "microsoft-edge-stable",
-    explorer = "thunar",
+    browser = "microsoft-edge-dev",
+    explorer = "pcmanfm",
   },
   keys = {
     modkey = "Mod4",
@@ -48,7 +48,7 @@ local config = {
     },
     icon_theme = "Papirus",
     random_wallpaper = {
-      auto_timeout = 15, -- auto change wallpaper every 1 minutes
+      auto_timeout = 60, -- auto change wallpaper every 15 minutes
     },
   },
 }
