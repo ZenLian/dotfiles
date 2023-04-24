@@ -147,23 +147,24 @@
 /* } */
 
 configuration {
-    modi: "run,drun,window,combi";
-    /* icon-theme: "Oranchelo"; */
-    show-icons: true;
-    terminal: "alacritty";
-    drun-display-format: "{icon} {name}";
-    location: 0;
-    hide-scrollbar: true;
-    display-drun:   "   Apps ";
-    display-run:    "   Run ";
-    display-window: "   Window";
-    display-combi:  "   All ";
-    sidebar-mode: true;
-    /* dpi: 192; */
-    matching: "fuzzy";
-    /* font: "mono 12"; */
-    /* font: "JetBrainsMono Nerd Font 14"; */
-    font: "CaskaydiaCove Nerd Font Mono 14";
+  modi: "run,drun,window,combi";
+  combi-modi: "window,drun";
+  /* icon-theme: "Oranchelo"; */
+  show-icons: true;
+  terminal: "alacritty";
+  drun-display-format: "{icon} {name}";
+  location: 0;
+  hide-scrollbar: true;
+  display-drun:   "   Apps ";
+  display-run:    "   Run ";
+  display-window: "   Window ";
+  display-combi:  "  ";
+  sidebar-mode: true;
+  /* dpi: 192; */
+  matching: "fuzzy";
+  /* font: "mono 12"; */
+  /* font: "JetBrainsMono Nerd Font 14"; */
+  font: "CaskaydiaCove Nerd Font Mono 14";
 }
 
 @theme "themes/catppuccin-mocha.rasi"

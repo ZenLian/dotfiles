@@ -10,18 +10,21 @@ local config = require("config")
 local naughty = require("naughty")
 local modkey = require("config").keys.modkey
 
-local M = {}
+local M = {
+  selected_index = 1,
+}
 
-local function build_power_widget(name, icon, callback)
+local function build_power_widget(item) --name, icon, callback)
   local normal_bg = "00000000"
   local hover_bg = theme.palette.surface2 .. "33"
+  local selected_color = theme.palette.maroon
   local background = wibox.widget {
     {
       {
-        image = icon,
+        image = item.icon,
         widget = wibox.widget.imagebox,
       },
-      margins = dpi(16),
+      margins = dpi(15),
       widget = wibox.container.margin,
     },
     widget = wibox.container.background,
@@ -31,7 +34,19 @@ local function build_power_widget(name, icon, callback)
     forced_height = dpi(90),
   }
 
-  local item = wibox.widget {
+  local label = wibox.widget {
+    widget = wibox.container.background,
+    -- bg = normal_bg,
+    {
+      widget = wibox.widget.textbox,
+      text = string.format("%s(%s)", item.name, string.upper(item.key)),
+      -- font = utils.font(10),
+      align = "center",
+      valign = "center",
+    },
+  }
+
+  local widget = wibox.widget {
     layout = wibox.layout.fixed.vertical,
     spacing = dpi(5),
     {
@@ -40,26 +55,31 @@ local function build_power_widget(name, icon, callback)
       right = dpi(24),
       widget = wibox.container.margin,
     },
-    {
-      widget = wibox.widget.textbox,
-      text = name,
-      -- font = utils.font(10),
-      align = "center",
-      valign = "center",
-    },
+    label,
   }
 
-  item:connect_signal("button::release", function()
-    callback()
+  widget:connect_signal("button::release", function()
+    item.command()
   end)
-
-  item:connect_signal("mouse::enter", function()
+  widget:connect_signal("mouse::enter", function()
     background.bg = hover_bg
   end)
-  item:connect_signal("mouse::leave", function()
+  widget:connect_signal("mouse::leave", function()
     background.bg = normal_bg
   end)
-  return item
+
+  function widget:select()
+    background.border_width = 2
+    background.border_color = selected_color
+    label.fg = selected_color
+  end
+
+  function widget:clear()
+    background.border_width = 0
+    label.fg = beautiful.fg_normal
+  end
+
+  return widget
 end
 
 local items = {
@@ -114,25 +134,49 @@ local items = {
 
 local power_widgets = {}
 for _, item in pairs(items) do
-  local widget = build_power_widget(item.name, item.icon, item.command)
+  local widget = build_power_widget(item)
   table.insert(power_widgets, widget)
 end
+power_widgets[1].select()
 
 local exit_screen_keygrabber = awful.keygrabber {
   -- stop_key = modkey,
   auto_start = true,
   stop_event = "release",
   keypressed_callback = function(self, mod, key, command)
-    for _, item in pairs(items) do
-      if key == item.key then
-        item.command()
-        return
+    if key == "Return" then
+      items[M.selected_index].command()
+      return
+    elseif key == "Left" then
+      M.prev()
+    elseif key == "Right" or key == "Tab" then
+      M.next()
+    else
+      for _, item in ipairs(items) do
+        if key == item.key then
+          item.command()
+          return
+        end
       end
+      -- hide on any other keys
+      awesome.emit_signal("layout::exit_screen::hide")
     end
-    -- hide on any other keys
-    awesome.emit_signal("layout::exit_screen::hide")
   end,
 }
+
+M.next = function()
+  power_widgets[M.selected_index]:clear()
+  M.selected_index = M.selected_index % #power_widgets + 1
+  power_widgets[M.selected_index]:select()
+end
+
+M.prev = function()
+  power_widgets[M.selected_index]:clear()
+  M.selected_index = (M.selected_index - 2) % #power_widgets + 1
+  power_widgets[M.selected_index]:select()
+end
+
+M.run = function() end
 
 M.new = function(s)
   local exit_screen = wibox {
