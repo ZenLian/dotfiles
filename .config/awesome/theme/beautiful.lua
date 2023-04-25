@@ -117,7 +117,7 @@ local function init()
   --------------------------------------
   -- Taglist
   --------------------------------------
-  theme.taglist_bg_focus = p.blue
+  theme.taglist_bg_focus = p.base
   theme.taglist_fg_focus = p.blue
   theme.taglist_bg_urgent = p.red
   theme.taglist_fg_urgent = p.base
@@ -125,7 +125,6 @@ local function init()
   theme.taglist_fg_occupied = p.text
   theme.taglist_bg_empty = p.base
   theme.taglist_fg_empty = p.overlay0
-  theme.taglist_disable_icon = true
 
   --------------------------------------
   -- Systray

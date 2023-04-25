@@ -55,12 +55,6 @@ ruled.client.connect_signal("request::rules", function()
   --   properties = { titlebars_enabled = true },
   -- }
 
-  -- Set Firefox to always map on the tag named "2" on screen 1.
-  -- ruled.client.append_rule {
-  --     rule       = { class = "Firefox"     },
-  --     properties = { screen = 1, tag = "2" }
-  -- }
-
   -- NOTE: below not defaults
   -- Borders
   -- ruled.client.append_rule {
@@ -105,4 +99,17 @@ ruled.client.connect_signal("request::rules", function()
       -- y = 1120,
     },
   }
+
+  -- Set Firefox to always map on the tag "web"
+  -- ruled.client.append_rule {
+  --   rule_any = {
+  --     class = {
+  --       "Firefox",
+  --       "Microsoft-edge-stable",
+  --       "Microsoft-edge-beta",
+  --       "Microsoft-edge-dev",
+  --     },
+  --   },
+  --   properties = { tag = "web" },
+  -- }
 end)

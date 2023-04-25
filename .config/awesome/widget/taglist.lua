@@ -1,10 +1,12 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
+local gears = require("gears")
 local dpi = beautiful.xresources.apply_dpi
 local config = require("config")
 local modkey = require("config").keys.modkey
 local theme = require("theme")
+local utils = require("utils")
 
 local total_height = config.layout.top_panel.height
 local indicator_height = 2
@@ -32,48 +34,66 @@ local taglist_buttons = {
   end),
 }
 
+local taglist_update = function(self, t, index, objects)
+  local indicator = self:get_children_by_id("indicator")[1]
+  if t.selected then
+    indicator.color = theme.palette.blue
+  else
+    indicator.color = theme.palette.base
+  end
+end
+
 local taglist = function(s)
   return awful.widget.taglist {
     screen = s,
     filter = awful.widget.taglist.filter.all,
+    buttons = taglist_buttons,
+    style = {
+      fg_urgent = theme.palette.red,
+    },
     widget_template = {
+      layout = wibox.layout.align.vertical,
+      forced_width = dpi(26),
       {
+        id = "background_role",
+        widget = wibox.container.background,
+        forced_height = dpi(total_height - indicator_height),
         {
+          id = "text_margin_role",
+          widget = wibox.container.margin,
+          left = dpi(6),
+          right = dpi(6),
           {
             id = "text_role",
             widget = wibox.widget.textbox,
-            align = "center",
+            -- align = "center",
+            -- font = utils.icon_font(12),
           },
-          id = "mainbox",
-          widget = wibox.container.background,
-          bg = beautiful.bg_normal,
-          forced_width = dpi(total_height - indicator_height - 4),
-          forced_height = dpi(total_height - indicator_height),
         },
-        layout = wibox.layout.fixed.vertical,
       },
-      id = "background_role",
-      widget = wibox.container.background,
-      -- Add support for hover colors and an index label
-      ---@diagnostic disable-next-line: unused-local
-      create_callback = function(self, c, index, objects) --luacheck: no unused args
-        local mainbox = self:get_children_by_id("mainbox")[1]
+      {
+        id = "indicator",
+        widget = wibox.widget.separator,
+        orientation = "horizontal",
+        thickness = dpi(2),
+        -- forced_width = dpi(20),
+        span_ratio = 1,
+      },
+      nil,
+      create_callback = function(self, t, index, objects) --luacheck: no unused args
+        local mainbox = self:get_children_by_id("background_role")[1]
         self:connect_signal("mouse::enter", function()
           mainbox.bg = theme.palette.surface0
         end)
         self:connect_signal("mouse::leave", function()
           mainbox.bg = theme.palette.base
         end)
+        taglist_update(self, t, index, objects)
       end,
-      -- update_callback = function(self, c3, index, objects) --luacheck: no unused args
-      -- 	self:get_children_by_id("index_role")[1].markup = "<b> " .. c3.index .. " </b>"
-      -- end,
-    },
-    buttons = taglist_buttons,
-    style = {
-      fg_urgent = theme.palette.red,
+      update_callback = taglist_update,
     },
   }
 end
 
 return taglist
+-- return taglist_new

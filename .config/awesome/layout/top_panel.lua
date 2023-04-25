@@ -17,6 +17,11 @@ local top_panel = function(s)
   }
 
   s.taglist = widget.taglist(s)
+  -- s.taglist = awful.widget.taglist {
+  --   screen = s,
+  --   filter = awful.widget.taglist.filter.all,
+  -- }
+
   s.tasklist = widget.tasklist(s)
 
   s.volume = widget.volume()
@@ -52,10 +57,7 @@ local top_panel = function(s)
       layout = wibox.layout.fixed.horizontal,
       s.taglist,
     },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      s.tasklist,
-    },
+    s.tasklist,
     {
       widget = wibox.container.margin,
       margins = dpi(6),

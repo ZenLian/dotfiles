@@ -33,10 +33,13 @@ local icons = {
   message = "󰍡",
   message_badge = "󱥁",
 
-  -- apps
-  -- web = "",
+  -- tags
   web = "󰇩",
   files = "",
+  console = "󰞷",
+  code = "󰅩",
+  music = "󰝚",
+  lab = "󰂔",
 }
 
 icons.get_battery = function(perc, charging)
@@ -55,25 +58,6 @@ end
 icons.get_wifi = function(perc)
   perc = math.min(99, math.max(perc, 0))
   return icons.wifi_strength[perc // 25 + 1]
-end
-
--- get Material Design Icon SVG image
-local MDI_ICON_PATH = gears.filesystem.get_configuration_dir() .. "mods/mdi/svg/%s.svg"
-icons.get_mdi = function(name, color)
-  local icon_path = MDI_ICON_PATH:format(name)
-  return gears.color.recolor_image(icon_path, color or beautiful.fg_normal)
-end
-
-icons.get_mdi_wifi = function(level, fg)
-  if level < -83 then
-    return icons.get_mdi("wifi-strength-1", fg)
-  elseif level < -70 then
-    return icons.get_mdi("wifi-strength-2", fg)
-  elseif level < -54 then
-    return icons.get_mdi("wifi-strength-3", fg)
-  else
-    return icons.get_mdi("wifi-strength-4", fg)
-  end
 end
 
 local ICON_PATH = gears.filesystem.get_configuration_dir() .. "theme/icons/%s.svg"
