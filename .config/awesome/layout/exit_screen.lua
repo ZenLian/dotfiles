@@ -17,7 +17,7 @@ local M = {
 local function build_power_widget(item) --name, icon, callback)
   local normal_bg = "00000000"
   local hover_bg = theme.palette.surface2 .. "33"
-  local selected_color = theme.palette.maroon
+  local selected_color = theme.palette.blue
   local background = wibox.widget {
     {
       {

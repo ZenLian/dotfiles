@@ -1,0 +1,32 @@
+# wubi86.custom.yaml
+patch:
+  schema/name: 五笔
+  switches:
+    - name: ascii_mode
+      reset: 0
+      # states: [中文, 西文] # 不显示
+    - name: single_char
+      states: [词组, 单字]
+      reset: 1
+    - name: simplification
+      states: [简体, 繁体]
+      reset: 0
+    - name: full_shape
+      states: [半角, 全角]
+    - name: extended_charset
+      states: [常用, 增广]
+  switcher/save_options/simplification: false
+  engine/filters/+:
+    - lua_filter@single_char_filter
+    - simplifier
+    - uniquifier
+  simplifier/opencc_config: s2t.json
+
+  translator/enable_sentence: false # 关闭连打
+  translator/enable_user_dict: false # 关闭用户字典和字频调整
+  punctuator:
+    import_preset: symbols
+    full_shape:
+      "/": "、"
+    half_shape:
+      "/": "、"

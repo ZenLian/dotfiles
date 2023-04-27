@@ -27,6 +27,7 @@ ruled.client.connect_signal("request::rules", function()
       class = {
         "Lxappearance",
         "Galculator",
+        "Kcalc",
         "Xarchiver",
         "Zathura",
         "fcitx5-config-qt",
