@@ -22,11 +22,17 @@ patch:
     - uniquifier
   simplifier/opencc_config: s2t.json
 
+  speller:
+    max_code_length: 4 # 四码顶字上屏
+
   translator/enable_sentence: false # 关闭连打
   translator/enable_user_dict: false # 关闭用户字典和字频调整
   punctuator:
     import_preset: symbols
     full_shape:
-      "/": "、"
+      "/": 、
     half_shape:
-      "/": "、"
+      "/": 、
+      "^": ……
+      # '"': [“, ”]
+      # "'": [‘, ’]

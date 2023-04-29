@@ -70,12 +70,27 @@ local tasklist = function(s)
     },
     widget_template = {
       {
+        layout = wibox.layout.fixed.horizontal,
         {
-          id = "clienticon",
-          widget = wibox.widget.imagebox,
+          widget = wibox.container.margin,
+          margins = dpi(3),
+          {
+            id = "clienticon",
+            widget = wibox.widget.imagebox,
+          },
         },
-        margins = dpi(3),
-        widget = wibox.container.margin,
+        {
+          widget = wibox.container.margin,
+          margins = dpi(3),
+          {
+            widget = wibox.container.constraint,
+            width = dpi(100),
+            {
+              id = "text_role",
+              widget = wibox.widget.textbox,
+            },
+          },
+        },
       },
       id = "background_role",
       widget = wibox.container.background,

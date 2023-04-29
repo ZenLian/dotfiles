@@ -57,7 +57,10 @@ local top_panel = function(s)
       layout = wibox.layout.fixed.horizontal,
       s.taglist,
     },
-    s.tasklist,
+    {
+      layout = wibox.layout.fixed.horizontal,
+      s.tasklist,
+    },
     {
       widget = wibox.container.margin,
       margins = dpi(6),
