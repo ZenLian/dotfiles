@@ -35,7 +35,7 @@ local icons = {
 
   -- tags
   web = "󰇩",
-  files = "",
+  files = "",
   console = "󰞷",
   code = "󰅩",
   music = "󰝚",

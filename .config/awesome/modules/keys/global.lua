@@ -98,9 +98,9 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, shift }, "s", function()
     awful.spawn.with_shell("flameshot gui")
   end, { description = "screenshot", group = "control" }),
-  awful.key({}, "Print", function()
-    awful.spawn.with_shell("flameshot screen --clipboard --path $HOME/Pictures/")
-  end, { description = "screenshot fullscreen", group = "control" }),
+  -- awful.key({}, "Print", function()
+  --   awful.spawn.with_shell("flameshot screen --clipboard --path $HOME/Pictures/")
+  -- end, { description = "screenshot fullscreen", group = "control" }),
   awful.key({ modkey }, "Print", function()
     awful.spawn.with_shell("flameshot launcher")
   end, { description = "screenshot launcher", group = "control" }),
