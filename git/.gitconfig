@@ -4,7 +4,7 @@
 	name = Zenlian
 [core]
 	editor = nvim
-	pager = delta
+	;pager = delta
 	quotepath = false
 [merge]
 	tool = nvim

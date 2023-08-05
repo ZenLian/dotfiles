@@ -17,10 +17,10 @@ if exists exa; then
     alias llta='exa -lTa'
 else
     alias ls='ls --color=auto'
+    alias la='ls -A --color=auto'
     alias lsa='ls -lah --color=auto'
     alias l='ls -lah --color=auto'
     alias ll='ls -lh --color=auto'
-    alias la='ls -lAh --color=auto'
 fi
 
 if exists nvim; then
@@ -34,7 +34,7 @@ fi
 
 exists "bat" && alias cat=bat
 #exists "trash" && alias rm=trash
-alias ra=ranger
+exists "ranger" && alias ra=ranger
 alias cht='cht.sh'
 alias lg='lazygit'
 

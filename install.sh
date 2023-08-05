@@ -3,11 +3,16 @@
 usage() {
     printf 'usage:\n'
     printf '  %s [name]\n' "$0"
-    printf '  %s all\n' "$0"
+    printf '  %s -a\n' "$0"
 }
 
+basic="zsh tmux nvim git"
+extra="bat lf npm"
+head="wezterm awesome alacritty"
+
+
 if [[ -n "$1" ]]; then
-    if [[ "$1" == "all" ]]; then
+    if [[ "$1" == "-a" ]]; then
         all="zsh wezterm tmux nvim git bat lf npm conda lazygit luarocks asdf pip"
     else
         all=$*
