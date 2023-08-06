@@ -248,13 +248,14 @@ ff() {
 }
 
 # rm: interactive delete files when used without argument
-rm() {
+frm() {
     if [[ $# -ne 0 ]]; then
-        trash "$@"
+        trash "$@" 2> /dev/null || command rm "$@"
         return
     fi
     local selected=$(
-        FZF_DEFAULT_COMMAND="fd --hidden --max-depth=1 --exclude=.git" \
+        # FZF_DEFAULT_COMMAND="fd --hidden --max-depth=1 --exclude=.git 2> /dev/null || find -min-depth 1 -max-depth 1"
+        FZF_DEFAULT_COMMAND="find -mindepth 1 -maxdepth 1" \
             FZF_DEFAULT_OPTS=" \
             --reverse \
             ${FZF_DEFAULT_OPTS} \
@@ -263,27 +264,27 @@ rm() {
             --preview='$FZF_PREVIEW_CMD' " \
             $(fzfcmd)
     )
-    [[ -n $selected ]] && trash ${=selected}
+    [[ -n $selected ]] && { trash ${=selected} 2> /dev/null || command rm -rf ${=selected} }
 }
 
 # frm: like above, but recursive search in subdirectories
-frm() {
-    if [[ $# -ne 0 ]]; then
-        trash "$*"
-        return
-    fi
-    local selected=$(
-        FZF_DEFAULT_COMMAND="fd --hidden --exclude=.git" \
-            FZF_DEFAULT_OPTS=" \
-            --reverse \
-            ${FZF_DEFAULT_OPTS} \
-            -m \
-            --ansi \
-            --preview='$FZF_PREVIEW_CMD' " \
-            $(fzfcmd)
-    )
-    [[ -n $selected ]] && trash ${=selected}
-}
+# frm() {
+#     if [[ $# -ne 0 ]]; then
+#         trash "$*"
+#         return
+#     fi
+#     local selected=$(
+#         FZF_DEFAULT_COMMAND="fd --hidden --exclude=.git" \
+#             FZF_DEFAULT_OPTS=" \
+#             --reverse \
+#             ${FZF_DEFAULT_OPTS} \
+#             -m \
+#             --ansi \
+#             --preview='$FZF_PREVIEW_CMD' " \
+#             $(fzfcmd)
+#     )
+#     [[ -n $selected ]] && trash ${=selected}
+# }
 #compdef rm=trash
 
 # ------------------------------------------
