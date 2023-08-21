@@ -47,8 +47,8 @@ case "$file" in
     *.tar*|*.gz|*.tgz|*.xz|*.zip|*.rar|*.7z) do_compressed ;;
     *.[1-8]) man "$file" | col -b ;;
     *.o) nm "$file" | less ;;
-    *.md) glow -s dark "$file" ;;
-        # *.pdf) pdftotext "$1" - ;;
+    # *.md) glow -s dark "$file" ;;
+    # *.pdf) pdftotext "$1" - ;;
     *.bmp|*.jpg|*.jpeg|*.png|*.xpm) do_img ;;
     *) do_preview ;;
 esac

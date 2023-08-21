@@ -1,4 +1,4 @@
-autoload -U compinit && compinit
+autoload -Uz compinit && compinit
 
 # Colorize completions using default `ls` colors.
 zstyle ':completion:*' list-colors ''

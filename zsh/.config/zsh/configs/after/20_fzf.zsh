@@ -71,7 +71,7 @@ export FZF_TMUX=0
 # `A-c`: cd directory
 # ------------------------------------------
 # #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/completion.zsh
 
 # NOTE:
 # steal from key-bindings.zsh, for writing custom scripts
@@ -91,8 +91,7 @@ export FZF_ZD_OPTS="\
     --reverse"
 
 __zd() {
-    local cmd='fd "${1:-.}" --type d --hidden --exclude .git/ 2> /dev/null || \
-        find "${1:-.}" -type d'
+    local cmd='fd "${1:-.}" --type d --hidden --exclude .git/'
     local dir="$(eval "$cmd" \
         | FZF_DEFAULT_OPTS=" \
         ${FZF_DEFAULT_OPTS-} \
@@ -175,7 +174,7 @@ export FZF_FILE_OPTS=" \
 
 # helper function to select files
 __fsel() {
-    local cmd="fd --type f --hidden --exclude=.git/ 2> /dev/null || ${FZF_DEFAULT_COMMAND}"
+    local cmd="fd --type f --hidden --exclude=.git/"
     local item
     eval "$cmd" | FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS-} ${FZF_FILE_OPTS-}" $(fzfcmd) -m "$@" \
         | while read item; do
@@ -248,14 +247,13 @@ ff() {
 }
 
 # rm: interactive delete files when used without argument
-frm() {
+rm() {
     if [[ $# -ne 0 ]]; then
-        trash "$@" 2> /dev/null || command rm "$@"
+        trash "$@"
         return
     fi
     local selected=$(
-        # FZF_DEFAULT_COMMAND="fd --hidden --max-depth=1 --exclude=.git 2> /dev/null || find -min-depth 1 -max-depth 1"
-        FZF_DEFAULT_COMMAND="find -mindepth 1 -maxdepth 1" \
+        FZF_DEFAULT_COMMAND="fd --hidden --max-depth=1 --exclude=.git" \
             FZF_DEFAULT_OPTS=" \
             --reverse \
             ${FZF_DEFAULT_OPTS} \
@@ -264,27 +262,27 @@ frm() {
             --preview='$FZF_PREVIEW_CMD' " \
             $(fzfcmd)
     )
-    [[ -n $selected ]] && { trash ${=selected} 2> /dev/null || command rm -rf ${=selected} }
+    [[ -n $selected ]] && trash ${=selected}
 }
 
 # frm: like above, but recursive search in subdirectories
-# frm() {
-#     if [[ $# -ne 0 ]]; then
-#         trash "$*"
-#         return
-#     fi
-#     local selected=$(
-#         FZF_DEFAULT_COMMAND="fd --hidden --exclude=.git" \
-#             FZF_DEFAULT_OPTS=" \
-#             --reverse \
-#             ${FZF_DEFAULT_OPTS} \
-#             -m \
-#             --ansi \
-#             --preview='$FZF_PREVIEW_CMD' " \
-#             $(fzfcmd)
-#     )
-#     [[ -n $selected ]] && trash ${=selected}
-# }
+frm() {
+    if [[ $# -ne 0 ]]; then
+        trash "$*"
+        return
+    fi
+    local selected=$(
+        FZF_DEFAULT_COMMAND="fd --hidden --exclude=.git" \
+            FZF_DEFAULT_OPTS=" \
+            --reverse \
+            ${FZF_DEFAULT_OPTS} \
+            -m \
+            --ansi \
+            --preview='$FZF_PREVIEW_CMD' " \
+            $(fzfcmd)
+    )
+    [[ -n $selected ]] && trash ${=selected}
+}
 #compdef rm=trash
 
 # ------------------------------------------
@@ -307,23 +305,23 @@ fzf-history-widget() {
             --query=${(qqq)LBUFFER} \
             +m" \
             $(fzfcmd)
-))
-ret=$?
-key=$selected[1]
-num=$selected[2]
-# <ENTER>
-if [[ "$key" != ctrl-o ]]; then
-    num="$key"
-fi
-if [[ -n "$num" ]]; then
-    zle vi-fetch-history -n $num
-    if [[ "$key" == ctrl-o ]]; then
-        zle accept-line
+    ))
+    ret=$?
+    key=$selected[1]
+    num=$selected[2]
+    # <ENTER>
+    if [[ "$key" != ctrl-o ]]; then
+        num="$key"
     fi
-fi
+    if [[ -n "$num" ]]; then
+        zle vi-fetch-history -n $num
+        if [[ "$key" == ctrl-o ]]; then
+            zle accept-line
+        fi
+    fi
 
-zle reset-prompt
-return $ret
+    zle reset-prompt
+    return $ret
 }
 zle     -N            fzf-history-widget
 bindkey -M emacs '^R' fzf-history-widget
@@ -335,17 +333,17 @@ bindkey -M viins '^R' fzf-history-widget
 # ------------------------------------------
 # fkill - kill processes, list only the ones you can kill.
 fkill() {
-local pid
-if [ "$UID" != "0" ]; then
-    pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
-else
-    pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-fi
+    local pid
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi
 
-if [ "x$pid" != "x" ]
-then
-    echo $pid | xargs kill -${1:-9}
-fi
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi
 }
 
 # ------------------------------------------
@@ -360,71 +358,27 @@ fi
 # FIXME: press <Enter> always show manpages
 # ------------------------------------------
 fzf-man-widget() {
-batman='SEC={2} && man ${SEC[-2,2]} {1} | col -bx | bat --language=man --plain --color=always --theme="Monokai Extended"'
-man -k . | sort \
-    | awk \
-    -v cyan=$(tput setaf 6) \
-    -v yellow=$(tput setaf 4) \
-    -v blue=$(tput setaf 7) \
-    -v res=$(tput sgr0) \
-    -v bld=$(tput bold) \
-    '{ $1=cyan bld $1; $2=yellow $2; $3=res blue $3;} 1' \
-    | fzf  \
-    -q "$BUFFER" \
-    --ansi \
-    --tiebreak=begin \
-    --prompt=' Man > '  \
-    --preview-window '50%,rounded,<50(up,85%,border-bottom)' \
-    --preview "${batman}" \
-    --bind "enter:execute(${batman})" \
-    --bind "alt-c:reload(cht.sh :list)+change-preview(cht.sh {1})+change-prompt(ﯽ Cheat > )" \
-    --bind "alt-m:+change-preview(${batman})+change-prompt( Man > )" \
-    --bind "alt-t:+change-preview(tldr --color=always {1})+change-prompt(ﳁ TLDR > )"
-zle reset-prompt
+    batman='SEC={2} && man ${SEC[-2,2]} {1} | col -bx | bat --language=man --plain --color=always --theme="Monokai Extended"'
+    man -k . | sort \
+        | awk \
+        -v cyan=$(tput setaf 6) \
+        -v yellow=$(tput setaf 4) \
+        -v blue=$(tput setaf 7) \
+        -v res=$(tput sgr0) \
+        -v bld=$(tput bold) \
+        '{ $1=cyan bld $1; $2=yellow $2; $3=res blue $3;} 1' \
+        | fzf  \
+        -q "$BUFFER" \
+        --ansi \
+        --tiebreak=begin \
+        --prompt=' Man > '  \
+        --preview-window '50%,rounded,<50(up,85%,border-bottom)' \
+        --preview "${batman}" \
+        --bind "enter:execute(${batman})" \
+        --bind "alt-c:reload(cht.sh :list)+change-preview(cht.sh {1})+change-prompt(ﯽ Cheat > )" \
+        --bind "alt-m:+change-preview(${batman})+change-prompt( Man > )" \
+        --bind "alt-t:+change-preview(tldr --color=always {1})+change-prompt(ﳁ TLDR > )"
+    zle reset-prompt
 }
 bindkey '^[h' fzf-man-widget
 zle -N fzf-man-widget
-
-# ------------------------------------------
-# asdf
-# https://github.com/junegunn/fzf/wiki/Examples#asdf
-# ------------------------------------------
-# Install one or more versions of specified language
-# e.g. `fai rust` # => fzf multimode, tab to mark, enter to install
-# if no plugin is supplied (e.g. `fai<CR>`), fzf will list them for you
-# Mnemonic [V]ersion [M]anager [I]nstall
-fai() {
-    local lang=${1}
-
-    if [[ ! $lang ]]; then
-        lang=$(asdf plugin-list | fzf)
-    fi
-
-    if [[ $lang ]]; then
-        local versions=$(asdf list-all $lang | fzf --tac --no-sort --multi)
-        if [[ $versions ]]; then
-            for version in $(echo $versions);
-            do; asdf install $lang $version; done;
-        fi
-    fi
-}
-
-# Remove one or more versions of specified language
-# e.g. `fau rust` # => fzf multimode, tab to mark, enter to remove
-# if no plugin is supplied (e.g. `fau<CR>`), fzf will list them for you
-# Mnemonic [V]ersion [M]anager [C]lean
-fau() {
-    local lang=${1}
-
-    if [[ ! $lang ]]; then
-        lang=$(asdf plugin-list | fzf)
-    fi
-
-    if [[ $lang ]]; then
-        local versions=$(asdf list $lang | fzf -m)
-        if [[ $versions ]]; then
-            for version in $(echo $versions);
-            do; asdf uninstall $lang $version; done;
-        fi
-    fi
-}

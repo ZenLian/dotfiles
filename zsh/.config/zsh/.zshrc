@@ -1,11 +1,15 @@
+#
+# Global Configs
+#
+typeset -g ZSHRC_KEYMAPS=true
+typeset -g ZSHRC_ICONS=false
 
 #
 # prepare
+#
 [[ -d $ZSH_CACHE_DIR ]] || mkdir -p $ZSH_CACHE_DIR
 
 path+=($HOME/.local/bin $ZDOTDIR/bin)
-
-
 fpath=($ZDOTDIR/functions $ZDOTDIR/completions $fpath)
 autoload -U $ZDOTDIR/functions/*(:t)
 
@@ -15,7 +19,7 @@ done
 
 plug "romkatv/zsh-defer"
 plug "romkatv/powerlevel10k"
-plug "jeffreytse/zsh-vi-mode"
+[[ $ZSHRC_KEYMAPS != true ]] && plug "jeffreytse/zsh-vi-mode"
 zsh-defer plug "Aloxaf/fzf-tab"
 zsh-defer plug "zsh-users/zsh-autosuggestions"
 zsh-defer plug "zdharma-continuum/fast-syntax-highlighting"
