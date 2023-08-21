@@ -16,6 +16,15 @@ export PYTHON_BUILD_MIRROR_URL="https://mirrors.huaweicloud.com/python"
 export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
 
 ################################################################################
+# tmux
+################################################################################
+
+if [[ $ZSHRC_ICONS == true ]]; then
+    export DOTFILES_TMUX_ICON=" "
+fi
+
+
+################################################################################
 # fzf
 ################################################################################
 local fzf_dirs=($HOME/.local/opt/fzf)

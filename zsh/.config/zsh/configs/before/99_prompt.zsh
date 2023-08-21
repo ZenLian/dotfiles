@@ -1,30 +1,28 @@
+[[ $ZSHRC_PROMPT != true ]] && exit
+
 setopt PROMPT_SUBST
 autoload -U colors && colors
 
-if [[ -n "$TMUX" ]]; then
-    local shlvl=$(($SHLVL - 1))
-else
-    local shlvl=$SHLVL
-fi
 local dir="%F{blue}%~%f"
-hint() {
-    print -P '%(?.%(!.%F{yellow}.%F{green}).%F{red})%B%(!.%n.)'$(printf "$1%.0s" {1..$shlvl})'%b%f'
-}
-export PS1="${dir}"$'\n'"$(hint '\u276f') "
 
-#export RPROMPT=$RPROMPT_BASE
+# export PS1="${dir}"$'\n'"$(hint '\u276f') "
+export PS1="${dir}"$'\n'"%f$ "
 export SPROMPT="zsh: correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
+set-prompt() {
+    case ${KEYMAP} in
+        vicmd) VI_MODE="%F{yellow}<%f" ;;
+        viins|main) VI_MODE="%f$" ;;
+    esac
+    PS1="${dir}"$'\n'"${VI_MODE} "
+}
+
 # update prompt when mode changes
-#zle-keymap-select() {
-#    case ${KEYMAP} in
-#        vicmd) PS1="${dir}"$'\n'"$(hint '\u276e') " ;;
-#        visual) PS1="${dir}"$'\n'"$(hint 'V') " ;;
-#        viins|main) PS1="${dir}"$'\n'"$(hint '\u276f') " ;;
-#    esac
-#    zle reset-prompt
-#}
-#zle -N zle-keymap-select
+zle-keymap-select() {
+    set-prompt
+    zle reset-prompt
+}
+zle -N zle-keymap-select
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
 # autoload -Uz vcs_info
