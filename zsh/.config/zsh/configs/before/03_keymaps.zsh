@@ -15,3 +15,5 @@ if [[ $ZSHRC_KEYMAPS == true ]]; then
     bindkey -M viins '^K' kill-line
     bindkey -M viins '^U' backward-kill-line
 fi
+
+KEYTIMEOUT=10
