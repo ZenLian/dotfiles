@@ -32,6 +32,7 @@ for fzf_dir in $fzf_dirs; do
     if [[ -f ${fzf_dir}/bin/fzf ]]; then
         export FZF_DIR="${fzf_dir}"
         path+=($FZF_DIR/bin)
+        . $FZF_DIR/shell/completion.zsh
     fi
 done
 

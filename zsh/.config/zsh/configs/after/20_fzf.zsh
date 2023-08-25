@@ -10,15 +10,18 @@ export FZF_PREVIEW_DIR_CMD='exa -aT -L2 --icons {} | head -n $FZF_PREVIEW_LINES'
 # Default colors
 # https://github.com/catppuccin/fzf
 # macchiato
-export FZF_DEFAULT_COLOR="\
+local fzf_color_maccchiato="\
 bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796,\
 fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6,\
 marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
-# mocha
-# local FZF_DEFAULT_COLOR="\
-    # bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,\
-    # fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,\
-    # marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+mocha
+
+local fzf_color_mocha="\
+bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,\
+fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,\
+marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+export FZF_DEFAULT_COLOR="$fzf_color_maccchiato"
 
 # Default key-bindings
 export FZF_DEFAULT_KEYBINDINGS="\
@@ -52,9 +55,9 @@ export FZF_DEFAULT_OPTS="\
   --preview-window=sharp \
   --color=${FZF_DEFAULT_COLOR} \
   --height=${FZF_DEFAULT_HEIGHT:-80%} \
-  --marker='+' \
-  --prompt='⌕ ' \
-  --pointer='>' "
+  --marker='+'"
+  # --prompt='> ' \
+  # --pointer='>' "
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_COMPLETION_TRIGGER='\'
 export FZF_ALT_C_OPTS="--preview='$FZF_PREVIEW_DIR_CMD'"
@@ -71,7 +74,6 @@ export FZF_TMUX=0
 # `A-c`: cd directory
 # ------------------------------------------
 # #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source /usr/share/fzf/completion.zsh
 
 # NOTE:
 # steal from key-bindings.zsh, for writing custom scripts
@@ -249,7 +251,7 @@ ff() {
 # rm: interactive delete files when used without argument
 rm() {
     if [[ $# -ne 0 ]]; then
-        trash "$@"
+        command rm "$@"
         return
     fi
     local selected=$(
@@ -262,7 +264,7 @@ rm() {
             --preview='$FZF_PREVIEW_CMD' " \
             $(fzfcmd)
     )
-    [[ -n $selected ]] && trash ${=selected}
+    [[ -n $selected ]] && rm -rf ${=selected}
 }
 
 # frm: like above, but recursive search in subdirectories
