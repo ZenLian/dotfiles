@@ -37,8 +37,32 @@ for fzf_dir in $fzf_dirs; do
 done
 
 ################################################################################
+# ripgrep
+################################################################################
+local ripgrep_dir=$HOME/.local/opt/ripgrep
+if [[ -d ${ripgrep_dir} ]]; then
+    path+=(${ripgrep_dir}/bin)
+    fpath+=(${ripgrep_dir}/complete)
+fi
+
+################################################################################
+# fd
+################################################################################
+local fd_dir=$HOME/.local/opt/fd
+if [[ -d ${fd_dir} ]]; then
+    path+=(${fd_dir}/bin)
+    fpath+=(${fd_dir}/autocomplete)
+fi
+
+################################################################################
 # bat
 ################################################################################
+local bat_dir=$HOME/.local/opt/bat
+if [[ -d ${bat_dir} ]]; then
+    path+=(${bat_dir})
+    fpath+=(${bat_dir}/autocomplete)
+fi
+
 if exists 'bat'; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p --paging=always --theme=\"Monokai Extended\"'"
     export MANROFFOPT="-c"
@@ -55,6 +79,11 @@ fi
 ################################################################################
 # zoxide
 ################################################################################
+local zoxide_dir=$HOME/.local/opt/zoxide
+if [[ -d ${zoxide_dir} ]]; then
+    path+=(${zoxide_dir}/bin)
+    fpath+=(${zoxide_dir}/completions)
+fi
 exists "zoxide" && eval "$(zoxide init zsh)"
 
 ####################

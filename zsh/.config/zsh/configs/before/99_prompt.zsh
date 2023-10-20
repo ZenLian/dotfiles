@@ -1,4 +1,4 @@
-[[ $ZSHRC_PROMPT != true ]] && exit
+[[ $ZSHRC_PROMPT != true ]] && return
 
 setopt PROMPT_SUBST
 autoload -U colors && colors
