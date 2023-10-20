@@ -110,6 +110,7 @@ alias gdc='git diff --cached'
 alias gdcw='git diff --cached --word-diff'
 alias gds='git diff --staged'
 alias gdw='git diff --word-diff'
+alias gdd='git diff | delta'
 
 # alias glg=
 alias glp='git log --stat'
