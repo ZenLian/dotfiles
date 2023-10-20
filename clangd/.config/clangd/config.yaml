@@ -9,3 +9,5 @@ CompileFlags:
     - -Wno-format-truncation
     - -Wno-format-overflow
     - -Werror=designated-init
+InlayHints:
+  Enabled: No

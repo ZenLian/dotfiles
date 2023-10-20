@@ -77,6 +77,15 @@ if exists 'bat'; then
 fi
 
 ################################################################################
+# exa
+################################################################################
+local exa_dir=$HOME/.local/opt/exa
+if [[ -d ${exa_dir} ]]; then
+    path+=(${exa_dir}/bin)
+    fpath+=(${exa_dir}/completions)
+fi
+
+################################################################################
 # zoxide
 ################################################################################
 local zoxide_dir=$HOME/.local/opt/zoxide
@@ -114,3 +123,12 @@ exists "zoxide" && eval "$(zoxide init zsh)"
 ####################
 [[ -d $HOME/.luarocks ]] && path+=($HOME/.luarocks/bin)
 
+################################################################################
+# Development
+################################################################################
+toolchains=(/opt/linux/x86-arm/aarch64-mix210-linux /opt/linux/x86-arm/aarch64-himix100-linux)
+for toolchain in $toolchains; do
+    if [[ -d ${toolchain} && $PATH != *${toolchain}* ]]; then
+        export PATH=${toolchain}/bin:$PATH
+    fi
+done

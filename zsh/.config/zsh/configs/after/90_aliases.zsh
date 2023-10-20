@@ -154,7 +154,8 @@ alias grst='git restore --staged'
 
 alias gst='git status'
 alias gsb='git status -b'
-alias gss='git status -su'
+alias gss='git status -s'
+alias gsu='git status -s -uno'
 
 alias gsta='git stash push'
 alias gstA='git stash apply'
