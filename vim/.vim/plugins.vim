@@ -35,6 +35,8 @@ nmap <Leader>fh :History<CR>
 nmap <Leader>fb :Buffers<CR>
 
 "" explorer
+let NERDTreeDirArrowCollapsible="-"
+let NERDTreeDirArrowExpandable="+"
 nmap <Leader>e :NERDTreeToggle<CR>
 nmap <C-e> :NERDTree<CR>
 

@@ -1,12 +1,37 @@
 # dotconfig
 
+## 安装
+
+### Ubuntu
+
+```shell
+sudo apt install stow tmux zsh fzf ripgrep fd-find
+```
+
+Ubuntu 的 tmux 版本过低，需要手动编译 tmux:
+
+```shell
+# 安装编译需要的包
+sudo apt install build-essential libevent-dev ncurses-dev bison pkg-config
+# 编译、安装
+wget https://github.com/tmux/tmux/releases/download/3.5a/tmux-3.5a.tar.gz
+tar xf tmux-3.5a.tar.gz
+cd tmux-3.5a.tar.gz
+./configure --prefix=$HOME/.local
+make -j8 && make install
+```
+
+fzf 版本过低，需要手动编译。
+
+neovim 下载 appimage 版本：
+
+```shell
+cd ~/.local/bin
+nvim-0.10.0.appimage
+```
+
 ## Prerequisites
 
-- Window Server: x-org
-- Window Manager: awesome-git
-- Window Compositor: picom-git
-- Launcher: rofi
-- Terminal: alacrity
 - Terminal Multiplexer: tmux
 - Shell: zsh
 - Editor: neovim
