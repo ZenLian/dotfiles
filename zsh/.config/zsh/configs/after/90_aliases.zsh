@@ -5,26 +5,34 @@ alias _='sudo'
 alias diff='diff --color'
 
 # ls/exa
-if exists exa; then
+if exists eza; then
+    alias ls='eza'
+    alias la='eza -a'
+    alias l='eza -lb'
+    alias ll='eza -lba'
+    alias lt='eza -T'
+    alias lta='eza -Ta'
+    alias llt='eza -lT'
+    alias llta='eza -lTa'
+elif exists exa; then
     # if command -v exa &> /dev/null; then
     alias ls='exa'
     alias la='exa -a'
-    alias l='exa -al'
-    alias lsa='exa -al'
-    alias ll='exa -l'
+    alias l='exa -lb'
+    alias ll='exa -lba'
     alias lt='exa -T'
     alias lta='exa -Ta'
+    alias llt='exa -lT'
     alias llta='exa -lTa'
 else
     alias ls='ls --color=auto'
-    alias lsa='ls -lah --color=auto'
-    alias l='ls -lah --color=auto'
-    alias ll='ls -lh --color=auto'
-    alias la='ls -lAh --color=auto'
+    alias la='ls -aCF'
+    alias l='ls -lh'
+    alias ll='ls -lha'
 fi
 
 if exists nvim; then
-    alias vim=nvim
+    alias n=nvim
     alias vi=nvim
     alias v=nvim
 else

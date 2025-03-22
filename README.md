@@ -1,6 +1,40 @@
 # dotconfig
 
-## 安装
+## 下载和安装
+
+```shell
+git clone --recursive git@github.com:ZenLian/dotfiles.git
+```
+
+`clone` 时如果没有加 `--recursive`，需要手动更新 git 子模块：
+
+```shell
+git submodule init
+git submodule update
+```
+
+安装某个配置，比如 vim：
+
+```shell
+cd dotfiles
+./install vim
+```
+
+## 前置包安装
+
+### Arch
+
+必须的组件：
+
+```shell
+sudo pacman -S git stow tmux zsh neovim fzf ripgrep fd
+```
+
+可选组件：
+
+```shell
+sudo pacman -S eza bat git-delta
+```
 
 ### Ubuntu
 
@@ -30,53 +64,18 @@ cd ~/.local/bin
 nvim-0.10.0.appimage
 ```
 
-## Prerequisites
+## 桌面环境
 
-- Terminal Multiplexer: tmux
-- Shell: zsh
-- Editor: neovim
-- Browser: microsoft-edge-stable
-- File Explorer
-  - lf(terminal)
-  - thunar(gui) ~~dolphin~~
-- Screenshot: flameshot
-- Video:
-  - xf86-video-[admgpu/intel/nouveau]
-  - brightnessctl
-- Audio:
-  - alsa-utils
-- Network:
-  - Network Manager
-  - nmcli
+- 桌面：hyprland
+- 状态栏：waybar
+- 终端：kitty
 
-Optional:
+## FAQ
 
-- Fuzzy Finder: fzf
-- Grep Alternative: ripgrep
-- File Manager: lf
-- Cat Alternative: bat
-- find alternative: fd
+### bat 主题未生效
 
-```bash
-pacman -S awesome-git picom-git rofi alacritty
-pacman -S zsh tmux neovim fzf ripgrep lf bat fd
+安装 bat 配置文件之后，更新缓存以使主题生效：
+
 ```
-
-Optional tools:
-
-- [lazygit](https://github.com/jesseduffield/lazygit)
-- asdf: unified version manager
-- viu: terminal image viewer
-- glow: terminal markdown viewer
-
-```bash
-yay -S asdf-vm
-```
-
-## Installation
-
-```bash
-git clone --recursive git@github.com:ZenLian/dotfiles.git
-cd dotfiles
-./install.sh
+bat cache --build
 ```
