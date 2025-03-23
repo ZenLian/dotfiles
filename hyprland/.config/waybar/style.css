@@ -1,0 +1,102 @@
+@import 'palette/mocha.css';
+
+* {
+    font-family: 'FiraCode Nerd Font';
+    font-size: 14px;
+    border: none;
+    border-radius: 0px;
+}
+
+window#waybar {
+    background-color: alpha(@base, 0.4);
+    border-bottom: 0px solid;
+    color: @text;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+/*--------------------------------------
+ * Workspace
+ *------------------------------------*/
+#workspaces {
+    margin: 5px 1px 6px 1px;
+    padding: 0px 1px;
+    border-radius: 15px;
+    border: 0px;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+    color: @text;
+}
+
+#workspaces button {
+    padding: 0 3px;
+    margin: 4px 2px;
+    border-radius: 15px;
+    border: 0px;
+    color: @text;
+    min-width: 36px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    color: @base;
+    background: @lavender;
+}
+
+#workspaces button.urgent {
+    color: @text;
+    background-color: @red;
+}
+
+#workspaces button:hover {
+    color: @surface0;
+    background: alpha(@lavender, 0.8);
+}
+
+/*--------------------------------------
+ * Tooltips
+ *------------------------------------*/
+tooltip {
+    border-radius: 10px;
+    background-color: @crust;
+    opacity: 0.8;
+    padding: 20px;
+    margin: 0;
+}
+
+tooltip label {
+    color: @text;
+}
+
+/*--------------------------------------
+ * Window
+ *------------------------------------*/
+#window {
+    background: @base;
+    color: @text;
+    margin: 10px 15px 10px 0px;
+    padding: 2px 10px 0px 10px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+/*--------------------------------------
+ * Right Side
+ *------------------------------------*/
+#tray,
+#wireplumber,
+#network,
+#backlight,
+#battery,
+#clock
+{
+  margin-right: 16px;
+  font-size: 16px;
+  font-weight: bold;
+}

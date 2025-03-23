@@ -43,3 +43,5 @@
  	; insteadOf = https://github.com/
 [protocol "https"]
 	allow = always
+[http]
+	sslVerify = false
