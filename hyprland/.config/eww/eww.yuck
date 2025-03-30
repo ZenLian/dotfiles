@@ -1,0 +1,151 @@
+(defwindow bar
+  :monitor 0
+  :geometry (geometry
+    :x "0%"
+    :y "0%"
+    :width "99%"
+    :height "30px"
+    :anchor "top center")
+  :reverve (struts :side "top" :distance "4%")
+  :stacking "fg"
+  :exclusive true
+(bar))
+
+(defwidget bar []
+  (centerbox :orientation "h"
+    (apps)
+    (workspaces)
+    (right)
+))
+
+(defwidget apps []
+  (box
+    :class "apps"
+    :orientation "h"
+    :space-evenly false
+    :halign "start"
+    "Apps"
+  )
+)
+
+(defwidget workspaces []
+  (box :class "workspaces"
+     :orientation "h"
+     :space-evenly true
+     :halign "center"
+  (button :onclick "hyprctl dispatch workspace 1" 1)
+  (button :onclick "hyprctl dispatch workspace 2" 2)
+  (button :onclick "hyprctl dispatch workspace 3" 3)
+  (button :onclick "hyprctl dispatch workspace 4" 4)
+  (button :onclick "hyprctl dispatch workspace 5" 5)
+  )
+)
+
+(defwidget right []
+  (box :orientation "h" :space-evenly false :halign "end"
+    (systray :class "systray" :icon-size 16)
+    (volume)
+    (brightness)
+    (iconify (network))
+    (iconify (bluetooth))
+    (iconify (battery))
+    (time)
+  )
+)
+
+(defwidget iconify []
+    (box :class "iconify" (children))
+)
+
+;;;;;;;;;;;;;;;;;;;;
+;; Volume Control ;;
+;;;;;;;;;;;;;;;;;;;;
+(defwidget volume []
+  (eventbox :onhover "${EWW_CMD} update volume_show=true"
+            :onhoverlost "${EWW_CMD} update volume_show=false"
+            :tooltip "Volume: ${volume_value}%"
+    (box :orientation "h"
+         :space-evenly false
+         :spacing 2
+         :halign "end"
+        (revealer :transition "slideleft"
+                  :reveal volume_show
+                  :duration "300ms"
+          (scale :class "slider"
+                 :value volume_value
+                 :orientation "h"
+                 :max 101
+                 :min 0
+                 :onchange "scripts/volctl -v {}"))
+      (button :class "iconify"
+              :onclick "scripts/volctl -m toggle"
+        "󰕾")
+    )
+  )
+)
+(defvar volume_show false)
+(defpoll volume_mute :interval "1s" "")
+(defpoll volume_value :interval "1s" "scripts/volctl -v")
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; Brightness Control ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defwidget brightness []
+  (eventbox :onhover "${EWW_CMD} update bright_show=true"
+            :onhoverlost "${EWW_CMD} update bright_show=false"
+            :tooltip "Brightness: ${bright_value}"
+    (box :orientation "h"
+         :space-evenly false
+         :spacing 2
+         :halign "end"
+        (revealer :transition "slideleft"
+                  :reveal bright_show
+                  :duration "300ms"
+          (scale :class "slider"
+                 :value bright_value
+                 :orientation "h"
+                 :max 101
+                 :min 0
+                 :onchange "brightnessctl s {}%"))
+      (button :class "iconify" 
+              :onclick "${EWW_CMD} poll bright_value"
+        "")
+    )
+  )
+)
+(defvar bright_show false)
+(defpoll bright_value :interval "1s" "brightnessctl -m | awk -F, '{print $4}' | tr -d '%'")
+
+(defwidget network []
+  (eventbox
+    :tooltip "network"
+    "󰤨"
+  )
+)
+
+(defwidget bluetooth []
+  (eventbox
+    :tooltip "bluetooth"
+    "󰂯"
+  )
+)
+
+(defwidget battery []
+  (eventbox
+    :tooltip "battery"
+    "󰂄"
+  )
+)
+
+(defpoll g_time :interval "1s"
+  "date '+%H:%M'"
+)
+
+(defpoll g_date :interval "10s"
+  "date '+%Y-%m-%d'"
+)
+
+(defwidget time []
+  (box :tooltip g_date
+    g_time)
+)

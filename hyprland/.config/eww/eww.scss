@@ -1,0 +1,63 @@
+@import 'mocha.scss';
+
+* {
+  all: unset;
+}
+
+.bar {
+    font-family: 'FiraCode Nerd Font';
+    font-size: 14px;
+    background-color: $color-base;
+    color: $color-text;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.workspaces button {
+    font-weight: bold;
+    padding: 4px;
+    border-radius: 15px;
+    border: 0;
+    min-width: 36px;
+}
+
+.workspaces button:hover {
+    background-color: $color-lavender;
+    color: $color-surface0;
+}
+
+.systray {
+    margin: 6px;
+}
+
+.iconify {
+    // background-color: $color-blue;
+    margin-right: 6px;
+    min-width: 20px;
+    font-family:'Font Awesome 6 Free';
+    font-size: 16px;
+    font-weight: bold;
+}
+
+scale trough {
+    all: unset;
+    background-color: $color-overlay1;
+    border-radius: 5px;
+    min-width: 80px;
+    min-height: 10px;
+    // margin: 0 .3rem 0 .3rem;
+}
+
+.slider trough highlight {
+    background-color: $color-blue;
+    border-radius: 5px;
+}
+
+tooltip {
+    background-color: $color-crust;
+    color: $color-text;
+    border-radius: 10px;
+    opacity: 0.8;
+    padding: 20px;
+    margin: 0;
+}

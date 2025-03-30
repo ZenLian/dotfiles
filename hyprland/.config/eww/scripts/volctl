@@ -1,0 +1,45 @@
+#!/bin/bash
+# Usage:
+#   volctl -v|--volume [volume]
+#   volctl -m|--mute [on|off|toggle]
+
+volume_get() {
+  amixer sget Master | awk -F '[][]' '/Left:/{print $2}' | tr -d '%'
+}
+
+volume_set() {
+  amixer sset Master $1%
+}
+
+volume_mute() {
+  if [[ -n "$1" ]]; then
+    amixer sset Master $1
+  else
+    amixer sget Master | awk -F '[][]' '/Left:/{print $4}' | tr -d '%'
+  fi
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -v|--volume)
+      shift
+      if [[ -n "$1" ]]; then
+        volume_set $1
+        shift
+      else
+        volume_get
+      fi
+      ;;
+    -m|--mute)
+      shift
+      if [[ -n "$1" ]]; then
+        volume_mute $1
+        shift
+      else
+        volume_mute
+      fi
+      ;;
+    *)
+      break;;
+  esac
+done

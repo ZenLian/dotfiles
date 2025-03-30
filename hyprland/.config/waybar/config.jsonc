@@ -17,11 +17,7 @@
         "tray",
         "wireplumber",
         "network",
-        //"cpu",
-        //"memory",
-        //"temperature",
         "backlight",
-        //"keyboard-state",
         "battery",
         "clock",
         "custom/power"
@@ -49,15 +45,6 @@
             "*": 5
         }
     },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
     "tray": {
         // "icon-size": 21,
         "spacing": 10
@@ -67,25 +54,11 @@
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
-    "cpu": {
-        "format": " {usage}%"
-    },
-    "memory": {
-        "format": " {}%"
-    },
-    "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": ["", "", ""]
-    },
     "backlight": {
         // "device": "acpi_video1",
         "format": "{icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "tooltip-format": "Brightness: {percent}%",
+        "tooltip-format": "Brightness: {percent}%"
     },
     "battery": {
         "states": {
@@ -97,7 +70,7 @@
         "format-full": "󰂄",
         "format-icons": {
             "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-            "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
         },
         "interval": 5,
         "tooltip-format": "Capacity: {capacity}%\n{timeTo}"
@@ -106,9 +79,9 @@
         "format-wifi": "{icon}",
         "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
         "format-ethernet": "󰛳",
-        "format-alt": "󱛇",
+        // "format-alt": "󱛇",
         "format-disconnected": "󰲛",
-        "tooltip-format": "󰛳 {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+        "tooltip-format-ethernet": "󰛳 {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-disconnected": "Disconnected",
         "interval": 5,
