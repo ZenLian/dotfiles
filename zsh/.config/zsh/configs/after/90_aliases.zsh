@@ -46,6 +46,8 @@ alias ra=ranger
 alias cht='cht.sh'
 alias lg='lazygit'
 
+exists "fdfind" && alias fd=fdfind
+
 ##########################################
 # directories
 ##########################################

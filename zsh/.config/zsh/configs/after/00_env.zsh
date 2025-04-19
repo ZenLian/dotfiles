@@ -11,6 +11,8 @@ for asdf_dir in $asdf_dirs; do
         break
     fi
 done
+#export ASDF_CONFIG_FILE=$HOME/.config/asdf/config
+export ASDF_DATA_DIR=$HOME/.local/share/asdf
 # asdf-python(python-build)
 export PYTHON_BUILD_MIRROR_URL="https://mirrors.huaweicloud.com/python"
 export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
@@ -94,6 +96,15 @@ if [[ -d ${zoxide_dir} ]]; then
     fpath+=(${zoxide_dir}/completions)
 fi
 exists "zoxide" && eval "$(zoxide init zsh)"
+
+################################################################################
+# yazi
+################################################################################
+local yazi_dir=$HOME/.local/opt/yazi
+if [[ -d ${yazi_dir} ]]; then
+    path=(${yazi_dir} $path)
+    fpath=(${yazi_dir}/completions $fpath)
+fi
 
 ####################
 # go/gvm
