@@ -1,0 +1,45 @@
+// @import './mocha.scss';
+@use "./mocha.scss" as theme;
+
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$fg-color: theme.$text;
+$bg-color: theme.$base;
+
+* {
+  all: unset;
+}
+
+window.bar {
+  background: transparent;
+  color: theme.$text;
+  font-family: "FiraCode Nerd Font";
+  font-size: 15px;
+
+  >centerbox {
+    background: rgba(theme.$base, 0.6);
+    margin: 4px;
+    padding: 4px;
+  }
+}
+
+.workspaces {
+  font-weight: bold;
+}
+
+.workspace {
+  padding: 2px 3px;
+  margin: 4px 2px;
+  border: 0;
+  border-radius: 15px;
+  min-width: 36px;
+}
+
+.workspace-active {
+  background-color: theme.$blue;
+  color: theme.$base;
+}
+
+.workspace:hover {
+  background-color: theme.$lavender;
+  color: theme.$base;
+}
