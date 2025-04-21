@@ -9,7 +9,7 @@ typeset -g ZSHRC_PROMPT=false
 # use icons
 typeset -g ZSHRC_ICONS=false
 # load zprof for startup time parsing
-typeset -g ZSHRC_ZPROF=true
+typeset -g ZSHRC_ZPROF=false
 
 ##########################################
 # prepare
@@ -53,3 +53,10 @@ _zshrc-source-after() {
 }
 zsh-defer _zshrc-source-after
 
+
+# fnm
+FNM_PATH="/home/sda1/lianzn/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/sda1/lianzn/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi

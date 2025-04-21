@@ -32,21 +32,18 @@ else
 fi
 
 if exists nvim; then
-    alias n=nvim
-    alias vi=nvim
     alias v=nvim
 else
-    alias vi=vim
     alias v=vim
 fi
+alias vi=vim
 
+exists "fdfind" && alias fd=fdfind
 exists "bat" && alias cat=bat
 #exists "trash" && alias rm=trash
 alias ra=ranger
 alias cht='cht.sh'
 alias lg='lazygit'
-
-exists "fdfind" && alias fd=fdfind
 
 ##########################################
 # directories

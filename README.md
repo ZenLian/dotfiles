@@ -55,13 +55,15 @@ cd tmux-3.5a.tar.gz
 make -j8 && make install
 ```
 
-fzf 版本过低，需要手动编译。
+fzf 版本过低，需要手动下载。
 
 neovim 下载 appimage 版本：
 
 ```shell
 cd ~/.local/bin
-nvim-0.10.0.appimage
+wget https://github.com/neovim/neovim-releases/releases/download/v0.11.0/nvim-linux-x86_64.appimage
+mv nvim-linux-x86_64.appimage nvim
+chmod +x nvim
 ```
 
 ## 桌面环境

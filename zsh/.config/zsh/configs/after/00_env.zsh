@@ -115,6 +115,25 @@ if [[ -d ${delta_dir} ]]; then
     fpath+=(${delta_dir}/completions)
 fi
 
+################################################################################
+# conda
+################################################################################
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+local conda_dir=$HOME/.local/opt/miniconda3
+__conda_setup="$(${conda_dir}/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "${conda_dir}/etc/profile.d/conda.sh" ]; then
+        . "${conda_dir}/etc/profile.d/conda.sh"
+    else
+        export PATH="${conda_dir}/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 ####################
 # go/gvm
 ####################
@@ -132,6 +151,11 @@ fi
 #export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 ## [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
 ## path=($HOME/.nvm/versions/node/v17.2.0/bin $path)
+local FNM_PATH="/home/sda1/lianzn/.local/share"
+if [ -x "$FNM_PATH/fnm" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi
 
 ####################
 # rust
@@ -146,7 +170,13 @@ fi
 ################################################################################
 # Development
 ################################################################################
-toolchains=(/opt/linux/x86-arm/aarch64-mix210-linux /opt/linux/x86-arm/aarch64-himix100-linux)
+export MENUCONFIG_COLOR=mono
+
+local toolchains=(
+    /opt/linux/x86-arm/aarch64-mix210-linux
+    /opt/linux/x86-arm/aarch64-mix410-linux
+    /opt/linux/x86-arm/aarch64-himix100-linux
+)
 for toolchain in $toolchains; do
     if [[ -d ${toolchain} && $PATH != *${toolchain}* ]]; then
         export PATH=${toolchain}/bin:$PATH
