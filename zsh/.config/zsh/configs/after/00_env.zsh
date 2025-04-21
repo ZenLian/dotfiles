@@ -170,12 +170,15 @@ fi
 ################################################################################
 # Development
 ################################################################################
-export MENUCONFIG_COLOR=mono
+#export MENUCONFIG_COLOR=mono
 
 local toolchains=(
     /opt/linux/x86-arm/aarch64-mix210-linux
     /opt/linux/x86-arm/aarch64-mix410-linux
     /opt/linux/x86-arm/aarch64-himix100-linux
+    /opt/toolchains/x86-arm/arm-himix100-linux
+    /opt/toolchains/x86-arm/aarch64-mix210-linux
+    /opt/toolchains/x86-arm/arm-histbv310-linux
 )
 for toolchain in $toolchains; do
     if [[ -d ${toolchain} && $PATH != *${toolchain}* ]]; then

@@ -7,16 +7,18 @@ usage() {
 }
 
 basic="zsh tmux nvim git"
-extra="bat lf npm"
 head="wezterm awesome alacritty"
 
 
 if [[ -n "$1" ]]; then
-    if [[ "$1" == "-a" ]]; then
-        all="zsh wezterm tmux nvim git bat lf npm conda lazygit luarocks asdf pip"
-    else
-        all=$*
-    fi
+case "$1" in
+    "-t"|"--terminal") all="tmux zsh nvim yazi bat"
+    ;;
+    "-g"|"--graphic") all="hyprland kitty fontconfig"
+    ;;
+    *) all=$*
+    ;;
+esac
 else
     usage
     exit 1
@@ -24,7 +26,7 @@ fi
 
 for i in $all; do
     echo "installing: $i"
-    stow -t "$HOME" "$i" || exit 1
+    stow -t "$HOME" "$i"
 done
 
 echo "Installation success!"

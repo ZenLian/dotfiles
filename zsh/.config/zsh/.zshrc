@@ -19,8 +19,8 @@ typeset -g ZSHRC_ZPROF=false
 # type 'zprof' cmd to list startup profile
 [[ $ZSHRC_ZPROF == true ]] && zmodload zsh/zprof
 
-path+=($HOME/.local/bin $ZDOTDIR/bin)
-fpath+=($ZDOTDIR/functions $ZDOTDIR/completions)
+path=($HOME/.local/bin $ZDOTDIR/bin $path)
+fpath=($ZDOTDIR/functions $ZDOTDIR/completions $fpath)
 autoload -U $ZDOTDIR/functions/*(:t)
 
 ##########################################

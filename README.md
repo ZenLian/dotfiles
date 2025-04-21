@@ -33,16 +33,16 @@ sudo pacman -S git stow tmux zsh neovim fzf ripgrep fd
 可选组件：
 
 ```shell
-sudo pacman -S eza bat git-delta
+sudo pacman -S zoxide eza bat git-delta
 ```
 
 ### Ubuntu
 
 ```shell
-sudo apt install stow tmux zsh fzf ripgrep fd-find
+sudo apt install stow zsh fzf ripgrep fd-find
 ```
 
-Ubuntu 的 tmux 版本过低，需要手动编译 tmux:
+tmux 版本过低，需要手动编译 tmux:
 
 ```shell
 # 安装编译需要的包
@@ -55,16 +55,27 @@ cd tmux-3.5a.tar.gz
 make -j8 && make install
 ```
 
-fzf 版本过低，需要手动下载。
+fzf 版本过低，需要手动下载，以 v0.54.3 为例：
+
+```shell
+wget https://github.com/junegunn/fzf/releases/download/v0.54.3/fzf-0.54.3-linux_amd64.tar.gz
+tar xf fzf-0.54.3-linux_amd64.tar.gz
+```
 
 neovim 下载 appimage 版本：
 
 ```shell
 cd ~/.local/bin
-wget https://github.com/neovim/neovim-releases/releases/download/v0.11.0/nvim-linux-x86_64.appimage
-mv nvim-linux-x86_64.appimage nvim
-chmod +x nvim
+wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.appimage
+chmod +x nvim-*
+ln -sf nvim-*.appimage nvim
 ```
+
+### 远程环境
+
+Windows 端需要安装 NerdFont 字体:
+
+- https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/FiraMono.zip
 
 ## 桌面环境
 
