@@ -179,6 +179,14 @@ alias gswm='git switch main'
 alias gswd='git switch develop'
 
 ##########################################
+# svn
+##########################################
+alias sst='svn st'
+alias ssq='svn st -q'
+alias sdi='svn diff'
+alias sdd='svn diff | delta'
+
+##########################################
 # tmux
 ##########################################
 alias ta='tmux attach -t'
