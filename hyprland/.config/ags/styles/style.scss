@@ -16,30 +16,72 @@ window.bar {
   font-size: 15px;
 
   >centerbox {
-    background: rgba(theme.$base, 0.6);
-    margin: 4px;
-    padding: 4px;
+    //background: rgba(theme.$base, 0.6);
+    margin: 0.25rem;
+    padding: 0.25rem;
   }
 }
 
 .workspaces {
   font-weight: bold;
+  // background: theme.$base;
+  // border-radius: 0.3rem;
 }
 
 .workspace {
-  padding: 2px 3px;
-  margin: 4px 2px;
-  border: 0;
-  border-radius: 15px;
-  min-width: 36px;
-}
+  padding: 2px 4px;
+  margin: 0px 2px;
+  border-radius: 0.5rem;
+  min-width: 1rem;
+  background-color: theme.$base;
 
-.workspace-active {
-  background-color: theme.$blue;
-  color: theme.$base;
+  .workspace-label {
+    padding: 0.2rem 0.5rem;
+  }
+
+  .icon {
+    margin: 0.2rem 0.2rem;
+  }
 }
 
 .workspace:hover {
+  background-color: theme.$mauve;
+  color: theme.$base;
+}
+
+.workspace-active {
   background-color: theme.$lavender;
   color: theme.$base;
+}
+
+.workspace-urgent {
+  background-color: theme.$red;
+  color: theme.$base;
+}
+
+.widget {
+  background-color: theme.$base;
+  padding: 2px 6px;
+  margin: 0px 2px;
+  border-radius: 0.4rem;
+}
+
+.widget-tray {
+  color: theme.$base;
+  background-color: theme.$subtext1;
+}
+
+.widget-network {
+  color: theme.$base;
+  background-color: theme.$maroon;
+}
+
+.widget-volume {
+  color: theme.$base;
+  background-color: theme.$peach;
+}
+
+.widget-battery {
+  color: theme.$base;
+  background-color: theme.$sky;
 }

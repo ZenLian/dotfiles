@@ -1,8 +1,9 @@
 import { App, Astal, Gtk, Gdk } from "astal/gtk3";
-import { Variable } from "astal";
 import Workspaces from "./workspaces";
-
-const time = Variable("").poll(1000, "date");
+import Tray from "./tray";
+import Volume from "./volume";
+import Battery from "./battery";
+import Network from "./network";
 
 export default function Bar(monitor: number) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -17,13 +18,14 @@ export default function Bar(monitor: number) {
             application={App}
         >
             <centerbox>
-                <button onClicked="echo hello" halign={Gtk.Align.START}>
-                    Apps
-                </button>
                 <Workspaces monitor={monitor} />
-                <button onClicked={() => print("hello")} halign={Gtk.Align.END}>
-                    <label label={time()} />
-                </button>
+                <box></box>
+                <box halign={Gtk.Align.END}>
+                    <Tray />
+                    <Network />
+                    <Volume />
+                    <Battery />
+                </box>
             </centerbox>
         </window>
     );
