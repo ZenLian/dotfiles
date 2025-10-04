@@ -1,0 +1,19 @@
+---
+BasedOnStyle: Google
+# public/private 不缩进
+AccessModifierOffset: -4
+# { 换行风格. Linux 风格，仅 function/class/namespace 换行
+BreakBeforeBraces: Linux
+# 缩进
+IndentWidth: 4
+# 行宽限制
+ColumnLimit: 120
+# 初始化列表: 总是换行
+PackConstructorInitializers: Never # clang-format 14
+# ConstructorInitializerAllOnOneLineOrOnePerLine: false
+# 仅空函数时 允许单行函数
+AllowShortFunctionsOnASingleLine: Empty
+# 指针/引用靠左
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Left

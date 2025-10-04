@@ -1,0 +1,13 @@
+CompileFlags:
+  Remove:
+    - -mabi=lp64
+    - -fno-aggressive-loop-optimizations
+    - -fno-var-tracking-assignments
+    - -fno-ipa-sra
+    - -fconserve-stack
+    - -fmerge-constants
+    - -Wno-format-truncation
+    - -Wno-format-overflow
+    - -Werror=designated-init
+InlayHints:
+  Enabled: No

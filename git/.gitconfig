@@ -1,0 +1,47 @@
+# vim:ft=gitconfig:
+[user]
+	email = zeninglian@gmail.com
+	name = Zenlian
+[core]
+	editor = nvim
+	;pager = delta
+	quotepath = false
+[merge]
+	tool = nvim
+[mergetool "nvim"]
+	cmd = "nvim -d -c \"wincmd l\" -c \"norm ]c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\""
+[diff]
+	colorMoved = default
+	navigate = true
+[delta]
+	features = line-numbers decorations
+	side-by-side = true
+	syntax-theme = Visual Studio Dark+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+[interactive]
+  diffFilter = delta --color-only
+[color]
+	ui = true
+[push]
+	default = current
+	followTags = true
+[init]
+	defaultBranch = main
+; [format]
+; 	pretty = format:%C(yellow)%h %Cblue%ai %Cgreen%<(10)%aN%Cred%d %Creset%s
+[alias]
+	lg = log --color --graph --format='%C(yellow)%h %Cblue%ai %Cgreen%<(10)%aN%Cred%d %Creset%s'
+	st = status -su
+	fuck = reset --hard HEAD
+	uncommit = reset --soft HEAD^
+; [url "https://hub.fastgit.xyz/"]
+; [url "https://github.com.cnpmjs.org/"]
+; [url "https://gitclone.com/github.com/"]
+; [url "https://kgithub.com/"]
+ 	; insteadOf = https://github.com/
+[protocol "https"]
+	allow = always
+[http]
+	sslVerify = false

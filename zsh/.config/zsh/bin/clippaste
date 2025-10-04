@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+if [ -n "${DISPLAY:-}" ] && (( ${+commands[xclip]} )); then
+    xclip -out -selection clipboard;
+elif [ -n "${DISPLAY:-}" ] && (( ${+commands[xsel]} )); then
+    xsel --clipboard --output;
+elif [ -n "${TMUX:-}" ] && (( ${+commands[tmux]} )); then
+    tmux save-buffer -;
+elif [[ $(uname -r) = *icrosoft* ]]; then
+    powershell.exe -noprofile -command Get-Clipboard;
+else
+    print "Clipboard unavailable!" >&2
+    exit 1
+fi

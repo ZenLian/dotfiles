@@ -1,0 +1,54 @@
+#!/bin/bash
+
+file=$1
+h=$2
+w=$3
+# local x=$4
+# local y=$(($5 + 1))
+
+do_preview() {
+    if [[ $(file --mime "$file") =~ binary ]]; then
+        echo binary file: "$file"
+    else
+        [[ "$h" -gt 0 ]] && LINE_RANGE="--line-range=:$h"
+        bat --color=always --style=numbers,changes ${LINE_RANGE:-} "$file" 2> /dev/null || \
+            cat "$file"
+    fi
+}
+
+do_compressed() {
+    # require unarchiver
+    lsar "$file" 2> /dev/null || \
+        echo compressed file: "$file"
+}
+
+do_img() {
+    [[ "$h" -gt 0 ]] && HEIGHT="-h $h"
+    [[ "$w" -gt 0 ]] && WIDTH="-w $w"
+    viu -s ${HEIGHT:-} ${WIDTH:-} "$file" 2> /dev/null || \
+        echo image file: "$file"
+}
+
+do_dir() {
+    exa -ahl --git --color=always "$file" 2> /dev/null || \
+        ls -Ahl --color=always "$file"
+}
+
+if [[ -d $file ]]; then
+    do_dir
+    exit 0
+fi
+
+case "$file" in
+        # *.tar*) tar tf "$1" ;;
+        # *.zip) unzip -l "$1" ;;
+        # *.rar) unrar l "$1" ;;
+        # *.7z) 7z l "$1" ;;
+    *.tar*|*.gz|*.tgz|*.xz|*.zip|*.rar|*.7z) do_compressed ;;
+    *.[1-8]) man "$file" | col -b ;;
+    *.o) nm "$file" | less ;;
+    # *.md) glow -s dark "$file" ;;
+    # *.pdf) pdftotext "$1" - ;;
+    *.bmp|*.jpg|*.jpeg|*.png|*.xpm) do_img ;;
+    *) do_preview ;;
+esac

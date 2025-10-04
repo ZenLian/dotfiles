@@ -1,0 +1,201 @@
+""""""""""""""""""""""""""""""""""""""""
+" options {{{1
+""""""""""""""""""""""""""""""""""""""""
+set nocompatible
+
+set encoding=utf-8
+set fileformats=unix,dos,mac
+
+" user interface {{{2
+set number
+set relativenumber
+set signcolumn=auto
+set cmdheight=1
+set ruler
+set laststatus=2
+set statusline=%f\ %m%r%=%l,%-5v%p%%\ %{&fileencoding}\ %-4Y
+set showmode
+set showcmd
+set display=lastline
+set wildmenu
+set wildignorecase
+set wildignore+=*.o,*~,*.out,*.obj,*.so,.git,.svn,**/tmp**,
+set shortmess=aoOtTIcF
+set showtabline=2
+set cursorline
+set nocursorcolumn
+set colorcolumn=81
+set mouse=a
+
+set noerrorbells
+set novisualbell
+set t_vb=
+"}}}
+
+" indentation {{{2
+set tabstop=4
+set softtabstop=4
+set expandtab
+set smarttab
+set autoindent
+set smartindent
+set copyindent
+set shiftwidth=4
+set shiftround
+"}}}
+
+" text edit {{{2
+set matchtime=2
+set nowrap
+set virtualedit=block
+set list
+set listchars=tab:›\ ,trail:·
+set fillchars=fold:\ ,vert:│
+set showbreak=›
+set linebreak
+set textwidth=80
+set backspace=indent,eol,start
+set whichwrap=<,>,[,],~
+set scrolloff=10
+set foldcolumn=0
+set foldenable
+set foldlevelstart=999
+" }}}
+
+" searching {{{2
+set ignorecase
+set smartcase
+set infercase
+set incsearch
+set hlsearch
+set wrapscan
+set magic
+"set grepprg=
+"}}}
+
+" timeout {{{2
+set timeout
+set ttimeout
+set timeoutlen=300
+set ttimeoutlen=0
+set updatetime=100
+set redrawtime=1500
+set lazyredraw
+"}}}
+
+" file&buffer {{{2
+set autoread
+set autowrite
+set hidden
+set nobackup
+set nowritebackup
+set noswapfile
+set undofile
+set undodir=~/.cache/vim/undo/
+set viewdir=~/.cache/vim/view/
+set spellfile=$HOME/.vim/spell/en.utf-8.add
+set splitbelow
+set splitright
+set switchbuf=useopen
+set history=2000
+"}}}
+
+" completion {{{2
+set completeopt=menuone,noinsert
+set complete=.,w,b,u,t,i,k,kspell
+set omnifunc=syntaxcomplete#Complete
+" }}}
+
+set clipboard=unnamed,unnamedplus,exclude:.*
+
+"""""""""""""""""""""""""""""""""""""""""
+" keybindings {{{1
+"""""""""""""""""""""""""""""""""""""""""
+let mapleader=" "
+
+" reload vimrc
+noremap <Leader>r :<C-u>source $MYVIMRC<cr>
+" enable/disable termguicolors
+noremap <Leader>/ :<C-u>set termguicolors!<cr>
+" echo current syntax group
+noremap <Leader>s :<C-u>echo synIDattr(synID(line("."), col("."), 1), "name")<cr>
+
+" save&close
+noremap  <silent> <C-s> :<C-u>w<cr>
+inoremap <silent> <C-s> <esc>:w<cr>gi
+nnoremap <silent> <C-q> :qa<cr>
+nnoremap Q :bd<cr>
+
+" move across window
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" move lines
+nnoremap <silent> <S-Down> :m .+1<cr>==
+nnoremap <silent> <S-Up>   :m .-2<cr>==
+inoremap <silent> <S-Down> <esc>:m .+1<cr>==gi
+inoremap <silent> <S-Up>   <esc>:m .-2<cr>==gi
+vnoremap <silent> <S-Down> :m '>+1<cr>gv=gv
+vnoremap <silent> <S-Up>   :m '<-2<cr>gv=gv
+
+" sane indent
+vnoremap > >gv
+vnoremap < <gv
+vnoremap <tab>   >gv
+vnoremap <s-tab> <gv
+
+" clear highlight
+nmap <silent> <cr> :noh<cr>
+
+" sane yank
+nnoremap Y y$
+vnoremap Y "+y
+
+" prev/next
+noremap [b :<C-u>bp<cr>
+noremap ]b :<C-u>bn<cr>
+noremap [t :<C-u>tabp<cr>
+noremap ]t :<C-u>tabn<cr>
+
+" completions
+inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<tab>"
+
+"""""""""""""""""""""""""""""""""""""""""
+" autocmds
+"""""""""""""""""""""""""""""""""""""""""
+" auto detect file changes
+autocmd FocusGained,BufEnter * checktime
+
+" filetypes to close with `q`
+autocmd FileType help
+  \ noremap <buffer><silent> q :close<cr>
+
+" return to where you leave
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   execute "normal! g'\"" |
+  \ endif
+
+" trailing spaces
+"autocmd BufWritePre * :%s/\s\+$//e
+
+"""""""""""""""""""""""""""""""""""""""""""
+" commands
+"""""""""""""""""""""""""""""""""""""""""""
+" :W sudo save
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+"""""""""""""""""""""""""""""""""""""""""""
+" plugins {{{1
+"""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/plugins.vim
+
+"""""""""""""""""""""""""""""""""""""""""""
+" colorscheme {{{1
+"""""""""""""""""""""""""""""""""""""""""""
+" make undercurl work in terminal
+colorscheme catppuccin
+
+" vim:foldmethod=marker:foldmarker={{{,}}}

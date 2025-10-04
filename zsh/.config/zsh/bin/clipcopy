@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+if [ -n "${DISPLAY:-}" ] && (( ${+commands[xclip]} )); then
+    xclip -in -selection clipboard < "${1:-/dev/stdin}"
+elif [ -n "${DISPLAY:-}" ] && (( ${+commands[xsel]} )); then
+    xsel --clipboard --input < "${1:-/dev/stdin}"
+elif [ -n "${TMUX:-}" ] && (( ${+commands[tmux]} )); then
+    tmux load-buffer "${1:--}";
+elif [[ $(uname -r) = *icrosoft* ]]; then
+    clip.exe < "${1:-/dev/stdin}";
+else
+    print "Clipboard unavailable!" >&2
+    exit 1
+fi
