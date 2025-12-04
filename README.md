@@ -2,34 +2,24 @@
 
 ArchLinux 桌面环境
 
-- 框架：wayland
-- 桌面：niri
-- 状态栏：waybar
+- 后端：wayland
+- 合成器：niri
+- 状态栏：noctalia-shell
 - 终端：kitty
+- 剪切板历史：cliphist
 
 ## 下载和安装
 
 ```shell
-git clone --recursive git@github.com:ZenLian/dotfiles.git -b graphical
-```
-
-`clone` 时如果没有加 `--recursive`，需要手动更新 git 子模块：
-
-```shell
-git submodule init
-git submodule update
-```
-
-安装配置:
-
-```shell
-cd dotfiles
-./install niri
+git clone git@github.com:ZenLian/dotfiles.git -b graphical dotfiles-graphical
+cd dotfiles-graphical
+./install.sh
 ```
 
 ## 前置包安装
 
 ```shell
-sudo pacman -S niri waybar
+yay -S wayland niri kitty
+yay -S noctalia-shell
 ```
 
