@@ -1,0 +1,66 @@
+global {
+  log_level: info
+  wan_interface: wlp1s0 # 网卡名
+  dial_mode: ip
+  allow_insecure: false
+  auto_config_kernel_parameter: true
+}
+node {
+  clash: 'socks5://localhost:7897'
+}
+dns {
+  # 绑定到本地地址以监听 DNS 查询请求
+  #bind: '127.0.0.1:53'
+  upstream {
+    #alidns: 'udp://dns.alidns.com:53'
+    googledns: 'tcp+udp://8.8.8.8:53'
+    cfdns: 'tcp+udp://1.1.1.1:53'
+    #alih3: 'h3://dns.alidns.com:443'
+    doh: 'https://doh.pub/dns-query'
+    cfdoh: 'https://dns.cloudflare.com/dns-query'
+    alidoh: 'https://dns.alidns.com:443'
+  }
+  routing {
+    request {
+      qname(geosite:cn) -> doh
+      fallback: googledns
+    }
+    # According to the response of dns query, decide to accept or re-lookup using another DNS upstream.
+    # Match rules from top to bottom.
+    response {
+        # Trusted upstream. Always accept its result.
+        upstream(googledns) -> accept
+        # Possibly polluted, re-lookup using googledns.
+        ip(geoip:private) && !qname(geosite:cn) -> googledns
+        # fallback is also called default.
+        fallback: accept
+    }
+  }
+}
+group {
+  clash {
+    policy: fixed(0)
+  }
+}
+routing {
+  pname(NetworkManager) -> direct
+
+  # clash 客户端直连，防止回环
+  pname(clash-verge) -> must_direct
+  pname(verge-mihomo) -> must_direct
+  pname(mihomo) -> must_direct
+
+  domain(suffix: v2ex.com) -> clash
+  # 需要直连的网站/进程
+  dip(224.0.0.0/3, 'ff00::/8') -> direct
+  dip(geoip:cn) -> direct
+  dip(geoip:private) -> direct
+  domain(geosite:cn) -> direct
+  domain(suffix: bing.com) -> direct
+
+  # 需要代理的网站/进程
+
+  # 其他都交给 clash 处理
+  fallback: clash
+  #fallback: direct
+}

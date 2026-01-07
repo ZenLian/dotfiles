@@ -1,0 +1,206 @@
+# Modified from Clash Verge Rev
+
+#################### 通用配置 ####################
+## 1. 代理端口 ##
+mixed-port: 7890     # 本地混合代理(http和socks5合并）端口
+redir-port: 7892     # 本地Linux/macOS Redir代理端口
+tproxy-port: 7893    # 本地Linux Tproxy代理端口
+
+## 2. 局域网连接 ##
+allow-lan: false                  #允许局域网连接(false/true)
+bind-address:                     #监听IP白名单（当allow-lan：true），只允许列表设备
+  '*'                             #全部设备
+  # 192.168.122.11                #单个ip4地址
+  # "[aaaa::a8aa:ff:fe09:57d8]"   #单个ip6地址
+
+## 3. Web UI ##
+# 可通过`http://{{external-controller}}/ui`直接使用
+external-controller: 127.0.0.1:9090   # 控制面板监听地址
+external-ui: /usr/share/metacubexd    # 控制面板路径(放静态web网页)
+external-ui-name: metacubexd          # 控制面板名称
+# external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" # 下载地址
+secret: "1213"                        # 登录密码
+
+## 4. 核心行为 ##
+# clash 工作模式（rule/global/direct)
+mode: rule      
+log-level: info      # 日志等级（info/warning/error/debug/silent），查问题时改 info
+ipv6: true           # ipv6开关，当为false时，停止解析hostanmes为ip6地址
+unified-delay: true  # 更换延迟计算方式，去除握手等额外延迟
+tcp-concurrent: true #【Meta专属】TCP连接并发，如果域名解析结果对应多个IP，并发所有IP，选择握手最快的IP进行连接
+# 进程查找模式
+# - always: 强制匹配所有连接的进程
+# - strict: （默认）由 mihomo 决定
+# - off: 不匹配进程，推荐在路由器上使用
+find-process-mode: "always"
+# 模拟 Chrome 的 TLS 指纹，增强隐私性和绕过某些网站的指纹检测
+global-client-fingerprint: chrome
+
+# 缓存设置(文件位置./cache.db)
+profile:
+  store-selected: true # 节点状态记忆（若不同配置有同代理名称,设置值共享）
+  store-fake-ip: true  # fake-ip缓存
+
+keep-alive-idle: 600
+keep-alive-interval: 15
+disable-keep-alive: false
+
+#interface-name: en0       #出口网卡名称
+#routing-mark: 6666         #流量标记(仅Linux)
+
+## 5. Geo Data ##
+# geoip 模式
+# - true: 使用 geoip.dat 数据库
+# - false: （默认）使用mmdb 数据库
+geodata-mode: true
+geodata-loader: memconservative # 加载策略，保持较低的内存占用
+geo-auto-update: true   # 自动更新 GEO 数据库
+geo-update-interval: 48 # 自动更新间隔（小时）
+# 自定义 geodata 下载地址
+geox-url:
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+
+#################### TUN 模式配置 ####################
+# TUN 模式会新建一个虚拟网卡，接管所有系统流量，实现真正的透明代理
+tun:
+  enable: true
+  # 协议栈
+  # - system: 使用系统协议栈，可以提供稳定、全面的 tun 体验
+  # - gvisor: （默认）用户空间实现网络协议栈，提供更高的安全性和隔离性
+  # - mixed: TCP 使用 system，UDP 使用 gvisor
+  stack: mixed
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  strict-route: true
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  mtu: 1500
+  gso: true
+  gso-max-size: 65536
+  udp-timeout: 300
+
+#################### 流量嗅探配置 ####################
+# 节点出口一般都开着嗅探，这里修改没什么影响
+sniffer:                         #【Meta专属】sniffer域名嗅探器
+  enable: false                   #嗅探开关
+  #sniffing:                      #嗅探协议对象：目前支持tls/http
+  #  - tls
+  #  - http
+  skip-domain:                   # 跳过嗅探的域名，优先级比force-domain高
+    - 'Mijia Cloud'              # 米家设备，建议加
+    - 'dlg.io.mi.com'
+    - '+.apple.com'              # 苹果域名，建议加
+  # - '+.baidu.com'
+  # - '+.bilibili.com'
+  # - '*.baidu.com'              #支持通配符
+
+  force-domain:                  #需要强制嗅探的域名，默认只对IP嗅探
+  # - '+'                        #去掉注释后等于全局嗅探
+    - '+.v2ex.com'
+    - 'google.com'
+
+  port-whitelist:               #端口白名单，只对名单内的端口进行还原域名
+    - 80
+    - 443
+    - 8000-9000
+
+#################### DNS 解析 ####################
+#hosts:                           #host，支持通配符（非通配符域名优先级高于通配符域名）
+  # '*.clash.dev': 127.0.0.1     #例如foo.example.com>*.example.com>.example.com
+  # '.dev': 127.0.0.1
+  # 'alpha.clash.dev': '::1'
+
+dns:
+  enable: true         # DNS开关(false/true)
+  listen: 0.0.0.0:7053 # DNS监听地址
+  ipv6: true           # IP6解析开关；如果为false，将返回ip6结果为空
+  cache-algorithm: arc # 缓存策略，使用性能更优的 ARC 算法
+  cache-size: 2048
+  prefer-h3: true     # DOH 优先使用 http/3
+  respect-rules: false # DNS 解析遵循路由规则
+  use-hosts: false        # 使用上面的 hosts
+  use-system-hosts: true # 使用系统 hosts
+
+  # 启用 Fake-IP 模式，劫持所有 DNS 请求
+  enhanced-mode: fake-ip       # DNS模式(redir-host/fake-ip)
+  fake-ip-range: 198.18.0.1/16 # Fake-IP解析地址池
+  # fake-ip 过滤器: 域名不被 fake-ip 转换
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter: #Fake-ip过滤，列表中的域名返回真实ip
+    - '*.lan'
+    #- "rule-set:private_domain,cn_domain"
+    #- "geosite:connectivity-check"
+    #- "geosite:cn,private"
+    #- "rule-set:fake_ip_filter_DustinWin"
+
+  # 解析非IP的dns服务器域名,只支持纯IP
+  default-nameserver: 
+    - "119.29.29.29"
+    - "223.5.5.5"
+    - "114.114.114.114"
+    - "tls://1.12.12.12:853"
+    - "tls://223.5.5.5:853"
+  # DNS 分流策略, 优先于 nameserver
+  #nameserver-policy:
+  #  'geosite:cn,private': # 国内域名和私有域名
+  #    - https://223.5.5.5/dns-query # ali
+  #    - https://doh.pub/dns-query   # tencent
+  #    - 223.5.5.5    # ali(UDP)
+  #    - 119.29.29.29 # tencent(UDP)
+  #  'geo:cn': # 国内 IP
+  #    - https://223.5.5.5/dns-query # ali
+  #    - https://doh.pub/dns-query   # tencent
+  #    - 223.5.5.5    # ali(UDP)
+  #    - 119.29.29.29 # tencent(UDP)
+  #  'geosite:gfw': # 墙外域名
+  #    - https://1.1.1.1/dns-query
+  #    - https://dns.google/dns-query
+  #    - 1.1.1.1
+  #    - 8.8.8.8
+  #  'geosite:geolocation-!cn': # 非中国大陆域名
+  #    - https://1.1.1.1/dns-query
+  #    - https://dns.google/dns-query
+  #    - 1.1.1.1
+  #    - 8.8.8.8
+  #  'full-nameserver': # 所有未匹配的域名走国外
+  #    - https://1.1.1.1/dns-query
+  #    - https://dns.google/dns-query
+  #    - 1.1.1.1
+  #    - 8.8.8.8
+  # 默认DNS服务器，使用国内加密 DNS
+  nameserver: 
+    - "https://doh.pub/dns-query"
+    - "https://dns.alidns.com/dns-query"
+  # 'nameserver' 解析失败时，使用这里的解析
+  fallback:
+    - "tls://1.1.1.1:853"
+    - "https://dns.google/dns-query"
+    - "tls://dns.google"
+  # 满足条件的使用 fallback 域名解析
+  fallback-filter:                   #回落DNS服务器过滤
+    geoip: true                      #为真时，不匹配为geoip规则的使用fallback返回结果
+    geoip-code: CN                   #geoip匹配区域设定
+    geosite:                         #【Meta专属】设定geosite某分类使用fallback返回结果
+      - gfw
+    ipcidr:                          #列表中的ip使用fallback返回解析结果
+      - 240.0.0.0/4
+    domain:                          #列表中的域名使用fallback返回解析结果
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
+
+  #【Meta专属】解析代理服务器域名的dns
+  #proxy-server-nameserver:
+  #  - https://1.1.1.1/dns-query
+  #  - https://dns.google/dns-query
+  #  - 1.1.1.1
+  #  - 8.8.8.8
+
+#proxies:
+#
+#rules:
+#

@@ -126,6 +126,7 @@
                     "drawerEnabled": true,
                     "id": "Tray",
                     "pinned": [
+                        "Flameshot"
                     ]
                 },
                 {
@@ -257,7 +258,7 @@
         "colorizeIcons": false,
         "displayMode": "auto_hide",
         "enabled": true,
-        "floatingRatio": 1,
+        "floatingRatio": 0.4,
         "monitors": [
         ],
         "onlySameOutput": true,
@@ -270,7 +271,7 @@
         "animationDisabled": false,
         "animationSpeed": 1,
         "avatarImage": "/home/morisl/.config/hypr/face",
-        "compactLockScreen": false,
+        "compactLockScreen": true,
         "dimmerOpacity": 0.6,
         "enableShadows": true,
         "forceBlackScreenCorners": false,
@@ -459,11 +460,11 @@
         "transitionDuration": 1500,
         "transitionEdgeSmoothness": 0.05,
         "transitionType": "random",
-        "useWallhaven": false,
+        "useWallhaven": true,
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",
         "wallhavenPurity": "100",
-        "wallhavenQuery": "",
+        "wallhavenQuery": "catppuccin",
         "wallhavenResolutionHeight": "",
         "wallhavenResolutionMode": "atleast",
         "wallhavenResolutionWidth": "",
