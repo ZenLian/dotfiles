@@ -66,6 +66,10 @@ export FZF_TMUX=0
 # export FZF_TMUX_OPTS='-p' # float window
 #export FZF_TMUX_HEIGHT='80%'
 
+# ------------------------------------------
+# fix fzf-tab opts
+# ------------------------------------------
+zstyle ':fzf-tab:*' fzf-flags "--color=${FZF_DEFAULT_COLOR}"
 
 # ------------------------------------------
 # builtin widgets

@@ -12,6 +12,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:*' show-group brief
 
+zstyle ':fzf-tab:*' fzf-min-height 8
+
 # ------------------------------------------
 # common preview
 # ------------------------------------------
@@ -62,6 +64,8 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl
 zstyle ':fzf-tab:complete:git-*:*' fzf-preview
 # zstyle ':fzf-tab:complete:git*:*' fzf-flags --preview-window=hidden
 zstyle ':fzf-tab:complete:git:argument-1' fzf-preview 'echo $desc'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
 
 # ------------------------------------------
 # zlua/zoxide
