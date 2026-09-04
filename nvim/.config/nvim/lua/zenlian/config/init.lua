@@ -1,0 +1,6 @@
+require('zenlian.config.options')
+require('zenlian.config.keymaps')
+require('zenlian.config.autocmds')
+require('zenlian.config.diagnostics')
+require('zenlian.config.lsp')
+require('zenlian.config.ui2')
