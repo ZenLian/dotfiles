@@ -224,9 +224,12 @@ alias ta='tmux -a'
 # ------------------------------------------
 # fzf {{{
 # ------------------------------------------
-[[ -d ${FZF_DIR} ]] && source "${FZF_DIR}/shell/completion.bash"
-[[ -d ${FZF_DIR} ]] && source "${FZF_DIR}/shell/key-bindings.bash"
-unset fzf_dir
+export FZF_DIR="${HOME}/.vim/plugged/junegunn/fzf"
+if [[ -d ${FZF_DIR} ]]; then
+  export PATH="${FZF_DIR}/bin:${PATH}"
+  source "${FZF_DIR}/shell/completion.bash"
+  source "${FZF_DIR}/shell/key-bindings.bash"
+fi
 # }}}
 
 # vim:foldmarker={{{,}}}:foldmethod=marker:

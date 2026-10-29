@@ -1,3 +1,4 @@
 .zcompdump*
 .zcalc_history
 .zcompcache
+local.zsh

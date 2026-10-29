@@ -9,7 +9,9 @@ typeset -g ZSHRC_PROMPT=false
 # use icons
 typeset -g ZSHRC_ICONS=false
 # load zprof for startup time parsing
-typeset -g ZSHRC_ZPROF=false
+typeset -g ZSHRC_ZPROF=true
+# use zsh-defer
+typeset -g ZSHRC_DEFER=false
 
 ##########################################
 # prepare
@@ -33,15 +35,24 @@ done
 ##########################################
 # plugins
 ##########################################
-plug "romkatv/zsh-defer"
+[[ $ZSHRC_DEFER == true ]] && plug "romkatv/zsh-defer"
 
 [[ $ZSHRC_PROMPT != true ]] && plug "romkatv/powerlevel10k"
 [[ $ZSHRC_KEYMAPS != true ]] && plug "jeffreytse/zsh-vi-mode"
-zsh-defer -t 0.1 plug "Aloxaf/fzf-tab"
-zsh-defer -t 0.5 plug "zsh-users/zsh-autosuggestions"
-zsh-defer plug "zdharma-continuum/fast-syntax-highlighting"
-#zsh-defer plug "zsh-users/zsh-history-substring-search"
-zsh-defer -t 0.2 plug "zsh-users/zsh-completions"
+
+if [[ $ZSHRC_DEFER == true ]]; then
+    zsh-defer -t 0.1 plug "Aloxaf/fzf-tab"
+    zsh-defer -t 0.5 plug "zsh-users/zsh-autosuggestions"
+    zsh-defer plug "zdharma-continuum/fast-syntax-highlighting"
+    #zsh-defer plug "zsh-users/zsh-history-substring-search"
+    zsh-defer -t 0.2 plug "zsh-users/zsh-completions"
+else
+    plug "Aloxaf/fzf-tab"
+    plug "zsh-users/zsh-autosuggestions"
+    plug "zdharma-continuum/fast-syntax-highlighting"
+    #plug "zsh-users/zsh-history-substring-search"
+    plug "zsh-users/zsh-completions"
+fi
 
 ##########################################
 # after
@@ -51,12 +62,16 @@ _zshrc-source-after() {
         source $cfg
     done
 }
-zsh-defer _zshrc-source-after
 
+if [[ $ZSHRC_DEFER == true ]]; then
+    zsh-defer _zshrc-source-after
+else
+    _zshrc-source-after
+fi
 
-# fnm
-FNM_PATH="/home/sda1/lianzn/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/home/sda1/lianzn/.local/share/fnm:$PATH"
-  eval "`fnm env`"
+##########################################
+# local
+##########################################
+if [[ -f $ZDOTDIR/local.zsh ]]; then
+    source $ZDOTDIR/local.zsh
 fi

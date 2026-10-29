@@ -1,21 +1,12 @@
 # batch rename utilities
 autoload -U zmv
+
 ################################################################################
-# 00.asdf
+# mise
 ################################################################################
-local asdf_dirs=($HOME/.local/opt/asdf /opt/asdf-vm)
-for asdf_dir in $asdf_dirs; do
-    if [[ -f ${asdf_dir}/asdf.sh ]]; then
-        . ${asdf_dir}/asdf.sh
-        fpath+=(${ASDF_DIR}/completions)
-        break
-    fi
-done
-#export ASDF_CONFIG_FILE=$HOME/.config/asdf/config
-export ASDF_DATA_DIR=$HOME/.local/share/asdf
-# asdf-python(python-build)
-export PYTHON_BUILD_MIRROR_URL="https://mirrors.huaweicloud.com/python"
-export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
+if exists mise; then
+    eval "$(mise activate zsh)"
+fi
 
 ################################################################################
 # tmux
@@ -115,48 +106,6 @@ if [[ -d ${delta_dir} ]]; then
     fpath+=(${delta_dir}/completions)
 fi
 
-################################################################################
-# conda
-################################################################################
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-local conda_dir=$HOME/.local/opt/miniconda3
-__conda_setup="$(${conda_dir}/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "${conda_dir}/etc/profile.d/conda.sh" ]; then
-        . "${conda_dir}/etc/profile.d/conda.sh"
-    else
-        export PATH="${conda_dir}/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-####################
-# go/gvm
-####################
-#export GOPATH=$XDG_DATA_HOME/gopath
-#export GOBIN=$GOPATH/bin
-#export GOPROXY=https://goproxy.cn
-#path+=($GOBIN)
-# command -v gvm &> /dev/null && eval "$(gvm 1.17.8)"
-
-####################
-# nodejs
-####################
-# 手动指定 nvm 默认环境, 加快 zsh 启动速度
-#export NVM_DIR="$HOME/.nvm"
-#export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
-## [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  --no-use
-## path=($HOME/.nvm/versions/node/v17.2.0/bin $path)
-local FNM_PATH="/home/sda1/lianzn/.local/share"
-if [ -x "$FNM_PATH/fnm" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
-fi
-
 ####################
 # rust
 ####################
@@ -167,21 +116,3 @@ fi
 ####################
 [[ -d $HOME/.luarocks ]] && path+=($HOME/.luarocks/bin)
 
-################################################################################
-# Development
-################################################################################
-#export MENUCONFIG_COLOR=mono
-
-local toolchains=(
-    /opt/linux/x86-arm/aarch64-mix210-linux
-    /opt/linux/x86-arm/aarch64-mix410-linux
-    /opt/linux/x86-arm/aarch64-himix100-linux
-    /opt/toolchains/x86-arm/arm-himix100-linux
-    /opt/toolchains/x86-arm/aarch64-mix210-linux
-    /opt/toolchains/x86-arm/arm-histbv310-linux
-)
-for toolchain in $toolchains; do
-    if [[ -d ${toolchain} && $PATH != *${toolchain}* ]]; then
-        export PATH=${toolchain}/bin:$PATH
-    fi
-done
