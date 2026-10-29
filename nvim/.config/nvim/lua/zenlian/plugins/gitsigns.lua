@@ -50,6 +50,16 @@ local opts = {
         require('gitsigns').toggle_signs(state)
       end,
     }):map('<leader>\\g')
+    Snacks.toggle({
+      id = 'git_blame',
+      name = 'Git Blame Line',
+      get = function()
+        return require('gitsigns.config').config.current_line_blame
+      end,
+      set = function(state)
+        require('gitsigns').toggle_current_line_blame(state)
+      end,
+    }):map('<leader>\\b')
   end,
 }
 require('gitsigns').setup(opts)
